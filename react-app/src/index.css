@@ -6,9 +6,11 @@
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
 
 .flex {
   display: flex;
@@ -26,6 +28,11 @@
 
 .flex-11 {
   justify-content: center;
+  align-items: center;
+}
+
+.flex-b1 {
+  justify-content: space-between;
   align-items: center;
 }
 
