@@ -45,6 +45,9 @@ class Business(db.Model):
 
     user = db.relationship("User", back_populates="businesses")
     address = db.relationship("Address")
+    carts = db.relationship("Cart", back_populates="business")
+    items = db.relationship("Item", back_populates="business")
+    categories = db.relationship("Category", back_populates="business")
 
     def to_dict(self, timestamps=False):
         dct = {
@@ -53,7 +56,6 @@ class Business(db.Model):
             "image": self.image,
             "priceRange": self.price_range,
             "type": self.type,
-            "owner": self.user,
             "address": self.address,
         }
 
