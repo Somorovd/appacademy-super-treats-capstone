@@ -16,7 +16,7 @@ export default function PageHeader() {
           className="header-login"
           onClick={() => history.push("/login")}
         >
-          <i class="fa-solid fa-user"></i> Log in
+          <i className="fa-solid fa-user"></i> Log in
         </button>
         <button
           className="header-signup bt-black"

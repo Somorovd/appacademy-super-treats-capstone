@@ -41,7 +41,6 @@ export const login = (credential, password) => async (dispatch) => {
   });
 
   const resBody = await res.json();
-  console.log(res, resBody);
 
   if (res.ok) dispatch(setUser(resBody));
   return resBody;
