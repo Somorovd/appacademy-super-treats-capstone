@@ -16,7 +16,7 @@ export default function LandingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(thunkSetLocation(address, delivery));
-    // history.push("/feed");
+    history.push("/feed");
   };
 
   return (
