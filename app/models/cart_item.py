@@ -22,7 +22,7 @@ class CartItem(db.Model):
         db.DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
-    item = db.relationship("Item", back_populates="cart_items")
+    item = db.relationship("Item")
 
     def to_dict(self, timestamps=False):
         dct = {"id": self.id, "quantity": self.quantity, "item": self.item.to_dict()}

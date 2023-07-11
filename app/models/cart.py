@@ -20,7 +20,7 @@ class Cart(db.Model):
 
     user = db.relationship("User", back_populates="carts")
     business = db.relationship("Business", back_populates="carts")
-    cart_items = db.relationship("CartItem", back_populates="cart")
+    cart_items = db.relationship("CartItem")
 
     @property
     def item_count(self):
