@@ -17,7 +17,7 @@ class Item(db.Model):
         db.Integer, db.ForeignKey(add_prefix_for_prod("businesses.id")), nullable=False
     )
     category_id = db.Column(
-        db.Integer, db.ForeignKey(add_prefix_for_prod("ctegories.id")), nullable=True
+        db.Integer, db.ForeignKey(add_prefix_for_prod("categories.id")), nullable=True
     )
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
