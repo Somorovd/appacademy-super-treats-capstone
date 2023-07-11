@@ -1,13 +1,23 @@
+import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 import { useState } from "react";
+
 import PageHeader from "../PageHeader";
+import { thunkSetLocation } from "../../store/session";
 
 import "./LandingPage.css";
 
 export default function LandingPage() {
+  const dispatch = useDispatch();
+  const history = useHistory();
   const [address, setAddress] = useState("");
   const [delivery, setDelivery] = useState("delivery");
 
-  const handleSubmit = () => {};
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await dispatch(thunkSetLocation(address, delivery));
+    // history.push("/feed");
+  };
 
   return (
     <div className="landing-page flex-c">

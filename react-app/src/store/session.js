@@ -2,6 +2,7 @@ import { clearAll } from ".";
 
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
+const SET_LOCATION = "session/SET_LOCATION";
 
 const setUser = (user) => ({
   type: SET_USER,
@@ -12,7 +13,10 @@ const removeUser = () => ({
   type: REMOVE_USER,
 });
 
-const initialState = { user: null };
+const actionSetLocation = (address, delivery) => ({
+  type: SET_LOCATION,
+  payload: { address, delivery },
+});
 
 export const authenticate = () => async (dispatch) => {
   const response = await fetch("/api/auth/", {
@@ -87,12 +91,18 @@ export const signUp = (username, email, password) => async (dispatch) => {
   }
 };
 
+export const thunkSetLocation = (address, delivery) => async (dispatch) => {
+  await dispatch(actionSetLocation(address, delivery));
+};
+
+const initialState = { user: null, address: null, delivery: "delivery" };
+
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case SET_USER:
-      return { user: action.payload };
-    case REMOVE_USER:
-      return { user: null };
+      return { ...state, user: action.payload };
+    case SET_LOCATION:
+      return { ...state, ...action.payload };
     default:
       return state;
   }
