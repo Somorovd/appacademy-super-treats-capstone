@@ -13,7 +13,7 @@ export default function LoginFormPage() {
   const [credential, setCredential] = useState("");
   const [isPhone, setIsPhone] = useState(false);
   const [password, setPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [errors, setErrors] = useState({});
 
   if (sessionUser) history.push("/");
 
