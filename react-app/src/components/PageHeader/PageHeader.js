@@ -1,16 +1,27 @@
 import { useHistory } from "react-router-dom";
-import "./PageHeader.css";
 import { useSelector } from "react-redux";
+import { useModal } from "../../context/Modal";
+
+import UserMenu from "../UserMenu";
+import "./PageHeader.css";
 
 export default function PageHeader() {
   const history = useHistory();
+  const { setModalContent, closeModal } = useModal();
 
   const user = useSelector((state) => state.session.user);
+
+  const openUserMenu = () => {
+    setModalContent(<UserMenu />);
+  };
 
   return (
     <header className="page-header flex flex-b1">
       <div className="header-left flex">
-        <div className="header-menu">
+        <div
+          className="header-menu"
+          onClick={openUserMenu}
+        >
           <i className="fa-solid fa-bars"></i>
         </div>
         <div className="header-logo">SuperTreats</div>

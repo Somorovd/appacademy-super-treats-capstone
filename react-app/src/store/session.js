@@ -1,3 +1,5 @@
+import { clearAll } from ".";
+
 const SET_USER = "session/SET_USER";
 const REMOVE_USER = "session/REMOVE_USER";
 
@@ -54,7 +56,7 @@ export const logout = () => async (dispatch) => {
   });
 
   if (response.ok) {
-    dispatch(removeUser());
+    dispatch(clearAll());
   }
 };
 
