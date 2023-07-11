@@ -23,7 +23,7 @@ class Cart(db.Model):
     business = db.relationship("Business", back_populates="carts")
     items = db.relationship("CartItem", back_populates="cart")
 
-    def to_dict(self, timezones=False):
+    def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
             "userId": self.user_id,
@@ -34,7 +34,7 @@ class Cart(db.Model):
             "totalPrice": self.total_price,
         }
 
-        if timezones:
+        if timestamps:
             dct["createdAt"] = self.created_at
             dct["updatedAt"] = self.updated_at
 
