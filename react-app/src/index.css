@@ -57,3 +57,9 @@ button {
 .bt-black:hover {
   background-color: #333;
 }
+
+.auth-error {
+  font-size: 0.8rem;
+  color: firebrick;
+  font-style: italic;
+}
