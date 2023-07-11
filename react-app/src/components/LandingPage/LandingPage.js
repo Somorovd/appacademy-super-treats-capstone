@@ -32,7 +32,7 @@ export default function LandingPage() {
               <option value="delivery">Delivery</option>
               <option value="pickup">Pickup</option>
             </select>
-            <button>Find Food</button>
+            <button className="bt-black">Find Food</button>
           </form>
           <p>
             <a href="/signup">Sign In</a> for your recent addresses

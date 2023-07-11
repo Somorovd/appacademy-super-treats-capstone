@@ -7,6 +7,10 @@
   gap: 40px;
 }
 
+.header-menu {
+  cursor: pointer;
+}
+
 .header-logo {
   font-weight: bold;
 }
