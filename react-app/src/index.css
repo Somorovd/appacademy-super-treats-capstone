@@ -39,3 +39,16 @@
 .fh {
   height: 100%;
 }
+
+button {
+  border: none;
+}
+
+.bt-black {
+  background-color: black;
+  color: white;
+}
+
+.bt-black:hover {
+  background-color: #333;
+}
