@@ -11,13 +11,13 @@ types = Enum(
     "Types",
     [
         "Restaurant",
-        "Convenience store",
+        # "Convenience store",
         "Grocery store",
-        "Specialty food store",
+        # "Specialty food store",
         "Liquor store",
-        "Florist",
-        "Pharmacy",
-        "Retail",
+        # "Florist",
+        # "Pharmacy",
+        # "Retail",
     ],
 )
 
