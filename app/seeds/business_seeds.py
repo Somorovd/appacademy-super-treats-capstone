@@ -6,6 +6,7 @@ from random import choice, randint
 
 fake = Faker()
 
+
 # Adds a demo user, you can add other users here if you want
 def seed_businesses():
     demo_business = Business(
@@ -40,8 +41,10 @@ def seed_businesses():
 # it will reset the primary keys for you as well.
 def undo_businesses():
     if environment == "production":
-        db.session.execute(f"TRUNCATE table {SCHEMA}.users RESTART IDENTITY CASCADE;")
+        db.session.execute(
+            f"TRUNCATE table {SCHEMA}.businesses RESTART IDENTITY CASCADE;"
+        )
     else:
-        db.session.execute(text("DELETE FROM users"))
+        db.session.execute(text("DELETE FROM businesses"))
 
     db.session.commit()
