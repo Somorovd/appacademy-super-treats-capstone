@@ -23,14 +23,17 @@ class Cart(db.Model):
     business = db.relationship("Business", back_populates="carts")
     items = db.relationship("CartItem", back_populates="cart")
 
+    @property
+    def count(self):
+        return sum(self.items)
+
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
-            "userId": self.user_id,
             "user": self.user.to_dict(),
-            "businessId": self.business_id,
             "business": self.business.to_dict(),
             "items": [i.to_dict() for i in self.items],
+            "count": self.count,
             "totalPrice": self.total_price,
         }
 
