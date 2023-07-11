@@ -1,1 +1,29 @@
 /* TODO Add site wide styles */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+
+.flex {
+  display: flex;
+}
+
+.flex-c {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-01 {
+  justify-content: left;
+  align-items: center;
+}
+
+.fh {
+  height: 100%;
+}
