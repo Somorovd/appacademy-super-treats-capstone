@@ -16,14 +16,12 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     phone = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
-    address_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(
         db.DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
     )
 
-    address = db.relationship("Address", back_populates="user")
     businesses = db.relationship("Business", back_populates="user")
     carts = db.relationship("Cart", back_populates="user")
 

@@ -29,14 +29,12 @@ class Business(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
+    address = db.Column(db.String(255), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255), nullable=True)
     price_range = db.Column(db.Enum(price_ranges))
     type = db.Column(db.Enum(types))
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
-    address_id = db.Column(
-        db.Integer, db.ForeignKey(add_prefix_for_prod("addresses.id"))
-    )
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(
@@ -44,7 +42,6 @@ class Business(db.Model):
     )
 
     user = db.relationship("User", back_populates="businesses")
-    address = db.relationship("Address")
     carts = db.relationship("Cart", back_populates="business")
     items = db.relationship("Item", back_populates="business")
     categories = db.relationship("Category", back_populates="business")
@@ -52,11 +49,11 @@ class Business(db.Model):
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
+            "address": self.address,
             "name": self.name,
             "image": self.image,
             "priceRange": self.price_range,
             "type": self.type,
-            "address": self.address,
         }
 
         if timestamps:
