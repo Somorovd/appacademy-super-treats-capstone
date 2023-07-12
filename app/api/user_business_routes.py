@@ -15,6 +15,19 @@ def all_businesses():
     return {"businesses": [b.to_dict() for b in businesses]}
 
 
+@user_business_routes.route("/<int:business_id>")
+@login_required
+def one_business(business_id):
+    business = Business.query.get(business_id)
+
+    if business == None:
+        return {"No business found"}, 404
+    if not business.user_id == current_user.id:
+        return {"errors": {"user": "Not Authorized"}}, 401
+
+    return {"business": business.to_dict()}
+
+
 @user_business_routes.route("/new", methods=["POST"])
 @login_required
 def new_business():
