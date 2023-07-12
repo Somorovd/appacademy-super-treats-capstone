@@ -11,7 +11,7 @@ export const thunkGetAllBusinesses = () => async (dispatch) => {
 
   if (res.ok) {
     const businesses = {};
-    for (let b in resBody) businesses[b.id] = b;
+    for (let b in resBody.businesses) businesses[b.id] = b;
     dispatch(actionGetAllBusinesses(businesses));
   }
   return resBody;
