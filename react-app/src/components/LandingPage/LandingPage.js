@@ -20,7 +20,7 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="landing-page flex-c">
+    <div className="landing-page flex-c pg-pd">
       <PageHeader />
       <div className="landing__content flex flex-01 fh">
         <div className="landing__address-form-wrapper">

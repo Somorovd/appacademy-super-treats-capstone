@@ -18,7 +18,7 @@ export default function BusinessBrowsingPage() {
   }, [dispatch]);
 
   return (
-    <div className="business-browsing">
+    <div className="business-browsing pg-pd">
       <header className="business-browsing__header">
         <PageHeader />
         <div className="filter-bar flex flex-11">

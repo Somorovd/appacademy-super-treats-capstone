@@ -1,11 +1,49 @@
 .business-card {
-  height: 150px;
+  height: 188px;
+  gap: 15px;
+  cursor: pointer;
+  border-radius: 10px;
+  display: grid;
+  grid-template-rows: 1fr auto;
 }
 
 .business-card header {
-  height: 75%;
+  overflow: hidden;
 }
 
-.business-card img {
+.business-card__image {
+  object-fit: cover;
+  max-width: 100%;
   background-color: blanchedalmond;
+  border-radius: 10px;
+  border: 1px solid blue;
+}
+
+.business-card__info {
+  display: grid;
+  grid-template-areas:
+    "name rating"
+    "delivery delivery"
+  ;
+}
+
+.business-card__name {
+  grid-area: name;
+  font-weight: bold;
+  align-self: center;
+}
+
+.business-card__rating {
+  grid-area: rating;
+  text-align: right;
+  justify-self: end;
+  font-size: 0.75rem;
+  font-weight: bold;
+  padding: 5px;
+  width: fit-content;
+}
+
+.business-card__delivery {
+  font-size: 0.85rem;
+  grid-area: delivery;
 }

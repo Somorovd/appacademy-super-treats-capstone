@@ -2,7 +2,7 @@ import "./BusinessCard.css";
 
 export default function BusinessCard({ business }) {
   return (
-    <div className="business-card flex-c">
+    <div className="business-card">
       <header>
         <img
           className="business-card__image fw fh"
@@ -18,7 +18,7 @@ export default function BusinessCard({ business }) {
         <p className="business-card__delivery">
           <span className="business-card__delivery-fee">
             ${business.deliveryFee} Delivery Fee
-          </span>
+          </span>{" "}
           &bull;
           <span className="business-card__delivery-time">15-20 min</span>
         </p>
