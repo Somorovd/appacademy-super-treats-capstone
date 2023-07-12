@@ -2,7 +2,7 @@ from app.models import db, User, Business, environment, SCHEMA
 from app.models.business import types, price_ranges
 from sqlalchemy.sql import text
 from faker import Faker
-from random import choice, randint
+from random import choice, randint, random
 
 fake = Faker()
 
@@ -14,6 +14,7 @@ def seed_businesses():
         name="App Academy",
         image="https://cdn.discordapp.com/attachments/723759214123679836/1128358776186093588/qHddZMInp.png",
         price_range=price_ranges["$$$$"],
+        delivery_fee="0.99",
         type=types["Restaurant"],
         user_id=1,
     )
@@ -25,6 +26,7 @@ def seed_businesses():
             name=fake.company(),
             image="",
             price_range=choice(list(price_ranges)),
+            delivery_fee=random() * 6.0,
             type=choice(list(types)),
             user_id=randint(1, 21),
         )

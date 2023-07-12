@@ -61,6 +61,7 @@ def upgrade():
             sa.Enum("$", "$$", "$$$", "$$$$", name="priceranges"),
             nullable=True,
         ),
+        sa.Column("delivery_fee", sa.Numeric(precision=3, scale=2), nullable=False),
         sa.Column(
             "type",
             sa.Enum("Restaurant", "Grocery store", "Liquor store", name="types"),

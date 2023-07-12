@@ -8,7 +8,10 @@ import "./BusinessBrowsingPage.css";
 
 export default function BusinessBrowsingPage() {
   const dispatch = useDispatch();
-  const allBusinesses = useSelector((state) => state.businesses.allBusinesses);
+  const allBusinessesObject = useSelector(
+    (state) => state.businesses.allBusinesses
+  );
+  const allBusinesses = Object.values(allBusinessesObject);
 
   useEffect(() => {
     dispatch(thunkGetAllBusinesses());
@@ -45,12 +48,12 @@ export default function BusinessBrowsingPage() {
       <div className="business-browsing__body flex">
         <div className="filter-sidebar"></div>
         <div className="business-browsing__content fw">
-          <BusinessCard />
-          <BusinessCard />
-          <BusinessCard />
-          <BusinessCard />
-          <BusinessCard />
-          <BusinessCard />
+          {allBusinesses.map((b) => (
+            <BusinessCard
+              business={b}
+              key={b.id}
+            />
+          ))}
         </div>
       </div>
     </div>

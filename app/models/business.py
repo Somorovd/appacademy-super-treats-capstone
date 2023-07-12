@@ -33,6 +33,7 @@ class Business(db.Model):
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255), nullable=True)
     price_range = db.Column(db.Enum(price_ranges))
+    delivery_fee = db.Column(db.Numeric(3, 2), nullable=False)
     type = db.Column(db.Enum(types))
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
@@ -53,6 +54,7 @@ class Business(db.Model):
             "name": self.name,
             "image": self.image,
             "priceRange": self.price_range.name,
+            "deliveryFee": self.delivery_fee,
             "type": self.type.name,
         }
 
