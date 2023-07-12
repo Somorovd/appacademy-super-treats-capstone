@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 6b8942ab5bb5
+Revision ID: 09260b304b2c
 Revises: 
-Create Date: 2023-07-12 16:16:15.306148
+Create Date: 2023-07-12 17:33:59.856186
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '6b8942ab5bb5'
+revision = '09260b304b2c'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -38,8 +38,8 @@ def upgrade():
     sa.Column('image', sa.String(length=255), nullable=True),
     sa.Column('price_range', sa.Enum('$', '$$', '$$$', '$$$$', name='priceranges'), nullable=True),
     sa.Column('delivery_fee', sa.Numeric(precision=3, scale=2), nullable=False),
-    sa.Column('type', sa.Enum('Restaurant', 'Grocery store', 'Liquor store', name='types'), nullable=True),
-    sa.Column('cuisine', sa.Enum('Alcohol', 'Bakery', 'BBQ', 'Burgers', 'Coffee & Tea', 'Chinese', 'French', 'Ice Cream & Frozen Yogurt', 'Pizza', 'Sushi', name='cuisines'), nullable=False),
+    sa.Column('type', sa.Enum('Restaurant', 'Grocery Store', 'Liquor Store', name='types'), nullable=False),
+    sa.Column('cuisine', sa.Enum('Alcohol', 'Bakery', 'BBQ', 'Burgers', 'Coffee & Tea', 'Chinese', 'French', 'Ice Cream & Frozen Yogurt', 'Pizza', 'Sushi', name='cuisines'), nullable=True),
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(timezone=True), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),

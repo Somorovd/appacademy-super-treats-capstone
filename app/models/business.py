@@ -50,8 +50,8 @@ class Business(db.Model):
     image = db.Column(db.String(255), nullable=True)
     price_range = db.Column(db.Enum(price_ranges), default=price_ranges["$"])
     delivery_fee = db.Column(db.Numeric(3, 2), nullable=False, default=0)
-    type = db.Column(db.Enum(types))
-    cuisine = db.Column(db.Enum(cuisines), nullable=False)
+    type = db.Column(db.Enum(types), nullable=False)
+    cuisine = db.Column(db.Enum(cuisines), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
