@@ -19,7 +19,7 @@ export default function BusinessInfoPage() {
 
   return (
     <div className="business-info flex">
-      <div className="business-info-nav"></div>
+      <div className="business-info-nav fh"></div>
       <div className="business-info-content">
         <h1>{business.name}</h1>
       </div>

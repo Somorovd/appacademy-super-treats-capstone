@@ -67,6 +67,7 @@ class Business(db.Model):
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
+            "userId": self.user_id,
             "address": self.address,
             "name": self.name,
             "image": self.image,

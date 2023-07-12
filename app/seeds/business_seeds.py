@@ -23,7 +23,7 @@ def seed_businesses():
 
     for _ in range(40):
         type = choice(list(types))
-        cuisine = choice(list(cuisines)) if type.name == "Restaurant" else ""
+        cuisine = choice(list(cuisines)) if type.name == "Restaurant" else None
         business = Business(
             address=fake.address(),
             name=fake.company(),

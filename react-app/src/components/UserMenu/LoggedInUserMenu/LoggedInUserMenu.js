@@ -31,8 +31,11 @@ export default function LoggedInUserMenu() {
         </button>
       </section>
       <section>
+        <button onClick={() => modalNavigate("/business")}>
+          Manage your businesses
+        </button>
         <button onClick={() => modalNavigate("/business/create")}>
-          Add your restaurant
+          Add your business
         </button>
       </section>
     </>

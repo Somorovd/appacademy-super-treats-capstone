@@ -6,7 +6,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
 import LandingPage from "./components/LandingPage";
 import BusinessBrowsingPage from "./components/BusinessBrowsingPage";
-import UserBussinessPage from "./components/UserBusinessPage";
+import BusinessRouter from "./components/BusinessRouter";
 
 function App() {
   const dispatch = useDispatch();
@@ -35,7 +35,7 @@ function App() {
             <BusinessBrowsingPage />
           </Route>
           <Route path="/business">
-            <UserBussinessPage />
+            <BusinessRouter />
           </Route>
         </Switch>
       )}
