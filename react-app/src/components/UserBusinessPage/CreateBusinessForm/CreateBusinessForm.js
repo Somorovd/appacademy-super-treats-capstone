@@ -1,8 +1,11 @@
+import { useDispatch } from "react-redux";
 import { useState } from "react";
 
+import { thunkCreateBusiness } from "../../../store/businesses";
 import "./CreateBusinessForm.css";
 
 export default function CreateBusinessForm() {
+  const dispatch = useDispatch();
   const [address, setAddress] = useState("");
   const [businessName, setBusinessName] = useState("");
   const [brandName, setBrandName] = useState("");
@@ -10,9 +13,19 @@ export default function CreateBusinessForm() {
   const [cuisine, setCuisine] = useState("");
   const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    const business = {
+      address,
+      name: businessName,
+      type,
+      cuisine,
+    };
+
+    const res = await dispatch(thunkCreateBusiness(business));
+    console.log(res);
   };
 
   const validateForm = () => {
@@ -23,14 +36,14 @@ export default function CreateBusinessForm() {
       errors.address = "The maximum characters allowed is 255";
 
     if (businessName.trim() === "") errors.name = "Enter a store name";
-    if (businessName.trim().length > 255)
-      errors.address = "The maximum characters allowed is 255";
+    if (businessName.trim().length > 100)
+      errors.address = "The maximum characters allowed is 100";
 
     if (brandName.trim() === "") errors.brand = "Enter a brand name";
-    if (brandName.trim().length > 255)
-      errors.address = "The maximum characters allowed is 255";
+    if (brandName.trim().length > 100)
+      errors.address = "The maximum characters allowed is 100";
 
-    if (type === "") errors.type = "Select a business type";
+    if (type.trim() === "") errors.type = "Select a business type";
 
     setErrors(errors);
     return Object.keys(errors).length === 0;

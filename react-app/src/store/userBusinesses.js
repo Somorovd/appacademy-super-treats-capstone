@@ -1,4 +1,5 @@
 const GET_ALL_BUSINESSES = "userBusinesses/GET_ALL_BUSINESSES";
+const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
 
 const actionGetAllBusinesses = (businesses) => ({
   type: GET_ALL_BUSINESSES,
@@ -26,6 +27,9 @@ export default function reducer(state = initialState, action) {
       state.allBusinesses = allBusinesses;
       return state;
     }
+    case CREATE_BUSINESS:
+      console.log("In user businesses");
+      return state;
     default:
       return state;
   }

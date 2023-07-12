@@ -12,12 +12,28 @@ types = Enum(
     [
         "Restaurant",
         # "Convenience store",
-        "Grocery store",
+        "Grocery Store",
         # "Specialty food store",
-        "Liquor store",
+        "Liquor Store",
         # "Florist",
         # "Pharmacy",
         # "Retail",
+    ],
+)
+
+cuisines = Enum(
+    "Cuisines",
+    [
+        "Alcohol",
+        "Bakery",
+        "BBQ",
+        "Burgers",
+        "Coffee & Tea",
+        "Chinese",
+        "French",
+        "Ice Cream & Frozen Yogurt",
+        "Pizza",
+        "Sushi",
     ],
 )
 
@@ -32,9 +48,10 @@ class Business(db.Model):
     address = db.Column(db.String(255), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255), nullable=True)
-    price_range = db.Column(db.Enum(price_ranges))
-    delivery_fee = db.Column(db.Numeric(3, 2), nullable=False)
+    price_range = db.Column(db.Enum(price_ranges), default=price_ranges["$"])
+    delivery_fee = db.Column(db.Numeric(3, 2), nullable=False, default=0)
     type = db.Column(db.Enum(types))
+    cuisine = db.Column(db.Enum(cuisines), nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
