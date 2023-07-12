@@ -4,7 +4,7 @@ from wtforms.validators import DataRequired, Length, AnyOf
 from ..models.business import types, cuisines, price_ranges
 
 
-class LoginForm(FlaskForm):
+class CreateBusinessForm(FlaskForm):
     address = StringField("address", validators=[DataRequired(), Length(1, 255)])
     name = StringField("address", validators=[DataRequired(), Length(1, 100)])
     price_range = StringField(
