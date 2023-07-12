@@ -64,31 +64,43 @@ export const logout = () => async (dispatch) => {
   }
 };
 
-export const signUp = (username, email, password) => async (dispatch) => {
-  const response = await fetch("/api/auth/signup", {
+export const signUp = (user) => async (dispatch) => {
+  const res = await fetch("/api/auth/signup", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({
-      username,
-      email,
-      password,
-    }),
+    body: JSON.stringify(user),
   });
 
-  if (response.ok) {
-    const data = await response.json();
-    dispatch(setUser(data));
-    return null;
-  } else if (response.status < 500) {
-    const data = await response.json();
-    if (data.errors) {
-      return data.errors;
-    }
-  } else {
-    return ["An error occurred. Please try again."];
-  }
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(setUser(resBody));
+  return resBody;
+};
+
+export const validateEmail = (email) => async (_dispatch) => {
+  const res = await fetch("/api/auth/validate_email", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ email }),
+  });
+  const resBody = await res.json();
+  return resBody;
+};
+
+export const validatePhone = (phone) => async (_dispatch) => {
+  const res = await fetch("/api/auth/validate_phone", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ phone }),
+  });
+  const resBody = await res.json();
+  return resBody;
 };
 
 export const thunkSetLocation = (address, delivery) => async (dispatch) => {

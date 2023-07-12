@@ -1,34 +1,65 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { signUp } from "../../store/session";
+import { useHistory } from "react-router-dom";
+import { signUp, validateEmail, validatePhone } from "../../store/session";
 import "./SignupForm.css";
 
 export default function SignupFormPage() {
   const dispatch = useDispatch();
+  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [errors, setErrors] = useState([]);
+  const [passwordStatus, setPasswordStatus] = useState({ fail: [] });
+  const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) history.push("/");
+
+  const submitEmail = async (e) => {
+    e.preventDefault();
+    const res = await dispatch(validateEmail(email));
+    if (res.errors) setErrors(res.errors);
+  };
+
+  const submitPhone = async (e) => {
+    e.preventDefault();
+    const res = await dispatch(validatePhone(phone));
+    if (res.errors) setErrors(res.errors);
+  };
+
+  const submitPassword = (e) => {
+    e.preventDefault();
+    const passwordStatus = { pass: [], fail: [] };
+
+    passwordStatus[password.length >= 8 ? "pass" : "fail"].push(
+      "Password is at least 8 characters"
+    );
+    passwordStatus[password.match(/[a-zA-Z]/) ? "pass" : "fail"].push(
+      "Password contains a letter"
+    );
+    passwordStatus[password.match(/\d/) ? "pass" : "fail"].push(
+      "Password contains a number"
+    );
+
+    setPasswordStatus(passwordStatus);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // if (password === confirmPassword) {
-    //   const data = await dispatch(signUp(username, email, password));
-    //   if (data) {
-    //     setErrors(data);
-    //   }
-    // } else {
-    //   setErrors([
-    //     "Confirm Password field must be the same as the Password field",
-    //   ]);
-    // }
+    const user = {
+      email,
+      phone,
+      password,
+      first_name: firstName,
+      last_name: lastName,
+    };
+
+    const res = await dispatch(signUp(user));
+    if (res.errors) setErrors(res.errors);
+    else history.push("/");
   };
 
   const validateMaxLength = (field, val, len, setter) => {
@@ -59,6 +90,7 @@ export default function SignupFormPage() {
               required
             />
             <p className="auth-error">{errors.email}</p>
+            <button onClick={submitEmail}>Next</button>
           </section>
 
           <section className="signup-form__section">
@@ -66,7 +98,6 @@ export default function SignupFormPage() {
             <input
               type="text"
               placeholder="Enter your phone number"
-              pattern=""
               value={phone}
               onChange={(e) =>
                 validateMaxLength("phone", e.target.value, 20, setPhone)
@@ -74,6 +105,7 @@ export default function SignupFormPage() {
               required
             />
             <p className="auth-error">{errors.phone}</p>
+            <button onClick={submitPhone}>Next</button>
           </section>
 
           <section className="signup-form__section">
@@ -92,7 +124,24 @@ export default function SignupFormPage() {
               minLength={8}
               required
             />
+            {passwordStatus.fail.length !== 0 && (
+              <>
+                {passwordStatus.fail.map((msg) => (
+                  <p>
+                    <i className="fa-solid fa-circle-xmark red-icon"></i>
+                    {msg}
+                  </p>
+                ))}
+                {passwordStatus.pass.map((msg) => (
+                  <p>
+                    <i className="fa-solid fa-circle-check green-icon"></i>
+                    {msg}
+                  </p>
+                ))}
+              </>
+            )}
             <p className="auth-error">{errors.password}</p>
+            <button onClick={submitPassword}>Next</button>
           </section>
 
           <section className="signup-form__section">
@@ -125,7 +174,6 @@ export default function SignupFormPage() {
             />
             <p className="auth-error">{errors.lastName}</p>
           </section>
-
           <button type="submit">Sign Up</button>
         </form>
       </div>
