@@ -52,8 +52,8 @@ class Business(db.Model):
             "address": self.address,
             "name": self.name,
             "image": self.image,
-            "priceRange": self.price_range,
-            "type": self.type,
+            "priceRange": self.price_range.name,
+            "type": self.type.name,
         }
 
         if timestamps:
