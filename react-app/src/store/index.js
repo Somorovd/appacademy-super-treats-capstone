@@ -1,6 +1,7 @@
 import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import session from "./session";
+import businesses from "./businesses";
 
 const CLEAR_ALL = "app/CLEAR_ALL";
 
@@ -11,6 +12,7 @@ export const clearAll = () => ({
 
 const appReducer = combineReducers({
   session,
+  businesses,
 });
 
 const rootReducer = (state, action) => {

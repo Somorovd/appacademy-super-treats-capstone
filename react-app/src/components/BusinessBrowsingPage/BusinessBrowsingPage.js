@@ -1,9 +1,19 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PageHeader from "../PageHeader";
 import BusinessCard from "./BusinessCard";
 
+import { thunkGetAllBusinesses } from "../../store/businesses";
 import "./BusinessBrowsingPage.css";
 
 export default function BusinessBrowsingPage() {
+  const dispatch = useDispatch();
+  const allBusinesses = useSelector((state) => state.businesses.allBusinesses);
+
+  useEffect(() => {
+    dispatch(thunkGetAllBusinesses());
+  }, [dispatch]);
+
   return (
     <div className="business-browsing">
       <header className="business-browsing__header">
