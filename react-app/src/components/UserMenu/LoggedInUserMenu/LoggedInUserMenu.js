@@ -10,10 +10,14 @@ export default function LoggedInUserMenu() {
   const history = useHistory();
   const { closeModal } = useModal();
 
+  const modalNavigate = (path) => {
+    closeModal();
+    history.push(path);
+  };
+
   const handleSignout = async () => {
     await dispatch(logout());
-    closeModal();
-    history.push("/");
+    modalNavigate("/");
   };
 
   return (
@@ -27,7 +31,7 @@ export default function LoggedInUserMenu() {
         </button>
       </section>
       <section>
-        <button onClick={history.push("/business/create")}>
+        <button onClick={() => modalNavigate("/business/create")}>
           Add your restaurant
         </button>
       </section>
