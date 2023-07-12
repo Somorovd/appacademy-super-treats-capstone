@@ -1,0 +1,26 @@
+.user-menu {
+  background-color: white;
+  height: 100vh;
+  width: 300px;
+  gap: 8px;
+  padding: 25px;
+}
+
+.user-menu__login,
+.user-menu__signup {
+  padding: 1rem;
+  font-size: 1.1rem;
+  border-radius: 8px;
+}
+
+
+.user-menu__signout {
+  font-size: 1rem;
+  text-align: left;
+  padding: 0.75rem 0px;
+  background-color: white;
+}
+
+.user-menu__signout:hover {
+  text-decoration: underline;
+}

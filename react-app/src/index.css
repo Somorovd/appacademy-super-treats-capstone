@@ -1,1 +1,65 @@
 /* TODO Add site wide styles */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+}
+
+* {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+#root {
+  height: 100vh;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-c {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-01 {
+  justify-content: left;
+  align-items: center;
+}
+
+.flex-11 {
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-b1 {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fh {
+  height: 100%;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+}
+
+.bt-black {
+  background-color: black;
+  color: white;
+}
+
+.bt-black:hover {
+  background-color: #333;
+}
+
+.auth-error {
+  font-size: 0.8rem;
+  color: firebrick;
+  font-style: italic;
+}
