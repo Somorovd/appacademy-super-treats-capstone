@@ -24,7 +24,7 @@ export default function UserBusinessesHome() {
       <div className="user-business__nav fh">
         <button onClick={() => history.push("/")}>Return to SuperTreats</button>
       </div>
-      <div className="user-business__home fh">
+      <div className="user-business__home pg-pd fh">
         <h2>Your Businesses</h2>
         <div className="user-business__grid">
           {allBusinesses.map((b) => (
