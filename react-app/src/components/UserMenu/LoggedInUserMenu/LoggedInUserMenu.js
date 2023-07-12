@@ -5,7 +5,7 @@ import { logout } from "../../../store/session";
 
 import "./LoggedInUserMenu.css";
 
-export default function LoggedInUserMenu({ modalNavigate }) {
+export default function LoggedInUserMenu() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { closeModal } = useModal();
@@ -18,12 +18,19 @@ export default function LoggedInUserMenu({ modalNavigate }) {
 
   return (
     <>
-      <button
-        className="user-menu__signout"
-        onClick={handleSignout}
-      >
-        Sign out
-      </button>
+      <section>
+        <button
+          className="user-menu__signout"
+          onClick={handleSignout}
+        >
+          Sign out
+        </button>
+      </section>
+      <section>
+        <button onClick={history.push("/business/create")}>
+          Add your restaurant
+        </button>
+      </section>
     </>
   );
 }
