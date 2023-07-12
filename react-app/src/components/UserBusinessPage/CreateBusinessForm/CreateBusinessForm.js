@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useState } from "react";
 
-import { thunkCreateBusiness } from "../../../store/businesses";
+import { thunkCreateBusiness } from "../../../store/userBusinesses";
 import "./CreateBusinessForm.css";
 
 export default function CreateBusinessForm() {
@@ -21,13 +21,12 @@ export default function CreateBusinessForm() {
 
     const business = {
       address,
-      cuisine,
+      cuisine: cuisine || null,
       name: businessName,
       type,
     };
 
     const res = await dispatch(thunkCreateBusiness(business));
-    console.log(res);
     if (res.errors) setErrors(res.errors);
     else history.push(`/business/${res.business.id}`);
   };

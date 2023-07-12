@@ -6,6 +6,11 @@ const actionGetAllBusinesses = (businesses) => ({
   payload: businesses,
 });
 
+const actionCreateBusiness = (business) => ({
+  type: CREATE_BUSINESS,
+  payload: business,
+});
+
 export const thunkGetAllBusinesses = () => async (dispatch) => {
   const res = await fetch("/api/user_businesses/all");
   const resBody = await res.json();
@@ -15,6 +20,20 @@ export const thunkGetAllBusinesses = () => async (dispatch) => {
     for (let b of resBody.businesses) businesses[b.id] = b;
     dispatch(actionGetAllBusinesses(businesses));
   }
+  return resBody;
+};
+
+export const thunkCreateBusiness = (business) => async (dispatch) => {
+  const res = await fetch("/api/user_businesses/new", {
+    method: "post",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(business),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionCreateBusiness(resBody.business));
   return resBody;
 };
 
@@ -28,7 +47,13 @@ export default function reducer(state = initialState, action) {
       return state;
     }
     case CREATE_BUSINESS:
-      console.log("In user businesses");
+      const allBusinesses = {
+        ...state.allBusinesses,
+        [action.payload.id]: action.payload,
+      };
+      const singleBusiness = { ...action.payload };
+      state.allBusinesses = allBusinesses;
+      state.singleBusiness = singleBusiness;
       return state;
     default:
       return state;
