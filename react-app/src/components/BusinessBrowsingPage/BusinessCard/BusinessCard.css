@@ -1,0 +1,11 @@
+.business-card {
+  height: 150px;
+}
+
+.business-card header {
+  height: 75%;
+}
+
+.business-card img {
+  background-color: blanchedalmond;
+}
