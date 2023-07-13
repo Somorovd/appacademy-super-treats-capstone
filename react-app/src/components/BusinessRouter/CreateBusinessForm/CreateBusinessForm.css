@@ -18,7 +18,7 @@
   margin-bottom: 5px;
 }
 
-.create-business-form input,
+.create-business-form input:not([type="radio"]),
 .create-business-form select,
 .create-business-form button {
   display: block;
@@ -31,6 +31,24 @@
 .create-business-form input,
 .create-business-form select {
   background-color: var(--input-color);
+}
+
+.price-range-input {
+  gap: 20px;
+}
+
+.price-range-input label {
+  padding: 5px;
+}
+
+.delivery-input {
+  gap: 20px;
+}
+
+.business-image-input img {
+  height: 150px;
+  margin-bottom: 10px;
+  object-fit: fill;
 }
 
 .create-business-form p:empty:before {

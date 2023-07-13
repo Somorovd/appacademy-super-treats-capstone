@@ -1,6 +1,7 @@
 const GET_ALL_BUSINESSES = "userBusinesses/GET_ALL_BUSINESSES";
 const GET_ONE_BUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
+const EDIT_BUSINESS = "businesses/EDIT_BUSINESS";
 const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
 
 const actionGetAllBusinesses = (businesses) => ({
@@ -15,6 +16,10 @@ const actionGetOneBusiness = (business) => ({
 
 const actionCreateBusiness = (business) => ({
   type: CREATE_BUSINESS,
+  payload: business,
+});
+const actionEditBusiness = (business) => ({
+  type: EDIT_BUSINESS,
   payload: business,
 });
 
@@ -55,6 +60,21 @@ export const thunkCreateBusiness = (business) => async (dispatch) => {
   });
   const resBody = await res.json();
 
+  if (res.ok) dispatch(actionCreateBusiness(resBody.business));
+  return resBody;
+};
+
+export const thunkEditBusiness = (business) => async (dispatch) => {
+  const res = await fetch(`/api/user_businesses/${business.id}/edit`, {
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(business),
+  });
+  const resBody = await res.json();
+
+  // create action intentional
   if (res.ok) dispatch(actionCreateBusiness(resBody.business));
   return resBody;
 };

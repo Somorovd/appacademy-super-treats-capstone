@@ -9,12 +9,13 @@ import {
 } from "../../../store/userBusinesses";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
 import "./BusinessInfoPage.css";
+import CreateBusinessForm from "../CreateBusinessForm";
 
 export default function BusinessInfoPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { businessId } = useParams();
-  const { setModalContent } = useModal();
+  const { closeModal, setModalContent, setModalClass } = useModal();
 
   const business = useSelector((state) => state.userBusinesses.singleBusiness);
 
@@ -25,6 +26,16 @@ export default function BusinessInfoPage() {
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteBusiness(business.id));
     if (!res.errors) history.push("/business");
+  };
+
+  const handleEdit = () => {
+    setModalClass("flex flex-11");
+    setModalContent(
+      <CreateBusinessForm
+        business={business}
+        onSubmit={closeModal}
+      />
+    );
   };
 
   const handleDelete = () => {
@@ -49,7 +60,7 @@ export default function BusinessInfoPage() {
             alt=""
           />
           <div className="business-actions">
-            <button>Edit Profile</button>
+            <button onClick={handleEdit}>Edit Profile</button>
             <button
               className="bt-black"
               onClick={handleDelete}
@@ -63,7 +74,7 @@ export default function BusinessInfoPage() {
           <p className="business-profile__address">{business.address}</p>
           <p>
             <span className="business-profile__rating">
-              <i class="fa-solid fa-star"></i> {business.rating}
+              <i className="fa-solid fa-star"></i> {business.rating}
             </span>
             &bull;
             <span className="business-profile__type">

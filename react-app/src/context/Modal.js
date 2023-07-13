@@ -27,6 +27,7 @@ export function ModalProvider({ children }) {
     setModalContent, // function to set the React component to render inside modal
     setOnModalClose, // function to set the callback function called when modal is closing
     closeModal, // function to close the modal
+    modalClass,
     setModalClass,
   };
 
