@@ -6,6 +6,8 @@
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+
+  --input-color: rgb(233, 233, 233)
 }
 
 * {
@@ -17,7 +19,8 @@
 }
 
 .pg-pd {
-  padding: 0px 40px;
+  padding-left: 40px;
+  padding-right: 40px;
 }
 
 .flex {
@@ -67,7 +70,7 @@ button {
 }
 
 .auth-error {
-  font-size: 0.8rem;
+  font-size: 0.8rem !important;
   color: firebrick;
   font-style: italic;
 }

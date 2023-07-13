@@ -1,3 +1,38 @@
+.create-business-form {
+  width: 550px;
+  border: 1px solid black;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  gap: 10px;
+}
+
+.create-business-form p {
+  font-size: 0.6rem;
+  padding: 2px 0px;
+}
+
+.create-business-form label {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.create-business-form input,
+.create-business-form select,
+.create-business-form button {
+  display: block;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: none;
+}
+
+.create-business-form input,
+.create-business-form select {
+  background-color: var(--input-color);
+}
+
 .create-business-form p:empty:before {
   content: ' ';
   white-space: pre;

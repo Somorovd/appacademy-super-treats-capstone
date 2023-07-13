@@ -55,7 +55,7 @@ export default function CreateBusinessForm() {
   return (
     <div className="create-business-page flex-c">
       <form
-        className="create-business-form"
+        className="create-business-form pg-pd flex-c"
         onSubmit={handleSubmit}
       >
         <h2>Get Started</h2>
