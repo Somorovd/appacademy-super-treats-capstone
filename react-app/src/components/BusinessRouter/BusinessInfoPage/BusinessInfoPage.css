@@ -74,3 +74,8 @@
 .item-table__date {
   text-align: center;
 }
+
+.item-actions {
+  text-align: right;
+  margin: 10px 0px;
+}

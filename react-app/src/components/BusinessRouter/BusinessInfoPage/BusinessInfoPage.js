@@ -100,6 +100,14 @@ export default function BusinessInfoPage() {
           </p>
         </section>
         <section>
+          <div className="item-actions">
+            <Link
+              to={`/business/${businessId}/items/new`}
+              className="add-item-button bt-black bt-pd"
+            >
+              <i className="fa-solid fa-plus"></i> Add Item
+            </Link>
+          </div>
           <table className="business-item-table">
             <thead>
               <tr>
