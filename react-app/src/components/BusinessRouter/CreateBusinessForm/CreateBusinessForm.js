@@ -59,7 +59,7 @@ export default function CreateBusinessForm({ business, onSubmit }) {
         : thunkCreateBusiness(businessObj)
     );
     if (res.errors) setErrors(res.errors);
-    else onSubmit() || history.push(`/business/${res.business.id}`);
+    else onSubmit ? onSubmit() : history.push(`/business/${res.business.id}`);
   };
 
   const validateForm = () => {
@@ -105,6 +105,7 @@ export default function CreateBusinessForm({ business, onSubmit }) {
                 e.target.src = defaultImage;
                 e.target.style = "object-fit: contain";
               }}
+              onLoad={(e) => (e.target.style = "object-fit: cover")}
             />
             <label htmlFor="image">Banner Image</label>
             <input
