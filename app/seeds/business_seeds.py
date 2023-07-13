@@ -1,8 +1,8 @@
 from app.models import db, User, Business, environment, SCHEMA
-from app.models.business import types, price_ranges
+from app.models.business import types, price_ranges, cuisines
 from sqlalchemy.sql import text
 from faker import Faker
-from random import choice, randint
+from random import choice, randint, random
 
 fake = Faker()
 
@@ -14,18 +14,24 @@ def seed_businesses():
         name="App Academy",
         image="https://cdn.discordapp.com/attachments/723759214123679836/1128358776186093588/qHddZMInp.png",
         price_range=price_ranges["$$$$"],
+        delivery_fee="0.99",
         type=types["Restaurant"],
+        cuisine=cuisines["Burgers"],
         user_id=1,
     )
     db.session.add(demo_business)
 
     for _ in range(40):
+        type = choice(list(types))
+        cuisine = choice(list(cuisines)) if type.name == "Restaurant" else None
         business = Business(
             address=fake.address(),
             name=fake.company(),
             image="",
             price_range=choice(list(price_ranges)),
-            type=choice(list(types)),
+            delivery_fee=random() * 6.0,
+            type=type,
+            cuisine=cuisine,
             user_id=randint(1, 21),
         )
         db.session.add(business)

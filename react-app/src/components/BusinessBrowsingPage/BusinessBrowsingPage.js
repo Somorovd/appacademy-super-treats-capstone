@@ -1,11 +1,24 @@
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import PageHeader from "../PageHeader";
 import BusinessCard from "./BusinessCard";
 
+import { thunkGetAllBusinesses } from "../../store/businesses";
 import "./BusinessBrowsingPage.css";
 
 export default function BusinessBrowsingPage() {
+  const dispatch = useDispatch();
+  const allBusinessesObject = useSelector(
+    (state) => state.businesses.allBusinesses
+  );
+  const allBusinesses = Object.values(allBusinessesObject);
+
+  useEffect(() => {
+    dispatch(thunkGetAllBusinesses());
+  }, [dispatch]);
+
   return (
-    <div className="business-browsing">
+    <div className="business-browsing pg-pd">
       <header className="business-browsing__header">
         <PageHeader />
         <div className="filter-bar flex flex-11">
@@ -35,12 +48,12 @@ export default function BusinessBrowsingPage() {
       <div className="business-browsing__body flex">
         <div className="filter-sidebar"></div>
         <div className="business-browsing__content fw">
-          <BusinessCard />
-          <BusinessCard />
-          <BusinessCard />
-          <BusinessCard />
-          <BusinessCard />
-          <BusinessCard />
+          {allBusinesses.map((b) => (
+            <BusinessCard
+              business={b}
+              key={b.id}
+            />
+          ))}
         </div>
       </div>
     </div>

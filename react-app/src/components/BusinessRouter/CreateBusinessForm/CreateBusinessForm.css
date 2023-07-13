@@ -1,0 +1,4 @@
+.create-business-form p:empty:before {
+  content: ' ';
+  white-space: pre;
+}

@@ -12,12 +12,28 @@ types = Enum(
     [
         "Restaurant",
         # "Convenience store",
-        "Grocery store",
+        "Grocery Store",
         # "Specialty food store",
-        "Liquor store",
+        "Liquor Store",
         # "Florist",
         # "Pharmacy",
         # "Retail",
+    ],
+)
+
+cuisines = Enum(
+    "Cuisines",
+    [
+        "Alcohol",
+        "Bakery",
+        "BBQ",
+        "Burgers",
+        "Coffee & Tea",
+        "Chinese",
+        "French",
+        "Ice Cream & Frozen Yogurt",
+        "Pizza",
+        "Sushi",
     ],
 )
 
@@ -32,8 +48,10 @@ class Business(db.Model):
     address = db.Column(db.String(255), nullable=False)
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255), nullable=True)
-    price_range = db.Column(db.Enum(price_ranges))
-    type = db.Column(db.Enum(types))
+    price_range = db.Column(db.Enum(price_ranges), default=price_ranges["$"])
+    delivery_fee = db.Column(db.Numeric(3, 2), nullable=False, default=0)
+    type = db.Column(db.Enum(types), nullable=False)
+    cuisine = db.Column(db.Enum(cuisines), nullable=True)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -49,11 +67,13 @@ class Business(db.Model):
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
+            "userId": self.user_id,
             "address": self.address,
             "name": self.name,
             "image": self.image,
-            "priceRange": self.price_range,
-            "type": self.type,
+            "priceRange": self.price_range.name,
+            "deliveryFee": self.delivery_fee,
+            "type": self.type.name,
         }
 
         if timestamps:

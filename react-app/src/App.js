@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { authenticate } from "./store/session";
 import { Route, Switch } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import SignupFormPage from "./components/SignupFormPage";
 import LoginFormPage from "./components/LoginFormPage";
-import { authenticate } from "./store/session";
 import LandingPage from "./components/LandingPage";
 import BusinessBrowsingPage from "./components/BusinessBrowsingPage";
+import BusinessRouter from "./components/BusinessRouter";
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path="/feed">
             <BusinessBrowsingPage />
+          </Route>
+          <Route path="/business">
+            <BusinessRouter />
           </Route>
         </Switch>
       )}

@@ -6,21 +6,19 @@
   padding: 25px;
 }
 
-.user-menu__login,
-.user-menu__signup {
-  padding: 1rem;
-  font-size: 1.1rem;
-  border-radius: 8px;
-}
-
-
-.user-menu__signout {
+.user-menu button {
+  cursor: pointer;
   font-size: 1rem;
   text-align: left;
   padding: 0.75rem 0px;
   background-color: white;
+  width: 100%;
 }
 
-.user-menu__signout:hover {
-  text-decoration: underline;
+.user-menu button:hover {
+  color: rgb(0, 62, 121);
+}
+
+.user-menu section:not(:last-of-type) {
+  border-bottom: 1px solid lightgray;
 }

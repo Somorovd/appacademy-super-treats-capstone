@@ -16,6 +16,10 @@
   height: 100vh;
 }
 
+.pg-pd {
+  padding: 0px 40px;
+}
+
 .flex {
   display: flex;
 }
@@ -42,6 +46,10 @@
 
 .fh {
   height: 100%;
+}
+
+.fw {
+  width: 100%;
 }
 
 button {
