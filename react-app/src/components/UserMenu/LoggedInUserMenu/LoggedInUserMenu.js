@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 import { logout } from "../../../store/session";
 
@@ -22,7 +22,7 @@ export default function LoggedInUserMenu() {
 
   return (
     <>
-      <section>
+      <section className="menu-section">
         <button
           className="user-menu__signout"
           onClick={handleSignout}
@@ -30,13 +30,21 @@ export default function LoggedInUserMenu() {
           Sign out
         </button>
       </section>
-      <section>
-        <button onClick={() => modalNavigate("/business")}>
+      <section className="menu-section">
+        <Link
+          to="/business"
+          className="user-menu__link"
+          onClick={closeModal}
+        >
           Manage your businesses
-        </button>
-        <button onClick={() => modalNavigate("/business/create")}>
+        </Link>
+        <Link
+          to="/business/create"
+          className="user-menu__link"
+          onClick={closeModal}
+        >
           Add your business
-        </button>
+        </Link>
       </section>
     </>
   );
