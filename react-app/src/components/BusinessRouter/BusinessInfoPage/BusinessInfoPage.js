@@ -47,7 +47,7 @@ export default function BusinessInfoPage() {
     );
   };
 
-  if (!business) return <></>;
+  if (!business || business.id !== Number(businessId)) return <></>;
 
   return (
     <div className="business-info flex">
