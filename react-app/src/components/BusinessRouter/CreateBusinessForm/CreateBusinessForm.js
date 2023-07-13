@@ -71,11 +71,13 @@ export default function CreateBusinessForm({ business, onSubmit }) {
 
     if (businessName.trim() === "") errors.name = "Enter a store name";
     if (businessName.trim().length > 100)
-      errors.address = "The maximum characters allowed is 100";
+      errors.name = "The maximum characters allowed is 100";
 
-    if (brandName.trim() === "") errors.brand = "Enter a brand name";
-    if (brandName.trim().length > 100)
-      errors.address = "The maximum characters allowed is 100";
+    if (!business) {
+      if (brandName.trim() === "") errors.brand = "Enter a brand name";
+      if (brandName.trim().length > 100)
+        errors.brand = "The maximum characters allowed is 100";
+    }
 
     if (type.trim() === "") errors.type = "Select a business type";
 

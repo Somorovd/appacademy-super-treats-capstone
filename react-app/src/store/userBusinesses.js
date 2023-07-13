@@ -65,6 +65,7 @@ export const thunkCreateBusiness = (business) => async (dispatch) => {
 };
 
 export const thunkEditBusiness = (business) => async (dispatch) => {
+  console.log("IN THUNK");
   const res = await fetch(`/api/user_businesses/${business.id}/edit`, {
     method: "put",
     headers: {
