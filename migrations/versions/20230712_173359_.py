@@ -43,6 +43,9 @@ def upgrade():
         sa.UniqueConstraint("phone"),
     )
 
+    if environment == "production":
+        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
+
     op.create_table(
         "businesses",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -96,6 +99,10 @@ def upgrade():
         ),
         sa.PrimaryKeyConstraint("id"),
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE businesses SET SCHEMA {SCHEMA};")
+
     op.create_table(
         "carts",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -123,6 +130,10 @@ def upgrade():
         ),
         sa.PrimaryKeyConstraint("id"),
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE carts SET SCHEMA {SCHEMA};")
+
     op.create_table(
         "categories",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -146,6 +157,10 @@ def upgrade():
         ),
         sa.PrimaryKeyConstraint("id"),
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE categories SET SCHEMA {SCHEMA};")
+
     op.create_table(
         "items",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -177,6 +192,10 @@ def upgrade():
         ),
         sa.PrimaryKeyConstraint("id"),
     )
+
+    if environment == "production":
+        op.execute(f"ALTER TABLE items SET SCHEMA {SCHEMA};")
+
     op.create_table(
         "cart_items",
         sa.Column("id", sa.Integer(), nullable=False),
@@ -207,12 +226,6 @@ def upgrade():
     )
 
     if environment == "production":
-        op.execute(f"ALTER TABLE users SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE businesses SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE cuisine SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE carts SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE categories SET SCHEMA {SCHEMA};")
-        op.execute(f"ALTER TABLE items SET SCHEMA {SCHEMA};")
         op.execute(f"ALTER TABLE cart_items SET SCHEMA {SCHEMA};")
     # ### end Alembic commands ###
 
