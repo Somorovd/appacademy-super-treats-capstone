@@ -16,8 +16,8 @@
 
 .login-form input,
 .login-form select {
-  background-color: rgb(238, 238, 238);
-  border: 2px solid rgb(238, 238, 238);
+  background-color: var(--input-color);
+  border: 2px solid var(--input-color);
 }
 
 .login-form select {

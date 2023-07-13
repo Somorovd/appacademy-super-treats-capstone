@@ -9,12 +9,13 @@ import {
 } from "../../../store/userBusinesses";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
 import "./BusinessInfoPage.css";
+import CreateBusinessForm from "../CreateBusinessForm";
 
 export default function BusinessInfoPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { businessId } = useParams();
-  const { setModalContent } = useModal();
+  const { closeModal, setModalContent, setModalClass } = useModal();
 
   const business = useSelector((state) => state.userBusinesses.singleBusiness);
 
@@ -25,6 +26,16 @@ export default function BusinessInfoPage() {
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteBusiness(business.id));
     if (!res.errors) history.push("/business");
+  };
+
+  const handleEdit = () => {
+    setModalClass("flex flex-11");
+    setModalContent(
+      <CreateBusinessForm
+        business={business}
+        onSubmit={closeModal}
+      />
+    );
   };
 
   const handleDelete = () => {
@@ -42,14 +53,45 @@ export default function BusinessInfoPage() {
     <div className="business-info flex">
       <div className="business-info-nav fh"></div>
       <div className="business-info-content">
-        <h1>{business.name}</h1>
-        <button>Edit Business Details</button>
-        <button
-          className="bt-black"
-          onClick={handleDelete}
-        >
-          Delete Business
-        </button>
+        <header className="business-info__header">
+          {business.image && (
+            <img
+              className="business-info__image"
+              src={business.image}
+              alt=""
+            />
+          )}
+          <div className="business-actions fw fh flex flex-22">
+            <button onClick={handleEdit}>Edit Profile</button>
+            <button
+              className="bt-black"
+              onClick={handleDelete}
+            >
+              Delete Business
+            </button>
+          </div>
+        </header>
+        <section className="business-profile">
+          <h1 className="business-profile__name">{business.name}</h1>
+          <p className="business-profile__address">{business.address}</p>
+          <p>
+            <span className="business-profile__rating">
+              <i className="fa-solid fa-star"></i> {business.rating}
+            </span>
+            &bull;
+            <span className="business-profile__type">
+              {business.cuisine || business.type}
+            </span>
+            &bull;
+            <span className="business-profile__price">
+              {business.priceRange}
+            </span>
+            &bull;
+            <span className="business-profile__delivery">
+              ${business.deliveryFee} Delivery Fee
+            </span>
+          </p>
+        </section>
       </div>
     </div>
   );

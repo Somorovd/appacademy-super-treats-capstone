@@ -64,6 +64,9 @@ def upgrade():
         ),
         sa.Column("delivery_fee", sa.Numeric(precision=3, scale=2), nullable=False),
         sa.Column(
+            "rating", sa.Numeric(precision=3, scale=2), nullable=False, default=5
+        ),
+        sa.Column(
             "type",
             sa.Enum("Restaurant", "Grocery Store", "Liquor Store", name="types"),
             nullable=False,

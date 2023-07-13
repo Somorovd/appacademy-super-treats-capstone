@@ -4,6 +4,7 @@ from ..utils.helpers import validation_errors_to_dict
 
 from app.models import db, Business
 from app.forms.create_business_form import CreateBusinessForm
+from app.forms.edit_business_form import EditBusinessForm
 
 user_business_routes = Blueprint("user_businesses", __name__)
 
@@ -44,6 +45,33 @@ def new_business():
         )
 
         db.session.add(business)
+        db.session.commit()
+        return {"business": business.to_dict()}
+    return {"errors": validation_errors_to_dict(form.errors)}, 400
+
+
+@user_business_routes.route("/<int:business_id>/edit", methods=["PUT"])
+@login_required
+def edit_business(business_id):
+    form = EditBusinessForm()
+    form["csrf_token"].data = request.cookies.get("csrf_token")
+
+    if form.validate_on_submit():
+        business = Business.query.get(business_id)
+
+        if business == None:
+            return {"No business found"}, 404
+        if not business.user_id == current_user.id:
+            return {"errors": {"user": "Not Authorized"}}, 401
+
+        business.address = form.data["address"]
+        business.cuisine = form.data["cuisine"]
+        business.name = form.data["name"]
+        business.type = form.data["type"]
+        business.image = form.data["image"]
+        business.price_range = form.data["price_range"]
+        business.delivery_fee = form.data["delivery_fee"]
+
         db.session.commit()
         return {"business": business.to_dict()}
     return {"errors": validation_errors_to_dict(form.errors)}, 400

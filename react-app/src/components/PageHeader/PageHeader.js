@@ -7,11 +7,12 @@ import "./PageHeader.css";
 
 export default function PageHeader() {
   const history = useHistory();
-  const { setModalContent, closeModal } = useModal();
+  const { setModalContent, setModalClass, closeModal } = useModal();
 
   const user = useSelector((state) => state.session.user);
 
   const openUserMenu = () => {
+    setModalClass("");
     setModalContent(<UserMenu />);
   };
 
