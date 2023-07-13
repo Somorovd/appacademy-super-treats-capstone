@@ -11,12 +11,13 @@ fake = Faker()
 def seed_businesses():
     demo_business = Business(
         address="180 Geary St Fl 6\nSan Francisco, CA 94108",
-        name="App Academy",
-        image="https://cdn.discordapp.com/attachments/723759214123679836/1128358776186093588/qHddZMInp.png",
-        price_range=price_ranges["$$$$"],
-        delivery_fee="0.99",
-        type=types["Restaurant"],
         cuisine=cuisines["Burgers"],
+        delivery_fee="0.99",
+        image="https://cdn.discordapp.com/attachments/723759214123679836/1128358776186093588/qHddZMInp.png",
+        name="App Academy",
+        price_range=price_ranges["$$$$"],
+        rating=4.8,
+        type=types["Restaurant"],
         user_id=1,
     )
     db.session.add(demo_business)
@@ -26,12 +27,13 @@ def seed_businesses():
         cuisine = choice(list(cuisines)) if type.name == "Restaurant" else None
         business = Business(
             address=fake.address(),
-            name=fake.company(),
-            image="",
-            price_range=choice(list(price_ranges)),
-            delivery_fee=random() * 6.0,
-            type=type,
             cuisine=cuisine,
+            delivery_fee=random() * 6.0,
+            image="",
+            name=fake.company(),
+            price_range=choice(list(price_ranges)),
+            rating=random() * 3 + 2,
+            type=type,
             user_id=randint(1, 21),
         )
         db.session.add(business)

@@ -42,14 +42,43 @@ export default function BusinessInfoPage() {
     <div className="business-info flex">
       <div className="business-info-nav fh"></div>
       <div className="business-info-content">
-        <h1>{business.name}</h1>
-        <button>Edit Business Details</button>
-        <button
-          className="bt-black"
-          onClick={handleDelete}
-        >
-          Delete Business
-        </button>
+        <header className="business-info__header">
+          <img
+            className="business-info__image"
+            src={business.image}
+            alt=""
+          />
+          <div className="business-actions">
+            <button>Edit Profile</button>
+            <button
+              className="bt-black"
+              onClick={handleDelete}
+            >
+              Delete Business
+            </button>
+          </div>
+        </header>
+        <section className="business-profile">
+          <h1 className="business-profile__name">{business.name}</h1>
+          <p className="business-profile__address">{business.address}</p>
+          <p>
+            <span className="business-profile__rating">
+              <i class="fa-solid fa-star"></i> {business.rating}
+            </span>
+            &bull;
+            <span className="business-profile__type">
+              {business.cuisine || business.type}
+            </span>
+            &bull;
+            <span className="business-profile__price">
+              {business.priceRange}
+            </span>
+            &bull;
+            <span className="business-profile__delivery">
+              ${business.deliveryFee} Delivery Fee
+            </span>
+          </p>
+        </section>
       </div>
     </div>
   );

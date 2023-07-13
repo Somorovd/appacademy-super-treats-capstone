@@ -52,6 +52,7 @@ class Business(db.Model):
     delivery_fee = db.Column(db.Numeric(3, 2), nullable=False, default=0)
     type = db.Column(db.Enum(types), nullable=False)
     cuisine = db.Column(db.Enum(cuisines), nullable=True)
+    rating = db.Column(db.Numeric(3, 2), nullable=False, default=5)
     user_id = db.Column(db.Integer, db.ForeignKey(add_prefix_for_prod("users.id")))
 
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
@@ -66,14 +67,16 @@ class Business(db.Model):
 
     def to_dict(self, timestamps=False):
         dct = {
-            "id": self.id,
-            "userId": self.user_id,
             "address": self.address,
-            "name": self.name,
-            "image": self.image,
-            "priceRange": self.price_range.name,
+            "cuisine": self.cuisine.name if self.cuisine else None,
             "deliveryFee": self.delivery_fee,
+            "id": self.id,
+            "image": self.image,
+            "name": self.name,
+            "rating": self.rating,
+            "priceRange": self.price_range.name,
             "type": self.type.name,
+            "userId": self.user_id,
         }
 
         if timestamps:
