@@ -1,5 +1,6 @@
 const GET_ALL_BUSINESSES = "businesses/GET_ALL_BUSINESSES";
 const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
+const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
 
 const actionGetAllBusinesses = (businesses) => ({
   type: GET_ALL_BUSINESSES,

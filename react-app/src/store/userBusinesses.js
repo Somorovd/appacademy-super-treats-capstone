@@ -1,6 +1,7 @@
 const GET_ALL_BUSINESSES = "userBusinesses/GET_ALL_BUSINESSES";
 const GET_ONE_BUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
+const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
 
 const actionGetAllBusinesses = (businesses) => ({
   type: GET_ALL_BUSINESSES,
@@ -15,6 +16,11 @@ const actionGetOneBusiness = (business) => ({
 const actionCreateBusiness = (business) => ({
   type: CREATE_BUSINESS,
   payload: business,
+});
+
+const actionDeleteBusiness = (businessId) => ({
+  type: DELETE_BUSINESS,
+  payload: businessId,
 });
 
 export const thunkGetAllBusinesses = () => async (dispatch) => {
@@ -53,6 +59,16 @@ export const thunkCreateBusiness = (business) => async (dispatch) => {
   return resBody;
 };
 
+export const thunkDeleteBusiness = (businessId) => async (dispatch) => {
+  const res = await fetch(`/api/user_businesses/${businessId}/delete`, {
+    method: "delete",
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionDeleteBusiness(resBody.business));
+  return resBody;
+};
+
 const initialState = { allBusinesses: {}, singleBusiness: {} };
 
 export default function reducer(state = initialState, action) {
@@ -65,7 +81,7 @@ export default function reducer(state = initialState, action) {
       state.singleBusiness = action.payload;
       return state;
     }
-    case CREATE_BUSINESS:
+    case CREATE_BUSINESS: {
       const allBusinesses = {
         ...state.allBusinesses,
         [action.payload.id]: action.payload,
@@ -73,6 +89,14 @@ export default function reducer(state = initialState, action) {
       state.allBusinesses = allBusinesses;
       state.singleBusiness = { ...action.payload };
       return state;
+    }
+    case DELETE_BUSINESS: {
+      const allBusinesses = { ...state.allBusinesses };
+      delete allBusinesses[action.payload.id];
+      state.allBusinesses = allBusinesses;
+      state.singleBusiness = {};
+      return state;
+    }
     default:
       return state;
   }

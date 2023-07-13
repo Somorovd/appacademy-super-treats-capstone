@@ -47,3 +47,19 @@ def new_business():
         db.session.commit()
         return {"business": business.to_dict()}
     return {"errors": validation_errors_to_dict(form.errors)}, 400
+
+
+@user_business_routes.route("/<int:business_id>/delete", methods=["DELETE"])
+@login_required
+def delete_business(business_id):
+    business = Business.query.get(business_id)
+
+    if business == None:
+        return {"No business found"}, 404
+    if not business.user_id == current_user.id:
+        return {"errors": {"user": "Not Authorized"}}, 401
+
+    db.session.delete(business)
+    db.session.commit()
+
+    return {"business": business.to_dict()}
