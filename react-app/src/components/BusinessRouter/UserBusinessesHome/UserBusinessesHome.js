@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 
 import { thunkGetAllBusinesses } from "../../../store/userBusinesses";
 import BusinessCard from "../../BusinessBrowsingPage/BusinessCard";
-
+import BusinessMenu from "../BusinessMenu";
 import "./UserBusinessesHome.css";
 
 export default function UserBusinessesHome() {
@@ -20,10 +20,8 @@ export default function UserBusinessesHome() {
   }, [dispatch]);
 
   return (
-    <div className="business-info flex fh">
-      <div className="user-business__nav fh">
-        <button onClick={() => history.push("/")}>Return to SuperTreats</button>
-      </div>
+    <div className="business-page">
+      <BusinessMenu />
       <div className="user-business__home pg-pd fh">
         <h2>Your Businesses</h2>
         <div className="user-business__grid">

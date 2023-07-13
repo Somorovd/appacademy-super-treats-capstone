@@ -8,8 +8,9 @@ import {
   thunkDeleteBusiness,
 } from "../../../store/userBusinesses";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
-import "./BusinessInfoPage.css";
 import CreateBusinessForm from "../CreateBusinessForm";
+import BusinessMenu from "../BusinessMenu";
+import "./BusinessInfoPage.css";
 
 export default function BusinessInfoPage() {
   const dispatch = useDispatch();
@@ -50,8 +51,8 @@ export default function BusinessInfoPage() {
   if (!business) return <></>;
 
   return (
-    <div className="business-info flex">
-      <div className="business-info-nav fh"></div>
+    <div className="business-page">
+      <BusinessMenu />
       <div className="business-info-content">
         <header className="business-info__header">
           {business.image && (
