@@ -11,6 +11,11 @@ import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
 import CreateBusinessForm from "../CreateBusinessForm";
 import BusinessMenu from "../BusinessMenu";
 import "./BusinessInfoPage.css";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+
+const formatDate = (date) => {
+  return new Date(date).toLocaleDateString("en-US");
+};
 
 export default function BusinessInfoPage() {
   const dispatch = useDispatch();
@@ -19,6 +24,7 @@ export default function BusinessInfoPage() {
   const { closeModal, setModalContent, setModalClass } = useModal();
 
   const business = useSelector((state) => state.userBusinesses.singleBusiness);
+  const items = business.items;
 
   useEffect(() => {
     dispatch(thunkGetOneBusiness(businessId));
@@ -48,7 +54,7 @@ export default function BusinessInfoPage() {
     );
   };
 
-  if (!business) return <></>;
+  if (!business.id) return <></>;
 
   return (
     <div className="business-page">
@@ -92,6 +98,52 @@ export default function BusinessInfoPage() {
               ${business.deliveryFee} Delivery Fee
             </span>
           </p>
+        </section>
+        <section>
+          <table className="business-item-table">
+            <thead>
+              <tr>
+                <th>Photo</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Last Updated</th>
+              </tr>
+            </thead>
+            <tbody>
+              {items.map((i) => (
+                <tr key={i.id}>
+                  <td>
+                    {i.image ? (
+                      <img
+                        className="item-table__image"
+                        src={i.image}
+                        alt=""
+                      />
+                    ) : (
+                      "n/a"
+                    )}
+                  </td>
+                  <td>
+                    <Link
+                      className="item-table__link"
+                      to={`/business/${businessId}/items/${i.id}`}
+                    >
+                      {i.name}
+                    </Link>
+                  </td>
+                  <td>
+                    <p className="item-table__price">
+                      <span>$</span>
+                      <span>{i.price}</span>
+                    </p>
+                  </td>
+                  <td className="item-table__date">
+                    {formatDate(i.updatedAt)}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </section>
       </div>
     </div>
