@@ -54,12 +54,14 @@ export default function BusinessInfoPage() {
       <div className="business-info-nav fh"></div>
       <div className="business-info-content">
         <header className="business-info__header">
-          <img
-            className="business-info__image"
-            src={business.image}
-            alt=""
-          />
-          <div className="business-actions">
+          {business.image && (
+            <img
+              className="business-info__image"
+              src={business.image}
+              alt=""
+            />
+          )}
+          <div className="business-actions fw fh flex flex-22">
             <button onClick={handleEdit}>Edit Profile</button>
             <button
               className="bt-black"
