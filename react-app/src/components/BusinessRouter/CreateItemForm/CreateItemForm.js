@@ -22,17 +22,25 @@ export default function CreateItemForm() {
 
   const item = useSelector((state) => state.items.singleItem);
 
-  const [name, setName] = useState(item?.name || "");
-  const [about, setAbout] = useState(item?.about || "");
-  const [image, setImage] = useState(item?.image || "");
-  const [imageText, setImageText] = useState(item?.image || "");
-  const [price, setPrice] = useState(item?.price || 0);
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
+  const [image, setImage] = useState("");
+  const [imageInput, setImageInput] = useState("");
+  const [price, setPrice] = useState(0);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
     if (item && item.id === Number(itemId)) return;
     dispatch(thunkGetOneItem(itemId));
   }, [dispatch]);
+
+  useEffect(() => {
+    setName((name) => item?.name || name);
+    setAbout((about) => item?.about || about);
+    setImage((image) => item?.image || image);
+    setImageInput((imageText) => item?.image || imageText);
+    setPrice((price) => item?.price || price);
+  }, [item]);
 
   const isEditting = itemId;
 
@@ -107,8 +115,8 @@ export default function CreateItemForm() {
         <label htmlFor="image">Item Picture</label>
         <input
           id="image"
-          value={imageText}
-          onChange={(e) => setImageText(e.target.value)}
+          value={imageInput}
+          onChange={(e) => setImageInput(e.target.value)}
           onBlur={(e) => setImage(e.target.value)}
         />
         <p className="auth-error">{errors.image}</p>
