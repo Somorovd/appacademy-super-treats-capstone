@@ -1,16 +1,11 @@
-import { useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { Link } from "react-router-dom";
 
-import {
-  thunkGetOneBusiness,
-  thunkDeleteBusiness,
-} from "../../../store/userBusinesses";
+import { thunkDeleteBusiness } from "../../../store/userBusinesses";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
 import CreateBusinessForm from "../CreateBusinessForm";
-import BusinessMenu from "../BusinessMenu";
 import ItemTableRow from "./ItemTableRow";
 import "./BusinessInfoPage.css";
 
@@ -22,13 +17,6 @@ export default function BusinessInfoPage() {
 
   const business = useSelector((state) => state.userBusinesses.singleBusiness);
   const itemIds = business.items;
-
-  useEffect(() => {
-    (async () => {
-      const res = await dispatch(thunkGetOneBusiness(businessId));
-      if (res.errors) history.push("/business");
-    })();
-  }, [dispatch]);
 
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteBusiness(business.id));

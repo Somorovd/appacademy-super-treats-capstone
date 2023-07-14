@@ -71,8 +71,7 @@ export const thunkEditBusiness = (business) => async (dispatch) => {
   });
   const resBody = await res.json();
 
-  // create action intentional
-  if (res.ok) dispatch(actionCreateBusiness(resBody.business));
+  if (res.ok) dispatch(actionEditBusiness(resBody.business));
   return resBody;
 };
 
@@ -107,6 +106,15 @@ export default function reducer(state = initialState, action) {
       };
       state.allBusinesses = allBusinesses;
       state.singleBusiness = { ...action.payload, items: [] };
+      return state;
+    }
+    case EDIT_BUSINESS: {
+      const allBusinesses = {
+        ...state.allBusinesses,
+        [action.payload.id]: { ...action.payload },
+      };
+      state.allBusinesses = allBusinesses;
+      state.singleBusiness = { ...action.payload, ...state.singleBusiness };
       return state;
     }
     case DELETE_BUSINESS: {
