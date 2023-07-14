@@ -3,4 +3,6 @@
   border: 1px solid purple;
   grid-area: menu;
   padding: 40px;
+  display: flex;
+  flex-direction: column;
 }

@@ -89,15 +89,16 @@ export const thunkDeleteBusiness = (businessId) => async (dispatch) => {
 const initialState = { allBusinesses: {}, singleBusiness: {} };
 
 export default function reducer(state = initialState, action) {
+  const newState = { ...state };
   switch (action.type) {
     case GET_ALL_BUSINESSES: {
-      state.allBusinesses = action.payload;
-      return state;
+      newState.allBusinesses = action.payload;
+      return newState;
     }
     case GET_ONE_BUSINESS: {
-      state.singleBusiness = { ...action.payload };
-      state.singleBusiness.items = Object.keys(action.payload.items);
-      return state;
+      newState.singleBusiness = { ...action.payload };
+      newState.singleBusiness.items = Object.keys(action.payload.items);
+      return newState;
     }
     case CREATE_BUSINESS: {
       const allBusinesses = {
@@ -109,11 +110,11 @@ export default function reducer(state = initialState, action) {
       return state;
     }
     case DELETE_BUSINESS: {
-      const allBusinesses = { ...state.allBusinesses };
+      const allBusinesses = { ...newState.allBusinesses };
       delete allBusinesses[action.payload.id];
-      state.allBusinesses = allBusinesses;
-      state.singleBusiness = {};
-      return state;
+      newState.allBusinesses = allBusinesses;
+      newState.singleBusiness = {};
+      return newState;
     }
     default:
       return state;
