@@ -15,11 +15,14 @@ export default function BusinessRouter() {
         >
           <UserBussinessesHome />
         </Route>
+        <Route path="/business/create">
+          <CreateBusinessForm />
+        </Route>
         <Route path="/business/:businessId/items/new">
           <CreateItemForm />
         </Route>
-        <Route path="/business/create">
-          <CreateBusinessForm />
+        <Route path="/business/:businessId/items/:itemId">
+          <CreateItemForm />
         </Route>
         <Route path="/business/:businessId">
           <BusinessInfoPage />
