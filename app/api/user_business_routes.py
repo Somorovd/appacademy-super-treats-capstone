@@ -13,7 +13,7 @@ user_business_routes = Blueprint("user_businesses", __name__)
 @login_required
 def all_businesses():
     businesses = Business.query.filter(Business.user_id == current_user.id).all()
-    return {"businesses": [b.to_dict() for b in businesses]}
+    return {"businesses": {b.id: b.to_dict() for b in businesses}}
 
 
 @user_business_routes.route("/<int:business_id>")

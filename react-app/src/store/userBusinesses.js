@@ -32,11 +32,8 @@ export const thunkGetAllBusinesses = () => async (dispatch) => {
   const res = await fetch("/api/user_businesses/all");
   const resBody = await res.json();
 
-  if (res.ok) {
-    const businesses = {};
-    for (let b of resBody.businesses) businesses[b.id] = b;
-    dispatch(actionGetAllBusinesses(businesses));
-  }
+  if (res.ok) dispatch(actionGetAllBusinesses(resBody.businesses));
+
   return resBody;
 };
 
