@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 
+import { thunkCreateItem } from "../../../store/items";
 import "./CreateItemForm.css";
 
 const defaultImage =
@@ -16,11 +17,22 @@ export default function CreateItemForm() {
   const [image, setImage] = useState("");
   const [imageText, setImageText] = useState("");
   const [price, setPrice] = useState(0);
+  const [errors, setErrors] = useState({});
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    
+    const itemObj = {
+      name,
+      about,
+      image,
+      price,
+      business_id: Number(businessId),
+    };
+
+    const res = await dispatch(thunkCreateItem(itemObj));
+    if (res.errors) setErrors(res.errors);
+    else history.push(`/business/${businessId}`);
   };
 
   return (
@@ -34,7 +46,9 @@ export default function CreateItemForm() {
           placeholder="Name..."
           value={name}
           onChange={(e) => setName(e.target.value)}
+          required
         />
+        <p className="auth-error">{errors.name}</p>
       </div>
 
       <div className="create-item__picture">
@@ -54,6 +68,7 @@ export default function CreateItemForm() {
           onChange={(e) => setImageText(e.target.value)}
           onBlur={(e) => setImage(e.target.value)}
         />
+        <p className="auth-error">{errors.image}</p>
       </div>
 
       <div className="create-item__about">
@@ -63,6 +78,7 @@ export default function CreateItemForm() {
           value={about}
           onChange={(e) => setAbout(e.target.value)}
         />
+        <p className="auth-error">{errors.about}</p>
       </div>
 
       <div className="create-item__price">
@@ -72,7 +88,10 @@ export default function CreateItemForm() {
           type="number"
           value={price}
           onChange={(e) => setPrice(e.target.value)}
+          min={0}
+          max={1000}
         />
+        <p className="auth-error">{errors.price}</p>
       </div>
 
       <button className="bt-black bt-pd">Submit</button>
