@@ -14,8 +14,6 @@ def new_item():
     form = CreateItemForm()
     form["csrf_token"].data = request.cookies.get("csrf_token")
 
-    print("FORM_____", form.data)
-
     if form.validate_on_submit():
         item = Item(
             name=form.data["name"],

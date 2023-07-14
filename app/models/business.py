@@ -90,10 +90,9 @@ class Business(db.Model):
         if get_items:
             dct.update(
                 {
-                    "items": [i.to_dict(timestamps=True) for i in self.items]
+                    "items": {str(i.id): i.to_dict(timestamps=True) for i in self.items}
                     if self.items
                     else []
                 }
             )
-
         return dct

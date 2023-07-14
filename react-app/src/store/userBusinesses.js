@@ -65,7 +65,6 @@ export const thunkCreateBusiness = (business) => async (dispatch) => {
 };
 
 export const thunkEditBusiness = (business) => async (dispatch) => {
-  console.log("IN THUNK");
   const res = await fetch(`/api/user_businesses/${business.id}/edit`, {
     method: "put",
     headers: {
@@ -99,7 +98,9 @@ export default function reducer(state = initialState, action) {
       return state;
     }
     case GET_ONE_BUSINESS: {
-      state.singleBusiness = action.payload;
+      console.log("HERE");
+      state.singleBusiness = { ...action.payload };
+      state.singleBusiness.items = Object.keys(action.payload.items);
       return state;
     }
     case CREATE_BUSINESS: {
@@ -108,7 +109,7 @@ export default function reducer(state = initialState, action) {
         [action.payload.id]: action.payload,
       };
       state.allBusinesses = allBusinesses;
-      state.singleBusiness = { ...state.singleBusiness, ...action.payload };
+      state.singleBusiness = { ...action.payload };
       return state;
     }
     case DELETE_BUSINESS: {

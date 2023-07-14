@@ -1,4 +1,5 @@
 const CREATE_ITEM = "items/CREATE_ITEM";
+const GET_ONE_BUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 
 const actionCreateItem = (item) => ({
   type: CREATE_ITEM,
@@ -34,6 +35,10 @@ export default function reducer(state = initialState, action) {
       };
       state.allItems = allItems;
       state.singleItem = action.payload;
+      return state;
+    }
+    case GET_ONE_BUSINESS: {
+      state.allItems = { ...action.payload.items };
       return state;
     }
     default:
