@@ -51,7 +51,8 @@ export default function BusinessInfoPage() {
     );
   };
 
-  if (!business.id) return <></>;
+
+  if (!business || business.id !== Number(businessId)) return <></>;
 
   return (
     <div className="business-page">
