@@ -90,6 +90,7 @@ export default function CreateItemForm() {
           onChange={(e) => setPrice(e.target.value)}
           min={0}
           max={1000}
+          step={0.01}
         />
         <p className="auth-error">{errors.price}</p>
       </div>
