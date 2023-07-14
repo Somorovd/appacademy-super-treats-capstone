@@ -25,19 +25,20 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
+  const newState = { ...state };
   switch (action.type) {
     case GET_ALL_BUSINESSES: {
       const allBusinesses = action.payload;
-      state.allBusinesses = allBusinesses;
-      return state;
+      newState.allBusinesses = allBusinesses;
+      return newState;
     }
     case CREATE_BUSINESS: {
       const allBusinesses = {
-        ...state.allBusinesses,
+        ...newState.allBusinesses,
         [action.payload.id]: action.payload,
       };
-      state.allBusinesses = allBusinesses;
-      return state;
+      newState.allBusinesses = allBusinesses;
+      return newState;
     }
     default:
       return state;
