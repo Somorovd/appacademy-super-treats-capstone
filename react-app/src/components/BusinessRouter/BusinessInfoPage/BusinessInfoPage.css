@@ -17,12 +17,17 @@
   height: 250px;
 }
 
+.business-info__header img[src=""] {
+  display: none;
+}
+
 .business-info__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
   position: absolute;
   z-index: -1;
+  background-color: lightgrey;
 }
 
 .business-actions {

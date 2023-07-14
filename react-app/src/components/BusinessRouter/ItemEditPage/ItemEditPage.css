@@ -22,6 +22,11 @@
   aspect-ratio: 1;
 }
 
+.create-item__price input {
+  width: 100px;
+  text-align: right;
+}
+
 /* Hiding number input arrows -- Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
