@@ -39,6 +39,30 @@ def new_item():
     return {"errors": validation_errors_to_dict(form.errors)}, 400
 
 
+@item_routes.route("/<int:item_id>/edit", methods=["PUT"])
+@login_required
+def edit_item(item_id):
+    form = CreateItemForm()
+    form["csrf_token"].data = request.cookies.get("csrf_token")
+
+    if form.validate_on_submit():
+        item = Item.query.get(item_id)
+
+        if item == None:
+            return {"errors": "No item found"}, 404
+        if not item.business.user_id == current_user.id:
+            return {"errors": {"user": "Not Authorized"}}, 401
+
+        item.name = form.data["name"]
+        item.about = form.data["about"]
+        item.image = form.data["image"]
+        item.price = form.data["price"]
+
+        db.session.commit()
+        return {"item": item.to_dict()}
+    return {"errors": validation_errors_to_dict(form.errors)}, 400
+
+
 @item_routes.route("/<int:item_id>/delete", methods=["DELETE"])
 @login_required
 def delete_item(item_id):
