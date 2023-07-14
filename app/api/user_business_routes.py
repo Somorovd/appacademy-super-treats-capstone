@@ -22,7 +22,7 @@ def one_business(business_id):
     business = Business.query.get(business_id)
 
     if business == None:
-        return {"No business found"}, 404
+        return {"error": "No business found"}, 404
     if not business.user_id == current_user.id:
         return {"errors": {"user": "Not Authorized"}}, 401
 
@@ -60,7 +60,7 @@ def edit_business(business_id):
         business = Business.query.get(business_id)
 
         if business == None:
-            return {"No business found"}, 404
+            return {"error": "No business found"}, 404
         if not business.user_id == current_user.id:
             return {"errors": {"user": "Not Authorized"}}, 401
 
@@ -83,11 +83,11 @@ def delete_business(business_id):
     business = Business.query.get(business_id)
 
     if business == None:
-        return {"No business found"}, 404
+        return {"error": "No business found"}, 404
     if not business.user_id == current_user.id:
         return {"errors": {"user": "Not Authorized"}}, 401
 
     db.session.delete(business)
     db.session.commit()
 
-    return {"business": business.to_dict()}
+    return {"message": "successfully deleted"}

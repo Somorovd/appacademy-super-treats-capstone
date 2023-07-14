@@ -21,7 +21,6 @@ export default function CreateItemForm() {
   const { setModalContent } = useModal();
 
   const item = useSelector((state) => state.items.singleItem);
-  console.log(item);
 
   const [name, setName] = useState(item?.name || "");
   const [about, setAbout] = useState(item?.about || "");
