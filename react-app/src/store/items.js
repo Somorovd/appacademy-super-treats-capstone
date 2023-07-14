@@ -59,30 +59,31 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
+  const newState = { ...state };
   switch (action.type) {
     case GET_ONE_ITEM: {
-      state.singleItem = { ...action.payload };
-      return state;
+      newState.singleItem = { ...action.payload };
+      return newState;
     }
     case CREATE_ITEM: {
       const allItems = {
-        ...state.allItems,
+        ...newState.allItems,
         [action.payload.id]: { ...action.payload },
       };
-      state.allItems = allItems;
-      state.singleItem = { ...action.payload };
-      return state;
+      newState.allItems = allItems;
+      newState.singleItem = { ...action.payload };
+      return newState;
     }
     case DELETE_ITEM: {
-      const allItems = { ...state.allItems };
+      const allItems = { ...newState.allItems };
       delete allItems[action.payload.id];
-      state.allItems = allItems;
-      state.singleItem = {};
-      return state;
+      newState.allItems = allItems;
+      newState.singleItem = {};
+      return newState;
     }
     case GET_ONE_BUSINESS: {
-      state.allItems = { ...action.payload.items };
-      return state;
+      newState.allItems = { ...action.payload.items };
+      return newState;
     }
     default:
       return state;
