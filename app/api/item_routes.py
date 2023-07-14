@@ -8,6 +8,16 @@ from app.forms.create_item_form import CreateItemForm
 item_routes = Blueprint("items", __name__)
 
 
+@item_routes.route("/<int:item_id>")
+def get_one_item(item_id):
+    item = Item.query.get(item_id)
+
+    if item == None:
+        return {"missing item"}, 404
+
+    return {"item": item.to_dict(timestamps=True)}
+
+
 @item_routes.route("/new", methods=["POST"])
 @login_required
 def new_item():
