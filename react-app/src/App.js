@@ -7,6 +7,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import LandingPage from "./components/LandingPage";
 import BusinessBrowsingPage from "./components/BusinessBrowsingPage";
 import BusinessRouter from "./components/BusinessRouter";
+import Page404 from "./components/Page404";
 
 function App() {
   const dispatch = useDispatch();
@@ -36,6 +37,9 @@ function App() {
           </Route>
           <Route path="/business">
             <BusinessRouter />
+          </Route>
+          <Route>
+            <Page404 />
           </Route>
         </Switch>
       )}

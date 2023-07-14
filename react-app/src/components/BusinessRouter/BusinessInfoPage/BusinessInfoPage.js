@@ -24,7 +24,10 @@ export default function BusinessInfoPage() {
   const itemIds = business.items;
 
   useEffect(() => {
-    dispatch(thunkGetOneBusiness(businessId));
+    (async () => {
+      const res = await dispatch(thunkGetOneBusiness(businessId));
+      if (res.errors) history.push("/business");
+    })();
   }, [dispatch]);
 
   const onDelete = async () => {
@@ -50,7 +53,6 @@ export default function BusinessInfoPage() {
       />
     );
   };
-
 
   if (!business || business.id !== Number(businessId)) return <></>;
 

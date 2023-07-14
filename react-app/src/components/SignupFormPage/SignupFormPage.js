@@ -80,6 +80,7 @@ export default function SignupFormPage() {
         <form
           className="signup-form"
           onSubmit={handleSubmit}
+          autoComplete="false"
         >
           <CurrentStep form={form} />
         </form>
