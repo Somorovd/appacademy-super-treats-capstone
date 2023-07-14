@@ -82,78 +82,75 @@ export default function CreateItemForm() {
   if (!item || item.id !== Number(itemId)) return null;
 
   return (
-    <div className="business-page">
-      <BusinessMenu />
-      <div className="business-info-content">
-        <form
-          className="create-item-form pg-pd flex flex-c"
-          onSubmit={handleSubmit}
-        >
-          <div className="item-actions">
-            <button
-              className="bt-pd"
-              onClick={handleDelete}
-            >
-              Delete
-            </button>
-            <button className="bt-black bt-pd">Save</button>
-          </div>
+    <div className="business-info-content">
+      <form
+        className="create-item-form pg-pd flex flex-c"
+        onSubmit={handleSubmit}
+      >
+        <div className="item-actions">
+          <button
+            className="bt-pd"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+          <button className="bt-black bt-pd">Save</button>
+        </div>
 
-          <div className="create-item__name">
-            <input
-              placeholder="Name..."
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-            />
-            <p className="auth-error">{errors.name}</p>
-          </div>
+        <div className="create-item__name">
+          <input
+            placeholder="Name..."
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            required
+          />
+          <p className="auth-error">{errors.name}</p>
+        </div>
 
-          <div className="create-item__picture">
-            <img
-              src={image}
-              alt=""
-              onError={(e) => {
-                e.target.src = defaultImage;
-                e.target.style = "object-fit: fill";
-              }}
-              onLoad={(e) => (e.target.style = "object-fit: cover")}
-            />
-            <label htmlFor="image">Item Picture</label>
-            <input
-              id="image"
-              value={imageInput}
-              onChange={(e) => setImageInput(e.target.value)}
-              onBlur={(e) => setImage(e.target.value)}
-            />
-            <p className="auth-error">{errors.image}</p>
-          </div>
+        <div className="create-item__picture">
+          <img
+            src={image}
+            alt=""
+            onError={(e) => {
+              e.target.src = defaultImage;
+              e.target.style = "object-fit: fill";
+            }}
+            onLoad={(e) => (e.target.style = "object-fit: cover")}
+          />
+          <label htmlFor="image">Item Picture</label>
+          <input
+            id="image"
+            value={imageInput}
+            onChange={(e) => setImageInput(e.target.value)}
+            onBlur={(e) => setImage(e.target.value)}
+          />
+          <p className="auth-error">{errors.image}</p>
+        </div>
 
-          <div className="create-item__about">
-            <label htmlFor="about">Description</label>
-            <textarea
-              id="about"
-              value={about}
-              onChange={(e) => setAbout(e.target.value)}
-            />
-            <p className="auth-error">{errors.about}</p>
-          </div>
+        <div className="create-item__about">
+          <label htmlFor="about">Description</label>
+          <textarea
+            id="about"
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
+          />
+          <p className="auth-error">{errors.about}</p>
+        </div>
 
-          <div className="create-item__price">
-            <label htmlFor="price">Item Price</label>
-            <input
-              id="price"
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              min={0}
-              max={1000}
-              step={0.01}
-            />
-            <p className="auth-error">{errors.price}</p>
-          </div>
-        </form>
-      </div>
+        <div className="create-item__price">
+          <label htmlFor="price">Item Price</label>
+          <input
+            id="price"
+            type="number"
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            min={0}
+            max={1000}
+            step={0.01}
+          />
+          <p className="auth-error">{errors.price}</p>
+        </div>
+      </form>
     </div>
   );
 }
