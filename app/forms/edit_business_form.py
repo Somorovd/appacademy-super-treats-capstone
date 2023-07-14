@@ -13,7 +13,8 @@ def cuisine_required(form, field):
 
 def valid_cuisine(form, field):
     cuisine = field.data
-    if cuisine not in [e.name for e in cuisines]:
+    type = form.data["type"]
+    if type == "Restaurant" and cuisine not in [e.name for e in cuisines]:
         raise ValidationError("Invalid cuisine")
 
 
@@ -27,10 +28,6 @@ def supported_image(form, field):
     pass
 
 
-def valid_price_range(form, field):
-    pass
-
-
 class EditBusinessForm(FlaskForm):
     address = StringField("address", validators=[DataRequired(), Length(1, 255)])
     name = StringField("address", validators=[DataRequired(), Length(1, 100)])
@@ -38,7 +35,7 @@ class EditBusinessForm(FlaskForm):
     cuisine = StringField("cuisine", validators=[cuisine_required, valid_cuisine])
     image = StringField("image", validators=[Length(0, 255), supported_image])
     price_range = StringField(
-        "price_range", validators=[DataRequired(), valid_price_range]
+        "price_range", validators=[DataRequired(), NumberRange(min=0, max=1000)]
     )
     delivery_fee = FloatField(
         "delivery_fee", validators=[DataRequired(), NumberRange(min=0, max=10)]
