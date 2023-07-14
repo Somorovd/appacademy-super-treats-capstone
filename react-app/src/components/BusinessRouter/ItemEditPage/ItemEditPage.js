@@ -11,19 +11,21 @@ import {
 } from "../../../store/items";
 import BusinessMenu from "../BusinessMenu";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
-import "./CreateItemForm.css";
+import "./ItemEditPage.css";
 
 const defaultImage =
   "https://cdn.discordapp.com/attachments/723759214123679836/1129101930510172180/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
 
-export default function CreateItemForm() {
+export default function ItemEditPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { businessId, itemId } = useParams();
   const { setModalContent } = useModal();
 
+  const isEditting = itemId;
   const item = useSelector((state) => state.items.singleItem);
 
+  const [id, setId] = useState(0);
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [image, setImage] = useState("");
@@ -32,19 +34,20 @@ export default function CreateItemForm() {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    if (!isEditting) return;
     if (item && item.id === Number(itemId)) return;
     dispatch(thunkGetOneItem(itemId));
   }, [dispatch]);
 
   useEffect(() => {
-    setName((name) => item?.name || name);
-    setAbout((about) => item?.about || about);
-    setImage((image) => item?.image || image);
-    setImageInput((imageText) => item?.image || imageText);
-    setPrice((price) => item?.price || price);
+    if (!isEditting) return;
+    setId(item?.id || "");
+    setName(item?.name || "");
+    setAbout(item?.about || "");
+    setImage(item?.image || "");
+    setImageInput(item?.image || "");
+    setPrice(item?.price || "");
   }, [item]);
-
-  const isEditting = itemId;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -61,7 +64,11 @@ export default function CreateItemForm() {
     const res = await dispatch(
       isEditting ? thunkUpdateItem(itemObj) : thunkCreateItem(itemObj)
     );
+
     setErrors(res.errors || {});
+
+    if (!res.errors && !isEditting)
+      history.push(`/business/${businessId}/items/${res.item.id}`);
   };
 
   const onDelete = async () => {
@@ -71,6 +78,9 @@ export default function CreateItemForm() {
 
   const handleDelete = (e) => {
     e.preventDefault();
+
+    if (!isEditting) return history.push(`/business/${businessId}`);
+
     setModalContent(
       <ConfirmDeleteModal
         deleteName={`${item.name}`}
@@ -79,7 +89,7 @@ export default function CreateItemForm() {
     );
   };
 
-  if (!item || item.id !== Number(itemId)) return null;
+  if (isEditting && (!item || id !== Number(itemId))) return null;
 
   return (
     <div className="business-info-content">
