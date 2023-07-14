@@ -1,5 +1,6 @@
 const GET_ONE_ITEM = "items/GET_ONE_ITEM";
 const CREATE_ITEM = "items/CREATE_ITEM";
+const UPDATE_ITEM = "items/UPDATE_ITEM";
 const DELETE_ITEM = "items/DELETE_ITEM";
 const GET_ONE_BUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 
@@ -10,6 +11,11 @@ const actionGetOneItem = (item) => ({
 
 const actionCreateItem = (item) => ({
   type: CREATE_ITEM,
+  payload: item,
+});
+
+const actionUpdateItem = (item) => ({
+  type: UPDATE_ITEM,
   payload: item,
 });
 
@@ -42,13 +48,28 @@ export const thunkCreateItem = (item) => async (dispatch) => {
   return resBody;
 };
 
+export const thunkUpdateItem = (item) => async (dispatch) => {
+  const res = await fetch(`/api/items/${item.id}/edit`, {
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(item),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionCreateItem(resBody.item));
+
+  return resBody;
+};
+
 export const thunkDeleteItem = (itemId) => async (dispatch) => {
   const res = await fetch(`/api/items/${itemId}/delete`, {
     method: "delete",
   });
   const resBody = await res.json();
 
-  if (res.ok) dispatch(actionCreateItem(itemId));
+  if (res.ok) dispatch(actionDeleteItem(itemId));
 
   return resBody;
 };
@@ -71,6 +92,11 @@ export default function reducer(state = initialState, action) {
         [action.payload.id]: { ...action.payload },
       };
       newState.allItems = allItems;
+      newState.singleItem = { ...action.payload };
+      return newState;
+    }
+    case UPDATE_ITEM: {
+      newState.allItems[action.payload.id] = { ...action.payload };
       newState.singleItem = { ...action.payload };
       return newState;
     }

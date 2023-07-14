@@ -4,8 +4,9 @@ import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 
 import {
-  thunkCreateItem,
   thunkGetOneItem,
+  thunkCreateItem,
+  thunkUpdateItem,
   thunkDeleteItem,
 } from "../../../store/items";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
@@ -48,6 +49,7 @@ export default function CreateItemForm() {
     e.preventDefault();
 
     const itemObj = {
+      id: item?.id,
       name,
       about,
       image,
@@ -55,7 +57,9 @@ export default function CreateItemForm() {
       business_id: Number(businessId),
     };
 
-    const res = await dispatch(thunkCreateItem(itemObj));
+    const res = await dispatch(
+      isEditting ? thunkUpdateItem(itemObj) : thunkCreateItem(itemObj)
+    );
     if (res.errors) setErrors(res.errors);
     else history.push(`/business/${businessId}`);
   };
