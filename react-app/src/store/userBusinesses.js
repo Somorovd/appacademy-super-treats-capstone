@@ -32,11 +32,8 @@ export const thunkGetAllBusinesses = () => async (dispatch) => {
   const res = await fetch("/api/user_businesses/all");
   const resBody = await res.json();
 
-  if (res.ok) {
-    const businesses = {};
-    for (let b of resBody.businesses) businesses[b.id] = b;
-    dispatch(actionGetAllBusinesses(businesses));
-  }
+  if (res.ok) dispatch(actionGetAllBusinesses(resBody.businesses));
+
   return resBody;
 };
 
@@ -85,7 +82,7 @@ export const thunkDeleteBusiness = (businessId) => async (dispatch) => {
   });
   const resBody = await res.json();
 
-  if (res.ok) dispatch(actionDeleteBusiness(resBody.business));
+  if (res.ok) dispatch(actionDeleteBusiness(businessId));
   return resBody;
 };
 
@@ -105,12 +102,12 @@ export default function reducer(state = initialState, action) {
     }
     case CREATE_BUSINESS: {
       const allBusinesses = {
-        ...newState.allBusinesses,
-        [action.payload.id]: action.payload,
+        ...state.allBusinesses,
+        [action.payload.id]: { ...action.payload },
       };
-      newState.allBusinesses = allBusinesses;
-      newState.singleBusiness = { ...action.payload };
-      return newState;
+      state.allBusinesses = allBusinesses;
+      state.singleBusiness = { ...action.payload, items: [] };
+      return state;
     }
     case DELETE_BUSINESS: {
       const allBusinesses = { ...newState.allBusinesses };

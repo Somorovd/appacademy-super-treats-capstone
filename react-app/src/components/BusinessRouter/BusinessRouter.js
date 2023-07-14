@@ -3,11 +3,12 @@ import CreateBusinessForm from "./CreateBusinessForm";
 import CreateItemForm from "./CreateItemForm";
 import BusinessInfoPage from "./BusinessInfoPage";
 import UserBussinessesHome from "./UserBusinessesHome";
+import ProtectedRoute from "../auth/ProtectedRoute";
 import "./BusinessRouter.css";
 
 export default function BusinessRouter() {
   return (
-    <>
+    <ProtectedRoute>
       <Switch>
         <Route
           exact
@@ -28,6 +29,6 @@ export default function BusinessRouter() {
           <BusinessInfoPage />
         </Route>
       </Switch>
-    </>
+    </ProtectedRoute>
   );
 }
