@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, request
 from flask_login import login_required, current_user
 from ..utils.helpers import validation_errors_to_dict
 
@@ -22,11 +22,11 @@ def one_business(business_id):
     business = Business.query.get(business_id)
 
     if business == None:
-        return {"No business found"}, 404
+        return {"error": "No business found"}, 404
     if not business.user_id == current_user.id:
         return {"errors": {"user": "Not Authorized"}}, 401
 
-    return {"business": business.to_dict()}
+    return {"business": business.to_dict(get_items=True)}
 
 
 @user_business_routes.route("/new", methods=["POST"])
@@ -39,7 +39,7 @@ def new_business():
         business = Business(
             address=form.data["address"],
             name=form.data["name"],
-            type="Grocery Store",
+            type=form.data["type"],
             cuisine=form.data["cuisine"],
             user_id=current_user.id,
         )
@@ -60,7 +60,7 @@ def edit_business(business_id):
         business = Business.query.get(business_id)
 
         if business == None:
-            return {"No business found"}, 404
+            return {"error": "No business found"}, 404
         if not business.user_id == current_user.id:
             return {"errors": {"user": "Not Authorized"}}, 401
 
@@ -83,11 +83,11 @@ def delete_business(business_id):
     business = Business.query.get(business_id)
 
     if business == None:
-        return {"No business found"}, 404
+        return {"error": "No business found"}, 404
     if not business.user_id == current_user.id:
         return {"errors": {"user": "Not Authorized"}}, 401
 
     db.session.delete(business)
     db.session.commit()
 
-    return {"business": business.to_dict()}
+    return {"message": "successfully deleted"}

@@ -49,7 +49,7 @@ class Business(db.Model):
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255), nullable=True)
     price_range = db.Column(db.Enum(price_ranges), default=price_ranges["$"])
-    delivery_fee = db.Column(db.Numeric(3, 2), nullable=False, default=0)
+    delivery_fee = db.Column(db.Numeric(4, 2), nullable=False, default=0)
     type = db.Column(db.Enum(types), nullable=False)
     cuisine = db.Column(db.Enum(cuisines), nullable=True)
     rating = db.Column(db.Numeric(3, 2), nullable=False, default=5)
@@ -62,10 +62,14 @@ class Business(db.Model):
 
     user = db.relationship("User", back_populates="businesses")
     carts = db.relationship("Cart", back_populates="business")
-    items = db.relationship("Item", back_populates="business")
-    categories = db.relationship("Category", back_populates="business")
+    items = db.relationship(
+        "Item", back_populates="business", cascade="all, delete-orphan"
+    )
+    categories = db.relationship(
+        "Category", back_populates="business", cascade="all, delete-orphan"
+    )
 
-    def to_dict(self, timestamps=False):
+    def to_dict(self, timestamps=False, get_items=False):
         dct = {
             "address": self.address,
             "cuisine": self.cuisine.name if self.cuisine else None,
@@ -83,4 +87,12 @@ class Business(db.Model):
             dct["createdAt"] = self.created_at
             dct["updatedAt"] = self.updated_at
 
+        if get_items:
+            dct.update(
+                {
+                    "items": {str(i.id): i.to_dict(timestamps=True) for i in self.items}
+                    if self.items
+                    else []
+                }
+            )
         return dct

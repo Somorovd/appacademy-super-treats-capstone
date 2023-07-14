@@ -62,7 +62,7 @@ def upgrade():
             sa.Enum("$", "$$", "$$$", "$$$$", name="priceranges"),
             nullable=True,
         ),
-        sa.Column("delivery_fee", sa.Numeric(precision=3, scale=2), nullable=False),
+        sa.Column("delivery_fee", sa.Numeric(precision=4, scale=2), nullable=False),
         sa.Column(
             "rating", sa.Numeric(precision=3, scale=2), nullable=False, default=5
         ),
@@ -173,7 +173,7 @@ def upgrade():
         "items",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("name", sa.String(length=50), nullable=False),
-        sa.Column("price", sa.Numeric(precision=3, scale=2), nullable=False),
+        sa.Column("price", sa.Numeric(precision=6, scale=2), nullable=False),
         sa.Column("image", sa.String(length=255), nullable=True),
         sa.Column("about", sa.String(length=255), nullable=True),
         sa.Column("business_id", sa.Integer(), nullable=False),
