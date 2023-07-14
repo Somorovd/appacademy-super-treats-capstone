@@ -98,7 +98,6 @@ export default function reducer(state = initialState, action) {
       return state;
     }
     case GET_ONE_BUSINESS: {
-      console.log("HERE");
       state.singleBusiness = { ...action.payload };
       state.singleBusiness.items = Object.keys(action.payload.items);
       return state;

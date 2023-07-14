@@ -21,3 +21,15 @@
   width: 200px;
   aspect-ratio: 1;
 }
+
+/* Hiding number input arrows -- Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Hiding number input arrows -- Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
