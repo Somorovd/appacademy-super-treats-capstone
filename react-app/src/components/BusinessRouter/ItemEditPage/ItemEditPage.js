@@ -62,7 +62,11 @@ export default function ItemEditPage() {
     const res = await dispatch(
       isEditting ? thunkUpdateItem(itemObj) : thunkCreateItem(itemObj)
     );
+
     setErrors(res.errors || {});
+
+    if (!res.errors && !isEditting)
+      history.push(`/business/${businessId}/items/${res.item.id}`);
   };
 
   const onDelete = async () => {
