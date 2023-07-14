@@ -16,6 +16,7 @@ export default function SignupFormName({ form }) {
         onChange={(e) =>
           validateMaxLength("firstName", e.target.value, 255, setFirstName)
         }
+        autoFocus
         required
       />
       <p className="auth-error">{errors.firstName}</p>
