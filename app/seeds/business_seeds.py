@@ -7,7 +7,6 @@ from random import choice, randint, random
 fake = Faker()
 
 
-# Adds a demo user, you can add other users here if you want
 def seed_businesses():
     demo_business = Business(
         address="180 Geary St Fl 6\nSan Francisco, CA 94108",

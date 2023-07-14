@@ -6,6 +6,7 @@
   box-sizing: border-box;
   margin: 0px;
   padding: 0px;
+  text-decoration: none;
 
   --input-color: rgb(233, 233, 233)
 }
@@ -21,6 +22,10 @@
 .pg-pd {
   padding-left: 40px;
   padding-right: 40px;
+}
+
+.bt-pd {
+  padding: 0.8rem;
 }
 
 .flex {

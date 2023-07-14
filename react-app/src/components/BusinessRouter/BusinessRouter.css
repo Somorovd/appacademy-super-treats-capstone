@@ -1,0 +1,7 @@
+.business-page {
+  display: grid;
+  grid-template-areas: "menu body";
+  grid-template-columns: 300px 1fr;
+  height: 100%;
+  gap: 40px;
+}
