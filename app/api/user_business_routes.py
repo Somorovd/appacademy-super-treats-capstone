@@ -68,7 +68,7 @@ def edit_business(business_id):
         business.cuisine = form.data["cuisine"]
         business.name = form.data["name"]
         business.type = form.data["type"]
-        business.image = form.data["image"]
+        business.image = form.data["image"] or business.image
         business.price_range = form.data["price_range"]
         business.delivery_fee = form.data["delivery_fee"]
 
