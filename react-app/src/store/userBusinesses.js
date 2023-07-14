@@ -82,7 +82,7 @@ export const thunkDeleteBusiness = (businessId) => async (dispatch) => {
   });
   const resBody = await res.json();
 
-  if (res.ok) dispatch(actionDeleteBusiness(resBody.business));
+  if (res.ok) dispatch(actionDeleteBusiness(businessId));
   return resBody;
 };
 
@@ -102,10 +102,10 @@ export default function reducer(state = initialState, action) {
     case CREATE_BUSINESS: {
       const allBusinesses = {
         ...state.allBusinesses,
-        [action.payload.id]: action.payload,
+        [action.payload.id]: { ...action.payload },
       };
       state.allBusinesses = allBusinesses;
-      state.singleBusiness = { ...action.payload };
+      state.singleBusiness = { ...action.payload, items: [] };
       return state;
     }
     case DELETE_BUSINESS: {
