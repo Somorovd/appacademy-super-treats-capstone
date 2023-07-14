@@ -52,10 +52,10 @@ def edit_item(item_id):
     if form.validate_on_submit():
         item = Item.query.get(item_id)
 
-        if item == None:
+        if not item:
             return {"errors": "No item found"}, 404
         if not item.business.user_id == current_user.id:
-            return {"errors": {"user": "Not Authorized"}}, 401
+            return {"errors": "Not Authorized"}, 401
 
         item.name = form.data["name"]
         item.about = form.data["about"]
@@ -72,10 +72,10 @@ def edit_item(item_id):
 def delete_item(item_id):
     item = Item.query.get(item_id)
 
-    if item == None:
+    if not item:
         return {"errors": "No item found"}, 404
     if not item.business.user_id == current_user.id:
-        return {"errors": {"user": "Not Authorized"}}, 401
+        return {"errors": "Not Authorized"}, 401
 
     db.session.delete(item)
     db.session.commit()
