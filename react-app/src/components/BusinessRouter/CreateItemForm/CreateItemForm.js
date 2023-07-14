@@ -11,17 +11,18 @@ import {
 } from "../../../store/items";
 import BusinessMenu from "../BusinessMenu";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
-import "./CreateItemForm.css";
+import "./ItemEditPage.css";
 
 const defaultImage =
   "https://cdn.discordapp.com/attachments/723759214123679836/1129101930510172180/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
 
-export default function CreateItemForm() {
+export default function ItemEditPage() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { businessId, itemId } = useParams();
   const { setModalContent } = useModal();
 
+  const isEditting = itemId;
   const item = useSelector((state) => state.items.singleItem);
 
   const [name, setName] = useState("");
@@ -32,19 +33,19 @@ export default function CreateItemForm() {
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
+    if (!isEditting) return;
     if (item && item.id === Number(itemId)) return;
     dispatch(thunkGetOneItem(itemId));
   }, [dispatch]);
 
   useEffect(() => {
+    if (!isEditting) return;
     setName((name) => item?.name || name);
     setAbout((about) => item?.about || about);
     setImage((image) => item?.image || image);
     setImageInput((imageText) => item?.image || imageText);
     setPrice((price) => item?.price || price);
   }, [item]);
-
-  const isEditting = itemId;
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -71,6 +72,9 @@ export default function CreateItemForm() {
 
   const handleDelete = (e) => {
     e.preventDefault();
+
+    if (!isEditting) return history.push(`/business/${businessId}`);
+
     setModalContent(
       <ConfirmDeleteModal
         deleteName={`${item.name}`}
@@ -79,7 +83,7 @@ export default function CreateItemForm() {
     );
   };
 
-  if (!item || item.id !== Number(itemId)) return null;
+  if (isEditting && (!item || item.id !== Number(itemId))) return null;
 
   return (
     <div className="business-page">

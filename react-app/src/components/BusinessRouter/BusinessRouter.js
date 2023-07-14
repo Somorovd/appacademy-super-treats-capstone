@@ -1,6 +1,6 @@
 import { Route, Switch } from "react-router-dom";
 import CreateBusinessForm from "./CreateBusinessForm";
-import CreateItemForm from "./CreateItemForm";
+import ItemEditPage from "./ItemEditPage";
 import BusinessInfoPage from "./BusinessInfoPage";
 import UserBussinessesHome from "./UserBusinessesHome";
 import "./BusinessRouter.css";
@@ -19,10 +19,10 @@ export default function BusinessRouter() {
           <CreateBusinessForm />
         </Route>
         <Route path="/business/:businessId/items/new">
-          <CreateItemForm />
+          <ItemEditPage />
         </Route>
         <Route path="/business/:businessId/items/:itemId">
-          <CreateItemForm />
+          <ItemEditPage />
         </Route>
         <Route path="/business/:businessId">
           <BusinessInfoPage />
