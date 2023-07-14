@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from flask_login import login_required, current_user
 from ..utils.helpers import validation_errors_to_dict
 
-from app.models import db, Item
+from app.models import db, Item, Business
 from app.forms.create_item_form import CreateItemForm
 
 item_routes = Blueprint("items", __name__)
@@ -23,6 +23,10 @@ def get_one_item(item_id):
 def new_item():
     form = CreateItemForm()
     form["csrf_token"].data = request.cookies.get("csrf_token")
+
+    business = Business.query.get(form.data.get("business_id"))
+    if not business or not business.user_id == current_user.id:
+        return {"errors": "Not authorized"}
 
     if form.validate_on_submit():
         item = Item(
