@@ -49,7 +49,7 @@ class Business(db.Model):
     name = db.Column(db.String(100), nullable=False)
     image = db.Column(db.String(255), nullable=True)
     price_range = db.Column(db.Enum(price_ranges), default=price_ranges["$"])
-    delivery_fee = db.Column(db.Numeric(3, 2), nullable=False, default=0)
+    delivery_fee = db.Column(db.Numeric(4, 2), nullable=False, default=0)
     type = db.Column(db.Enum(types), nullable=False)
     cuisine = db.Column(db.Enum(cuisines), nullable=True)
     rating = db.Column(db.Numeric(3, 2), nullable=False, default=5)
