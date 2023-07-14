@@ -3,6 +3,7 @@ import thunk from "redux-thunk";
 import session from "./session";
 import businesses from "./businesses";
 import userBusinesses from "./userBusinesses";
+import items from "./items";
 
 const CLEAR_ALL = "app/CLEAR_ALL";
 
@@ -15,6 +16,7 @@ const appReducer = combineReducers({
   session,
   businesses,
   userBusinesses,
+  items,
 });
 
 const rootReducer = (state, action) => {
