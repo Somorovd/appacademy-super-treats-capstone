@@ -10,7 +10,7 @@ class Item(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
-    price = db.Column(db.Numeric(3, 2), nullable=False)
+    price = db.Column(db.Numeric(6, 2), nullable=False)
     image = db.Column(db.String(255), nullable=True)
     about = db.Column(db.String(255), nullable=True)
     business_id = db.Column(
