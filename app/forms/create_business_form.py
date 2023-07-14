@@ -19,6 +19,6 @@ def valid_type(form, field):
 
 class CreateBusinessForm(FlaskForm):
     address = StringField("address", validators=[DataRequired(), Length(1, 255)])
-    name = StringField("address", validators=[DataRequired(), Length(1, 100)])
+    name = StringField("name", validators=[DataRequired(), Length(1, 100)])
     type = StringField("type", validators=[DataRequired(), valid_type])
     cuisine = StringField("cuisine", validators=[cuisine_required])
