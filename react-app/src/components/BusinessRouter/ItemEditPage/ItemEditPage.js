@@ -22,7 +22,6 @@ export default function ItemEditPage() {
   const { setModalContent } = useModal();
 
   const isEditting = itemId;
-  console.log("Is Editting", isEditting);
   const item = useSelector((state) => state.items.singleItem);
 
   const [id, setId] = useState(0);
@@ -150,7 +149,7 @@ export default function ItemEditPage() {
           <p className="auth-error">{errors.about}</p>
         </div>
 
-        <div className="create-item__price">
+        <div className="create-item__price flex-c">
           <label htmlFor="price">Item Price</label>
           <input
             id="price"
