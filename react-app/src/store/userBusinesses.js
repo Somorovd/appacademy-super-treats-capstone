@@ -114,7 +114,10 @@ export default function reducer(state = initialState, action) {
         [action.payload.id]: { ...action.payload },
       };
       state.allBusinesses = allBusinesses;
-      state.singleBusiness = { ...action.payload, ...state.singleBusiness };
+      state.singleBusiness = {
+        ...action.payload,
+        items: state.singleBusiness.items,
+      };
       return state;
     }
     case DELETE_BUSINESS: {
