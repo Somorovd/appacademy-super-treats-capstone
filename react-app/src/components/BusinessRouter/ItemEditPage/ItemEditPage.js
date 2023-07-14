@@ -25,6 +25,7 @@ export default function ItemEditPage() {
   const isEditting = itemId;
   const item = useSelector((state) => state.items.singleItem);
 
+  const [id, setId] = useState(0);
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [image, setImage] = useState("");
@@ -40,11 +41,12 @@ export default function ItemEditPage() {
 
   useEffect(() => {
     if (!isEditting) return;
-    setName((name) => item?.name || name);
-    setAbout((about) => item?.about || about);
-    setImage((image) => item?.image || image);
-    setImageInput((imageText) => item?.image || imageText);
-    setPrice((price) => item?.price || price);
+    setId(item?.id || "");
+    setName(item?.name || "");
+    setAbout(item?.about || "");
+    setImage(item?.image || "");
+    setImageInput(item?.image || "");
+    setPrice(item?.price || "");
   }, [item]);
 
   const handleSubmit = async (e) => {
@@ -87,7 +89,7 @@ export default function ItemEditPage() {
     );
   };
 
-  if (isEditting && (!item || item.id !== Number(itemId))) return null;
+  if (isEditting && (!item || id !== Number(itemId))) return null;
 
   return (
     <div className="business-page">
