@@ -9,7 +9,6 @@ import {
   thunkUpdateItem,
   thunkDeleteItem,
 } from "../../../store/items";
-import BusinessMenu from "../BusinessMenu";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
 import "./ItemEditPage.css";
 
@@ -23,6 +22,7 @@ export default function ItemEditPage() {
   const { setModalContent } = useModal();
 
   const isEditting = itemId;
+  console.log("Is Editting", isEditting);
   const item = useSelector((state) => state.items.singleItem);
 
   const [id, setId] = useState(0);
@@ -47,7 +47,7 @@ export default function ItemEditPage() {
     setImage(item?.image || "");
     setImageInput(item?.image || "");
     setPrice(item?.price || "");
-  }, [item]);
+  }, [item, isEditting]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -96,6 +96,9 @@ export default function ItemEditPage() {
       <form
         className="create-item-form pg-pd flex flex-c"
         onSubmit={handleSubmit}
+        onKeyDown={(e) => {
+          if (e.key === "Enter") e.preventDefault();
+        }}
       >
         <div className="item-actions">
           <button
