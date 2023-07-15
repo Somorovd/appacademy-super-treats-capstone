@@ -1,3 +1,5 @@
+import SignupFormActions from "./SignupFormActions";
+
 export default function SignupFormPassword({ form }) {
   const { password, setPassword, passwordStatus, setPasswordStatus } =
     form.password;
@@ -61,7 +63,10 @@ export default function SignupFormPassword({ form }) {
           ))}
         </>
       )}
-      <button onClick={submitPassword}>{isLast ? "Submit" : "Next"}</button>
+      <SignupFormActions
+        submitAction={submitPassword}
+        form={form}
+      />
     </section>
   );
 }

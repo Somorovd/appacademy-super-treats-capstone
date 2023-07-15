@@ -1,12 +1,16 @@
-.login-form {
-  border: 1px solid red;
+.auth-form {
   gap: 10px;
   width: 350px;
 }
 
-.login-form input,
-.login-form button,
-.login-form select {
+.auth-form h2 {
+  font-weight: normal;
+  margin-bottom: 20px;
+}
+
+.auth-form input,
+.auth-form button,
+.auth-form select {
   font-size: 1rem;
   width: 100%;
   padding: 0.75rem;
@@ -14,21 +18,21 @@
   outline: none;
 }
 
-.login-form input,
-.login-form select {
+.auth-form input,
+.auth-form select {
   background-color: var(--input-color);
   border: 2px solid var(--input-color);
 }
 
-.login-form select {
+.auth-form select {
   width: 100px;
 }
 
-.login-form input:focus,
-.login-form select:focus {
+.auth-form input:focus,
+.auth-form select:focus {
   border: 2px solid black;
 }
 
-.login-form button {
+.auth-form button {
   padding: 1rem;
 }

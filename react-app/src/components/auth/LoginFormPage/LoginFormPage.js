@@ -1,7 +1,10 @@
 import React, { useState } from "react";
-import { login } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory } from "react-router-dom";
+import { login } from "../../../store/session";
+
+import HLine from "../../utils/HLine";
+import DemoLogin from "../DemoLogin";
 import "./LoginForm.css";
 
 const countries = ["US", "CA", "MX"];
@@ -23,6 +26,11 @@ export default function LoginFormPage() {
     if (res.errors)
       setErrors({ credential: "Invalid login", password: "Invalid login" });
     else history.push("/");
+  };
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    history.push("/signup");
   };
 
   const updateCredential = (e) => {
@@ -59,9 +67,10 @@ export default function LoginFormPage() {
     <div className="login-page fh">
       <div className="login-content flex flex-11 fh">
         <form
-          className="login-form flex-c"
+          className="auth-form flex-c"
           onSubmit={handleSubmit}
         >
+          <h2>Log in with your email or phone number</h2>
           <div className="flex">
             {isPhone && (
               <select>
@@ -79,6 +88,7 @@ export default function LoginFormPage() {
               value={credential}
               onChange={updateCredential}
               placeholder="Enter phone number or email"
+              autoFocus
               required
             />
           </div>
@@ -96,6 +106,18 @@ export default function LoginFormPage() {
             className="bt-black"
           >
             Log In
+          </button>
+          <HLine
+            text="or"
+            width="80%"
+          />
+          <DemoLogin />
+          <button
+            type="submit"
+            className="bt-black"
+            onClick={handleSignup}
+          >
+            Create an account
           </button>
         </form>
       </div>
