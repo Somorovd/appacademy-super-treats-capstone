@@ -1,18 +1,20 @@
 .business-item-table {
-  border-spacing: 20px 0px;
-  width: fit-content;
+  width: 100%;
   margin: auto;
 }
 
 .business-item-table tr {
   border-bottom: 1px solid lightgrey;
+  border-top: 1px solid lightgrey;
+  display: grid;
+  grid-template-columns: 100px 1fr 100px 150px;
+  padding: 3px 0px;
+  margin-bottom: 3px;
 }
 
 .business-item-table td,
 .business-item-table th {
-  vertical-align: middle;
   height: 50px;
-  padding: 10px;
 }
 
 .item-table__link {
@@ -22,7 +24,7 @@
 
 .item-table__image {
   aspect-ratio: 1;
-  height: 3rem;
+  height: 100%;
 }
 
 .item-table__price {
@@ -32,6 +34,7 @@
   align-items: center;
 }
 
-.item-table__date {
-  text-align: center;
+.item-table__name {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

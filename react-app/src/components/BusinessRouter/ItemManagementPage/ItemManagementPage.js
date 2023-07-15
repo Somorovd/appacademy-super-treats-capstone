@@ -26,10 +26,10 @@ export default function ItemManagementPage() {
       <table className="business-item-table">
         <thead>
           <tr>
-            <th>Photo</th>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Last Updated</th>
+            <th className="flex flex-11">Photo</th>
+            <th className="flex flex-01">Name</th>
+            <th className="flex flex-11">Price</th>
+            <th className="flex flex-11">Last Updated</th>
           </tr>
         </thead>
         <tbody>
