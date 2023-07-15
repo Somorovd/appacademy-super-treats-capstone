@@ -7,8 +7,8 @@ import "./ItemManagementPage.css";
 export default function ItemManagementPage() {
   const { businessId } = useParams();
 
-  const business = useSelector((state) => state.userBusinesses.singleBusiness);
-  const itemIds = business.items;
+  const itemsObj = useSelector((state) => state.items.allItems);
+  const itemIds = Object.keys(itemsObj);
 
   return (
     <div className="item-management-page">
