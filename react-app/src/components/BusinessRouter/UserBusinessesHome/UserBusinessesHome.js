@@ -37,6 +37,7 @@ export default function UserBusinessesHome() {
             <div onClick={() => history.push(`/business/${b.id}`)}>
               <BusinessCard
                 business={b}
+                isBusinessPage={true}
                 key={b.id}
               />
             </div>

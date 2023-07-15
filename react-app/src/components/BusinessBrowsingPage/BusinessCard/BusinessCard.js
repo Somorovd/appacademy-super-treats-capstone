@@ -1,6 +1,6 @@
 import "./BusinessCard.css";
 
-export default function BusinessCard({ business }) {
+export default function BusinessCard({ business, isBusinessPage }) {
   return (
     <div className="business-card">
       <header>
@@ -15,6 +15,9 @@ export default function BusinessCard({ business }) {
         <p className="business-card__rating">
           {(Math.random() * 2.5 + 2.5).toFixed(1)}
         </p>
+        {isBusinessPage && (
+          <p className="business-card__address">{business.address}</p>
+        )}
         <p className="business-card__delivery">
           <span className="business-card__delivery-fee">
             ${business.deliveryFee} Delivery Fee
