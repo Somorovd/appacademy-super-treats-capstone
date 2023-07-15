@@ -25,7 +25,9 @@ export default function PageHeader() {
         >
           <i className="fa-solid fa-bars"></i>
         </div>
-        <div className="header-logo">SuperTreats</div>
+        <div className="logo">
+          Super<span className="logo-b">Treats</span>
+        </div>
       </div>
       <div className="header-right flex">
         {!user && (

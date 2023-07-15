@@ -1,4 +1,14 @@
-/* TODO Add site wide styles */
+@font-face {
+  font-family: "UberMove";
+  src: url("./resources/UberMoveMedium.otf");
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: "UberMove";
+  src: url("./resources/UberMoveBold.otf");
+  font-weight: bold;
+}
 
 *,
 *::before,
@@ -12,11 +22,20 @@
 }
 
 * {
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-family: "UberMove", Arial, Helvetica, sans-serif;
 }
 
 #root {
   height: 100vh;
+}
+
+.logo {
+  font-size: 1.8rem;
+  color: black !important;
+}
+
+.logo-b {
+  font-weight: bold;
 }
 
 .pg-pd {
@@ -24,8 +43,16 @@
   padding-right: 40px;
 }
 
+.ft-15 {
+  font-size: 1.5rem;
+}
+
 .bt-pd {
   padding: 0.8rem;
+}
+
+.bt-br {
+  border-radius: 5px;
 }
 
 .flex {
@@ -72,7 +99,7 @@ button {
 
 .bt-black {
   background-color: black;
-  color: white;
+  color: white !important;
 }
 
 .bt-black:hover {

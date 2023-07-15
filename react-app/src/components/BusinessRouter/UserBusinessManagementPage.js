@@ -2,8 +2,9 @@ import { Route, Switch, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import BusinessMenu from "./BusinessMenu";
-import ItemEditPage from "./ItemEditPage";
 import BusinessInfoPage from "./BusinessInfoPage";
+import ItemEditPage from "./ItemEditPage";
+import ItemManagementPage from "./ItemManagementPage";
 import { thunkGetOneBusiness } from "../../store/userBusinesses";
 
 export default function UserBusinessManagementPage() {
@@ -31,6 +32,9 @@ export default function UserBusinessManagementPage() {
         </Route>
         <Route path="/business/:businessId/items/:itemId">
           <ItemEditPage />
+        </Route>
+        <Route path="/business/:businessId/items">
+          <ItemManagementPage />
         </Route>
         <Route path="/business/:businessId">
           <BusinessInfoPage />

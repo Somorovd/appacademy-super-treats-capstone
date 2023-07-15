@@ -51,6 +51,4 @@ class EditBusinessForm(FlaskForm):
     cuisine = StringField("cuisine", validators=[cuisine_required, valid_cuisine])
     image = StringField("image", validators=[supported_image, Length(0, 255)])
     price_range = StringField("price_range", validators=[DataRequired(), valid_range])
-    delivery_fee = FloatField(
-        "delivery_fee", validators=[DataRequired(), NumberRange(min=0, max=10)]
-    )
+    delivery_fee = FloatField("delivery_fee", validators=[NumberRange(min=0, max=10)])
