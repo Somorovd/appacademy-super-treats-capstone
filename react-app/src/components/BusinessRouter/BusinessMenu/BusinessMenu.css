@@ -5,7 +5,13 @@
   display: flex;
   flex-direction: column;
   background-color: lightgray;
+}
+
+.business-menu section {
+  display: flex;
+  flex-direction: column;
   gap: 20px;
+  padding: 10px 0px;
 }
 
 .business-menu section:not(:last-child) {

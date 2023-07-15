@@ -6,23 +6,26 @@ export default function BusinessMenu() {
 
   return (
     <div className="business-menu flex-c">
-      <Link
-        className="logo"
-        to="/"
-      >
-        Super
-        <span className="logo-b">Treats</span>
-      </Link>
-      <NavLink
-        exact
-        to="/business"
-        className="menu-link"
-      >
-        <i className="fa-solid fa-sitemap"></i>
-        Business Home
-      </NavLink>
+      <section>
+        <Link
+          className="logo"
+          to="/"
+        >
+          Super
+          <span className="logo-b">Treats</span>
+        </Link>
+        <NavLink
+          exact
+          to="/business"
+          className="menu-link"
+        >
+          <i className="fa-solid fa-table"></i>
+          Your Businesses
+        </NavLink>
+      </section>
+
       {businessId && (
-        <>
+        <section>
           <NavLink
             exact
             to={`/business/${businessId}`}
@@ -38,7 +41,7 @@ export default function BusinessMenu() {
             <i className="fa-solid fa-utensils"></i>
             Menu
           </NavLink>
-        </>
+        </section>
       )}
     </div>
   );
