@@ -72,7 +72,7 @@ export default function ItemEditPage() {
 
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteItem(item.id));
-    if (!res.errors) history.push(`/business/${businessId}`);
+    if (!res.errors) history.push(`/business/${businessId}/items`);
   };
 
   const handleDelete = (e) => {
