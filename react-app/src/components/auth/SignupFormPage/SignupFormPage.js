@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { signUp } from "../../store/session";
+import { signUp } from "../../../store/session";
 
+import HLine from "../../utils/HLine";
+import DemoLogin from "../DemoLogin";
 import SignupFormEmail from "./SignupFormEmail";
 import SignupFormPhone from "./SignupFormPhone";
 import SignupFormPassword from "./SignupFormPassword";
@@ -51,7 +53,7 @@ export default function SignupFormPage() {
     lastName: { lastName, setLastName },
     password: { password, setPassword, passwordStatus, setPasswordStatus },
     errors: { errors, setErrors },
-    steps: { nextStep, isLast: step === formSteps.length - 1 },
+    steps: { setStep, nextStep, isLast: step === formSteps.length - 1 },
     validateMaxLength,
   };
 
@@ -73,16 +75,32 @@ export default function SignupFormPage() {
     else history.push("/");
   };
 
+  const handleLogin = (e) => {
+    e.preventDefault();
+    history.push("/login");
+  };
+
   return (
     <div className="signup-page fh">
-      <h1>Sign Up</h1>
       <div className="signup-content flex flex-11 fh">
         <form
-          className="signup-form"
+          className="auth-form flex-c"
           onSubmit={handleSubmit}
           autoComplete="false"
         >
           <CurrentStep form={form} />
+          <HLine
+            text="or"
+            width="80%"
+          />
+          <DemoLogin />
+          <button
+            type="submit"
+            className="bt-black"
+            onClick={handleLogin}
+          >
+            Already have an account
+          </button>
         </form>
       </div>
     </div>

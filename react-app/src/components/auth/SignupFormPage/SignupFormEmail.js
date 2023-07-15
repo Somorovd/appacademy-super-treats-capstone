@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import { validateEmail } from "../../store/session";
+import { validateEmail } from "../../../store/session";
+import SignupFormActions from "./SignupFormActions";
 
 export default function SignupFormEmail({ form }) {
   const dispatch = useDispatch();
@@ -29,7 +30,10 @@ export default function SignupFormEmail({ form }) {
         required
       />
       <p className="auth-error">{errors.email}</p>
-      <button onClick={submitEmail}>{isLast ? "Submit" : "Next"}</button>
+      <SignupFormActions
+        submitAction={submitEmail}
+        form={form}
+      />
     </section>
   );
 }
