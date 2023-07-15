@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory, useParams, Link } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 
 import {
@@ -91,23 +91,28 @@ export default function ItemEditPage() {
   if (isEditting && (!item || id !== Number(itemId))) return null;
 
   return (
-    <div className="business-info-content">
+    <div className="">
       <form
-        className="create-item-form pg-pd flex flex-c"
+        className="create-item-form flex flex-c"
         onSubmit={handleSubmit}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.preventDefault();
         }}
       >
-        <div className="item-actions">
-          <button
-            className="bt-pd"
-            onClick={handleDelete}
-          >
-            Delete
-          </button>
-          <button className="bt-black bt-pd">Save</button>
-        </div>
+        <header className="business-header">
+          <Link to={`/business/${businessId}/items`}>
+            <i className="fa-solid fa-arrow-left ft-15"></i>
+          </Link>
+          <div className="item-actions flex">
+            <button
+              className="bt-pd"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+            <button className="bt-black bt-pd">Save</button>
+          </div>
+        </header>
 
         <div className="create-item__name">
           <input

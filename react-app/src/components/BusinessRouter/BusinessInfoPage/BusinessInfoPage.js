@@ -43,7 +43,7 @@ export default function BusinessInfoPage() {
   if (!business || business.id !== Number(businessId)) return <></>;
 
   return (
-    <div className="business-info-content">
+    <div className="business-info-content no-pd">
       <header className="business-info__header">
         {business.image ? (
           <img

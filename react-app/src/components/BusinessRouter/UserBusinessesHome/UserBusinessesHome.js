@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import { thunkGetAllBusinesses } from "../../../store/userBusinesses";
@@ -23,7 +23,15 @@ export default function UserBusinessesHome() {
     <div className="business-page">
       <BusinessMenu />
       <div className="user-business__home pg-pd fh">
-        <h2>Your Businesses</h2>
+        <header className="business-header">
+          <h2>Your Businesses</h2>
+          <Link
+            to="business/create"
+            className="bt-black bt-pd"
+          >
+            <i className="fa-solid fa-plus"></i> Add Your Business
+          </Link>
+        </header>
         <div className="user-business__grid">
           {allBusinesses.map((b) => (
             <div onClick={() => history.push(`/business/${b.id}`)}>
