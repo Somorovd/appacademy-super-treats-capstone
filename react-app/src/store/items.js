@@ -102,7 +102,7 @@ export default function reducer(state = initialState, action) {
     }
     case DELETE_ITEM: {
       const allItems = { ...newState.allItems };
-      delete allItems[action.payload.id];
+      delete allItems[action.payload];
       newState.allItems = allItems;
       newState.singleItem = {};
       return newState;
