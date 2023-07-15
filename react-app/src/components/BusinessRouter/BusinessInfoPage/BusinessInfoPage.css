@@ -41,3 +41,9 @@
   border-radius: 3rem;
   border: 2px solid black;
 }
+
+.business-profile__name,
+.business-profile__address {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
