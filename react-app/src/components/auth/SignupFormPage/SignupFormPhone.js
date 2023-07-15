@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
-import { validatePhone } from "../../store/session";
+import { validatePhone } from "../../../store/session";
+import SignupFormActions from "./SignupFormActions";
 
 export default function SignupFormPhone({ form }) {
   const dispatch = useDispatch();
@@ -29,7 +30,10 @@ export default function SignupFormPhone({ form }) {
         required
       />
       <p className="auth-error">{errors.phone}</p>
-      <button onClick={submitPhone}>{isLast ? "Submit" : "Next"}</button>
+      <SignupFormActions
+        submitAction={submitPhone}
+        form={form}
+      />
     </section>
   );
 }

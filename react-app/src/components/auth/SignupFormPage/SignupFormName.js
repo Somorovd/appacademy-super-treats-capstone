@@ -1,3 +1,5 @@
+import SignupFormActions from "./SignupFormActions";
+
 export default function SignupFormName({ form }) {
   const { firstName, setFirstName } = form.firstName;
   const { lastName, setLastName } = form.lastName;
@@ -31,7 +33,10 @@ export default function SignupFormName({ form }) {
         required
       />
       <p className="auth-error">{errors.lastName}</p>
-      <button onClick={nextStep}>{isLast ? "Submit" : "Next"}</button>
+      <SignupFormActions
+        submitAction={nextStep}
+        form={form}
+      />
     </section>
   );
 }
