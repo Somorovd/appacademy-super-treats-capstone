@@ -1,8 +1,31 @@
 .business-menu {
   height: 100%;
-  border: 1px solid purple;
   grid-area: menu;
   padding: 40px;
   display: flex;
   flex-direction: column;
+  background-color: lightgray;
+  gap: 20px;
+}
+
+.business-menu section:not(:last-child) {
+  border-bottom: 1px solid gray;
+}
+
+.business-menu i {
+  width: 30px;
+  text-align: left;
+}
+
+.menu-link {
+  font-weight: bold;
+}
+
+.menu-link {
+  color: gray;
+}
+
+
+.menu-link.active {
+  color: green
 }

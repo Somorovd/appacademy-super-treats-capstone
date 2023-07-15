@@ -1,12 +1,11 @@
 import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
-import { Link } from "react-router-dom";
 
 import { thunkDeleteBusiness } from "../../../store/userBusinesses";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
 import CreateBusinessForm from "../CreateBusinessForm";
-import ItemTableRow from "./ItemTableRow";
+
 import "./BusinessInfoPage.css";
 
 export default function BusinessInfoPage() {
@@ -16,7 +15,6 @@ export default function BusinessInfoPage() {
   const { closeModal, setModalContent, setModalClass } = useModal();
 
   const business = useSelector((state) => state.userBusinesses.singleBusiness);
-  const itemIds = business.items;
 
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteBusiness(business.id));
@@ -85,34 +83,7 @@ export default function BusinessInfoPage() {
           </span>
         </p>
       </section>
-      <section>
-        <div className="item-actions">
-          <Link
-            to={`/business/${businessId}/items/new`}
-            className="add-item-button bt-black bt-pd"
-          >
-            <i className="fa-solid fa-plus"></i> Add Item
-          </Link>
-        </div>
-        <table className="business-item-table">
-          <thead>
-            <tr>
-              <th>Photo</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Last Updated</th>
-            </tr>
-          </thead>
-          <tbody>
-            {itemIds.map((i) => (
-              <ItemTableRow
-                itemId={i}
-                key={i}
-              />
-            ))}
-          </tbody>
-        </table>
-      </section>
+      <section></section>
     </div>
   );
 }
