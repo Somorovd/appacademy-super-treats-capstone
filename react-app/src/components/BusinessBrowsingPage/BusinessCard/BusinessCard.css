@@ -4,7 +4,11 @@
   cursor: pointer;
   border-radius: 10px;
   display: grid;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: 1fr auto auto;
+}
+
+.business-card * {
+  max-width: 550px;
 }
 
 .business-card header {
@@ -23,8 +27,17 @@
   display: grid;
   grid-template-areas:
     "name rating"
+    "address address"
     "delivery delivery"
   ;
+  grid-template-columns: auto 1fr;
+}
+
+.business-card__name,
+.business-card__address {
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .business-card__name {
@@ -33,11 +46,16 @@
   align-self: center;
 }
 
+.business-card__address {
+  grid-area: address;
+  font-size: 0.85rem;
+  padding: 2px 0px;
+}
+
 .business-card__rating {
   grid-area: rating;
   text-align: right;
   justify-self: end;
-  font-size: 0.75rem;
   font-weight: bold;
   padding: 5px;
   width: fit-content;

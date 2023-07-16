@@ -13,7 +13,7 @@ export default function ItemTableRow({ itemId }) {
 
   return (
     <tr key={item.id}>
-      <td>
+      <td className="flex flex-11">
         {item.image ? (
           <img
             className="item-table__image"
@@ -24,7 +24,7 @@ export default function ItemTableRow({ itemId }) {
           "n/a"
         )}
       </td>
-      <td>
+      <td className="flex flex-01">
         <Link
           className="item-table__link"
           to={`/business/${businessId}/items/${item.id}`}
@@ -32,13 +32,13 @@ export default function ItemTableRow({ itemId }) {
           {item.name}
         </Link>
       </td>
-      <td>
+      <td className="flex flex-11">
         <p className="item-table__price">
           <span>$</span>
           <span>{item.price}</span>
         </p>
       </td>
-      <td className="item-table__date">{formatDate(item.updatedAt)}</td>
+      <td className="flex flex-11">{formatDate(item.updatedAt)}</td>
     </tr>
   );
 }

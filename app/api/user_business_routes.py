@@ -13,7 +13,7 @@ user_business_routes = Blueprint("user_businesses", __name__)
 @login_required
 def all_businesses():
     businesses = Business.query.filter(Business.user_id == current_user.id).all()
-    return {"businesses": [b.to_dict() for b in businesses]}
+    return {"businesses": {b.id: b.to_dict() for b in businesses}}
 
 
 @user_business_routes.route("/<int:business_id>")
@@ -22,9 +22,9 @@ def one_business(business_id):
     business = Business.query.get(business_id)
 
     if business == None:
-        return {"error": "No business found"}, 404
+        return {"errors": "No business found"}, 404
     if not business.user_id == current_user.id:
-        return {"errors": {"user": "Not Authorized"}}, 401
+        return {"errors": "Not Authorized"}, 401
 
     return {"business": business.to_dict(get_items=True)}
 
@@ -60,15 +60,15 @@ def edit_business(business_id):
         business = Business.query.get(business_id)
 
         if business == None:
-            return {"error": "No business found"}, 404
+            return {"errors": "No business found"}, 404
         if not business.user_id == current_user.id:
-            return {"errors": {"user": "Not Authorized"}}, 401
+            return {"errors": "Not Authorized"}, 401
 
         business.address = form.data["address"]
         business.cuisine = form.data["cuisine"]
         business.name = form.data["name"]
         business.type = form.data["type"]
-        business.image = form.data["image"]
+        business.image = form.data["image"] or ""
         business.price_range = form.data["price_range"]
         business.delivery_fee = form.data["delivery_fee"]
 
@@ -83,9 +83,9 @@ def delete_business(business_id):
     business = Business.query.get(business_id)
 
     if business == None:
-        return {"error": "No business found"}, 404
+        return {"errors": "No business found"}, 404
     if not business.user_id == current_user.id:
-        return {"errors": {"user": "Not Authorized"}}, 401
+        return {"errors": "Not Authorized"}, 401
 
     db.session.delete(business)
     db.session.commit()

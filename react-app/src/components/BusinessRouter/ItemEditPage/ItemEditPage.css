@@ -1,7 +1,4 @@
 .create-item-form {
-  width: 550px;
-  padding-top: 50px;
-  padding-bottom: 50px;
   gap: 10px;
 }
 
@@ -20,6 +17,15 @@
 .create-item__picture img {
   width: 200px;
   aspect-ratio: 1;
+}
+
+.create-item__price input {
+  width: 100px;
+  text-align: right;
+}
+
+.item-actions {
+  gap: 10px;
 }
 
 /* Hiding number input arrows -- Chrome, Safari, Edge, Opera */

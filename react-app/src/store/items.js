@@ -1,5 +1,6 @@
 const GET_ONE_ITEM = "items/GET_ONE_ITEM";
 const CREATE_ITEM = "items/CREATE_ITEM";
+const UPDATE_ITEM = "items/UPDATE_ITEM";
 const DELETE_ITEM = "items/DELETE_ITEM";
 const GET_ONE_BUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 
@@ -10,6 +11,11 @@ const actionGetOneItem = (item) => ({
 
 const actionCreateItem = (item) => ({
   type: CREATE_ITEM,
+  payload: item,
+});
+
+const actionUpdateItem = (item) => ({
+  type: UPDATE_ITEM,
   payload: item,
 });
 
@@ -42,13 +48,28 @@ export const thunkCreateItem = (item) => async (dispatch) => {
   return resBody;
 };
 
+export const thunkUpdateItem = (item) => async (dispatch) => {
+  const res = await fetch(`/api/items/${item.id}/edit`, {
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(item),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionCreateItem(resBody.item));
+
+  return resBody;
+};
+
 export const thunkDeleteItem = (itemId) => async (dispatch) => {
   const res = await fetch(`/api/items/${itemId}/delete`, {
     method: "delete",
   });
   const resBody = await res.json();
 
-  if (res.ok) dispatch(actionCreateItem(itemId));
+  if (res.ok) dispatch(actionDeleteItem(itemId));
 
   return resBody;
 };
@@ -59,30 +80,36 @@ const initialState = {
 };
 
 export default function reducer(state = initialState, action) {
+  const newState = { ...state };
   switch (action.type) {
     case GET_ONE_ITEM: {
-      state.singleItem = { ...action.payload };
-      return state;
+      newState.singleItem = { ...action.payload };
+      return newState;
     }
     case CREATE_ITEM: {
       const allItems = {
-        ...state.allItems,
+        ...newState.allItems,
         [action.payload.id]: { ...action.payload },
       };
-      state.allItems = allItems;
-      state.singleItem = { ...action.payload };
-      return state;
+      newState.allItems = allItems;
+      newState.singleItem = { ...action.payload };
+      return newState;
+    }
+    case UPDATE_ITEM: {
+      newState.allItems[action.payload.id] = { ...action.payload };
+      newState.singleItem = { ...action.payload };
+      return newState;
     }
     case DELETE_ITEM: {
-      const allItems = { ...state.allItems };
-      delete allItems[action.payload.id];
-      state.allItems = allItems;
-      state.singleItem = {};
-      return state;
+      const allItems = { ...newState.allItems };
+      delete allItems[action.payload];
+      newState.allItems = allItems;
+      newState.singleItem = {};
+      return newState;
     }
     case GET_ONE_BUSINESS: {
-      state.allItems = { ...action.payload.items };
-      return state;
+      newState.allItems = { ...action.payload.items };
+      return newState;
     }
     default:
       return state;

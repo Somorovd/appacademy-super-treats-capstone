@@ -48,9 +48,9 @@ export default function CreateBusinessForm({ business, onSubmit }) {
       name: businessName,
       type,
       id: business?.id,
-      image: business ? image : "",
-      price_range: business ? priceRange : "",
-      delivery_fee: business ? deliveryFee : "",
+      image,
+      price_range: priceRange,
+      delivery_fee: deliveryFee,
     };
 
     const res = await dispatch(

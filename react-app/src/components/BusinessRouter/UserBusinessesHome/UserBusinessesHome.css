@@ -1,11 +1,9 @@
-.user-business__nav {
-  width: 400px;
-  background-color: lightgray;
-  flex-shrink: 0;
+.user-business__home {
+  padding-top: 20px;
 }
 
 .user-business__grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 24px;
 }
