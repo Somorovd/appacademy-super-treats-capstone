@@ -22,14 +22,6 @@
   position: relative;
 }
 
-.filter-sidebar {
-  width: 500px;
-  height: 600px;
-  border: 1px solid black;
-  position: sticky;
-  top: 0px;
-}
-
 .business-browsing__content {
   display: grid;
   grid-template-columns: repeat(3, 1fr);

@@ -5,6 +5,7 @@ import { thunkGetAllBusinesses } from "../../store/businesses";
 import PageHeader from "../PageHeader";
 import BusinessCard from "./BusinessCard";
 import FilterIcon from "./FilterIcon/FilterIcon";
+import FilterSidebar from "./FilterSidebar";
 import "./BusinessBrowsingPage.css";
 
 const filterCategories = [
@@ -59,7 +60,7 @@ export default function BusinessBrowsingPage() {
         </div>
       </header>
       <div className="business-browsing__body flex pg-pd">
-        <div className="filter-sidebar"></div>
+        <FilterSidebar />
         <div className="business-browsing__content fw">
           {allBusinesses.map((b) => (
             <BusinessCard

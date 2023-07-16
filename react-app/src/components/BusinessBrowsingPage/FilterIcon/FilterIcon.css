@@ -15,4 +15,6 @@
   border-radius: 50%;
 }
 
-.filter-icon p {}
+.filter-icon p {
+  font-size: 0.9rem;
+}
