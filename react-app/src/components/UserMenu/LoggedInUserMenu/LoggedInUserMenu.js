@@ -38,7 +38,7 @@ export default function LoggedInUserMenu() {
             className="user-menu__link"
             onClick={comingSoon}
           >
-            Manage Profile
+            Manage Profile *
           </Link>
         </div>
         <div>
@@ -48,7 +48,7 @@ export default function LoggedInUserMenu() {
             onClick={comingSoon}
           >
             <i className="fa-solid fa-truck-fast"></i>
-            Orders
+            Orders *
           </Link>
           <Link
             to=""
@@ -56,7 +56,7 @@ export default function LoggedInUserMenu() {
             onClick={comingSoon}
           >
             <i className="fa-solid fa-heart"></i>
-            Favorites
+            Favorites *
           </Link>
         </div>
         <div>
@@ -84,6 +84,7 @@ export default function LoggedInUserMenu() {
           Add your business
         </Link>
       </section>
+      <footer>* Coming Soon</footer>
     </>
   );
 }

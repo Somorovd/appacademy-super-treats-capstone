@@ -56,3 +56,7 @@ div.menu-profile {
 .user-menu i {
   width: 30px;
 }
+
+.user-menu footer {
+  margin-top: auto;
+}
