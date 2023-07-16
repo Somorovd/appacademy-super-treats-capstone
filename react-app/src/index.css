@@ -48,7 +48,7 @@
 }
 
 .bt-pd {
-  padding: 0.8rem;
+  padding: 1rem;
 }
 
 .bt-br {
@@ -95,6 +95,7 @@
 button {
   cursor: pointer;
   border: none;
+  font-size: 1rem;
 }
 
 .bt-black {
