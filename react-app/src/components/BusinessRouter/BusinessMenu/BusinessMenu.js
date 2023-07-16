@@ -1,4 +1,5 @@
-import { useParams, NavLink, Link } from "react-router-dom";
+import { useParams, NavLink } from "react-router-dom";
+import Logo from "../../utils/Logo";
 import "./BusinessMenu.css";
 
 export default function BusinessMenu() {
@@ -7,13 +8,7 @@ export default function BusinessMenu() {
   return (
     <div className="business-menu flex-c">
       <section>
-        <Link
-          className="logo"
-          to="/"
-        >
-          Super
-          <span className="logo-b">Treats</span>
-        </Link>
+        <Logo />
         <NavLink
           exact
           to="/business"

@@ -4,7 +4,7 @@ import { useModal } from "../../../context/Modal";
 
 import { thunkDeleteBusiness } from "../../../store/userBusinesses";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
-import CreateBusinessForm from "../CreateBusinessForm";
+import CreateBusinessForm from "../CreateBusinessPage/CreateBusinessForm";
 
 import "./BusinessInfoPage.css";
 

@@ -1,7 +1,7 @@
 import { Route, Switch } from "react-router-dom";
 
 import ProtectedRoute from "../auth/ProtectedRoute";
-import CreateBusinessForm from "./CreateBusinessForm";
+import CreateBusinessPage from "./CreateBusinessPage";
 import UserBussinessesHome from "./UserBusinessesHome";
 import UserBusinessManagementPage from "./UserBusinessManagementPage";
 import "./BusinessRouter.css";
@@ -11,7 +11,7 @@ export default function BusinessRouter() {
     <ProtectedRoute>
       <Switch>
         <Route path="/business/create">
-          <CreateBusinessForm />
+          <CreateBusinessPage />
         </Route>
         <Route path="/business/:businessId">
           <UserBusinessManagementPage />

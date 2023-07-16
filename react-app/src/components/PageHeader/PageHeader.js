@@ -2,12 +2,13 @@ import { useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
 
+import Logo from "../utils/Logo";
 import UserMenu from "../UserMenu";
 import "./PageHeader.css";
 
-export default function PageHeader() {
+export default function PageHeader({ backgroundColor, color, highlight }) {
   const history = useHistory();
-  const { setModalContent, setModalClass, closeModal } = useModal();
+  const { setModalContent, setModalClass } = useModal();
 
   const user = useSelector((state) => state.session.user);
 
@@ -17,7 +18,10 @@ export default function PageHeader() {
   };
 
   return (
-    <header className="page-header flex flex-b1">
+    <header
+      className="page-header flex flex-b1 pg-pd"
+      style={{ backgroundColor, color }}
+    >
       <div className="header-left flex">
         <div
           className="header-menu"
@@ -25,9 +29,10 @@ export default function PageHeader() {
         >
           <i className="fa-solid fa-bars"></i>
         </div>
-        <div className="logo">
-          Super<span className="logo-b">Treats</span>
-        </div>
+        <Logo
+          color={color}
+          highlight={highlight || color}
+        />
       </div>
       <div className="header-right flex">
         {!user && (
