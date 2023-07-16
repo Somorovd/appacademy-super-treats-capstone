@@ -34,10 +34,11 @@ export default function LoginFormPage() {
   };
 
   const updateCredential = (e) => {
-    const credential = e.target.value;
+    const credential = e.target.value.trim();
     const is_phone =
       credential.length > 1 &&
-      credential.trim().search(/^(\d\s*\d|\(\s*\d)/) === 0;
+      credential.search(/^(\d\s*\d|\(\s*\d)/) === 0 &&
+      credential.search(/[a-zA-z@]/) === -1;
 
     setIsPhone(is_phone);
 
@@ -49,7 +50,7 @@ export default function LoginFormPage() {
     setErrors((errors) => ({ ...errors, credential: credential_error }));
 
     if (credential_error) return;
-    else setCredential(credential);
+    else setCredential(e.target.value);
   };
 
   const updatePassword = (e) => {
