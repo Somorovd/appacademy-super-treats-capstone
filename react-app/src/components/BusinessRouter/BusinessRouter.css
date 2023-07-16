@@ -1,7 +1,7 @@
 .business-page {
   display: grid;
   grid-template-areas: "menu body";
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px 1200px;
   height: 100%;
   max-width: 1500px;
   gap: 40px;

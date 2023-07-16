@@ -4,7 +4,7 @@ import { useModal } from "../../../context/Modal";
 
 import { thunkDeleteBusiness } from "../../../store/userBusinesses";
 import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
-import CreateBusinessForm from "../CreateBusinessForm";
+import CreateBusinessForm from "../CreateBusinessPage/CreateBusinessForm";
 
 import "./BusinessInfoPage.css";
 
@@ -64,7 +64,7 @@ export default function BusinessInfoPage() {
           </button>
         </div>
       </header>
-      <section className="business-profile">
+      <section className="business-profile flex-c">
         <h1 className="business-profile__name">{business.name}</h1>
         <p className="business-profile__address">{business.address}</p>
         <p>

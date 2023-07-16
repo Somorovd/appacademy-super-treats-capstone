@@ -1,10 +1,4 @@
-.business-profile p {
-  display: flex;
-  gap: 5px;
-}
-
 .business-info-content {
-  max-width: 1000px;
   width: 100%;
 }
 
@@ -37,13 +31,27 @@
 
 .business-actions button {
   padding: 0.75rem;
-  font-size: 1rem;
   border-radius: 3rem;
   border: 2px solid black;
+}
+
+.business-profile {
+  margin-top: 20px;
+  gap: 10px;
+  max-width: 100%;
 }
 
 .business-profile__name,
 .business-profile__address {
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.business-profile__name {
+  font-size: 2rem;
+}
+
+.business-profile p {
+  display: flex;
+  gap: 5px;
 }
