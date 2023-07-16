@@ -11,7 +11,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
-  padding: 10px 0px;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 .business-menu section:not(:last-child) {
@@ -33,5 +34,5 @@
 
 
 .menu-link.active {
-  color: green
+  color: #4e937a
 }

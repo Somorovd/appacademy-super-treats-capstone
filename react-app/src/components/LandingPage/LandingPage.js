@@ -7,6 +7,8 @@ import { thunkSetLocation } from "../../store/session";
 
 import "./LandingPage.css";
 
+const bgImg = "/src/resources/images/landing-page-background.png";
+
 export default function LandingPage() {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -20,7 +22,11 @@ export default function LandingPage() {
   };
 
   return (
-    <div className="landing-page flex-c pg-pd">
+    <div className="landing-page fh flex-c pg-pd">
+      <div
+        className="landing-page__background"
+        style={{ width: window.screen.width, height: window.screen.height }}
+      ></div>
       <PageHeader />
       <div className="landing__content flex flex-01 fh">
         <div className="landing__address-form-wrapper">
