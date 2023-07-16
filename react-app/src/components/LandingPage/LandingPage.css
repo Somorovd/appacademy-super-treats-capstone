@@ -48,3 +48,8 @@
 .landing__address-form>button {
   border-radius: 5px;
 }
+
+.signup-link a {
+  color: black;
+  font-weight: bold;
+}
