@@ -1,5 +1,5 @@
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, Link } from "react-router-dom";
 import { useState } from "react";
 
 import PageHeader from "../PageHeader";
@@ -12,6 +12,8 @@ export default function LandingPage() {
   const history = useHistory();
   const [address, setAddress] = useState("");
   const [delivery, setDelivery] = useState("delivery");
+
+  const user = useSelector((state) => state.session.user);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -44,8 +46,12 @@ export default function LandingPage() {
             </select>
             <button className="bt-black">Find Food</button>
           </form>
-          <p>
-            <a href="/signup">Sign In</a> for your recent addresses
+          <p className="signup-link">
+            {!user && (
+              <>
+                <Link to="/signup">Sign In</Link> for your recent addresses
+              </>
+            )}
           </p>
         </div>
       </div>
