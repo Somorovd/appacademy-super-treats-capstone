@@ -41,7 +41,12 @@ export default function FilterSidebar() {
         </div>
       </section>
       <section className="filter-sidebar__section">
-        <h3>Price Range</h3>
+        <h3 className="flex flex-b1">
+          Price Range
+          <span className="price-count bt-black flex flex-11">
+            {Object.values(priceRange).filter((pr) => pr).length || ""}
+          </span>
+        </h3>
         <div className="price-checks flex-c">
           {Object.keys(priceRangeOptions).map((p) => (
             <div className="flex">

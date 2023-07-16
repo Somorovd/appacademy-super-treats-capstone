@@ -25,3 +25,14 @@
 .filter-sidebar footer {
   margin-top: 50px;
 }
+
+.price-count {
+  height: 1.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  font-size: 0.8rem;
+}
+
+.price-count:empty {
+  display: none;
+}
