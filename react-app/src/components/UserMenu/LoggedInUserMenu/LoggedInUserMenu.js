@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useHistory, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { logout } from "../../../store/session";
 
@@ -9,6 +10,8 @@ export default function LoggedInUserMenu() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { closeModal } = useModal();
+
+  const user = useSelector((state) => state.session.user);
 
   const modalNavigate = (path) => {
     closeModal();
@@ -20,15 +23,50 @@ export default function LoggedInUserMenu() {
     modalNavigate("/");
   };
 
+  const comingSoon = () => {
+    alert("Feature Coming Soon");
+  };
+
   return (
     <>
       <section className="menu-section">
-        <button
-          className="user-menu__signout"
-          onClick={handleSignout}
-        >
-          Sign out
-        </button>
+        <div className="menu-profile">
+          <i className="fa-solid fa-circle-user menu-profile__icon"></i>
+          <p className="menu-profile__name">{`${user.firstName} ${user.lastName}`}</p>
+          <Link
+            to=""
+            className="user-menu__link"
+            onClick={comingSoon}
+          >
+            Manage Profile
+          </Link>
+        </div>
+        <div>
+          <Link
+            to=""
+            className="user-menu__link"
+            onClick={comingSoon}
+          >
+            <i className="fa-solid fa-truck-fast"></i>
+            Orders
+          </Link>
+          <Link
+            to=""
+            className="user-menu__link"
+            onClick={comingSoon}
+          >
+            <i className="fa-solid fa-heart"></i>
+            Favorites
+          </Link>
+        </div>
+        <div>
+          <button
+            className="user-menu__signout"
+            onClick={handleSignout}
+          >
+            Sign out
+          </button>
+        </div>
       </section>
       <section className="menu-section">
         <Link
