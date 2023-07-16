@@ -1,8 +1,27 @@
 .filter-sidebar {
   width: 500px;
   height: 600px;
-  border: 1px solid black;
   position: sticky;
   top: 0px;
-  padding: 40px;
+  padding: 40px 0px;
+}
+
+.filter-sidebar__section h3 {
+  padding: 20px 0px;
+}
+
+.filter-sidebar__section>div {
+  gap: 10px;
+}
+
+.filter-sidebar__section>div>div {
+  gap: 10px;
+}
+
+.filter-sidebar__section input {
+  width: 30px;
+}
+
+.filter-sidebar footer {
+  margin-top: 50px;
 }
