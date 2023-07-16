@@ -1,8 +1,15 @@
 .landing-page {
+  position: relative;
+  overflow: hidden;
+}
+
+.landing-page__background {
+  position: absolute;
+  top: 0;
+  right: 0;
   background-image: url("/src/resources/images/landing-page-background.png");
-  background-size: 100vw 100vh;
-  object-fit: fill;
-  height: 100vh;
+  background-size: 100% auto;
+  z-index: -10;
 }
 
 .landing__content h1 {
