@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { login } from "../../../store/session";
 
+import PageHeader from "../../PageHeader";
 import HLine from "../../utils/HLine";
 import DemoLogin from "../DemoLogin";
 import "./LoginForm.css";
@@ -65,7 +66,12 @@ export default function LoginFormPage() {
   };
 
   return (
-    <div className="login-page fh">
+    <div className="login-page flex-c fh">
+      <PageHeader
+        backgroundColor="black"
+        color="white"
+        auth={false}
+      />
       <div className="login-content flex flex-11 fh">
         <form
           className="auth-form flex-c"

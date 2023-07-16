@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { signUp } from "../../../store/session";
 
+import PageHeader from "../../PageHeader";
 import HLine from "../../utils/HLine";
 import DemoLogin from "../DemoLogin";
 import SignupFormEmail from "./SignupFormEmail";
@@ -81,7 +82,12 @@ export default function SignupFormPage() {
   };
 
   return (
-    <div className="signup-page fh">
+    <div className="signup-page flex-c fh">
+      <PageHeader
+        backgroundColor="black"
+        color="white"
+        auth={false}
+      />
       <div className="signup-content flex flex-11 fh">
         <form
           className="auth-form flex-c"
