@@ -29,7 +29,7 @@ export default function LandingPage() {
         className="landing-page__background"
         style={{ width: window.screen.width, height: window.screen.height }}
       ></div>
-      <PageHeader />
+      <PageHeader auth={!user} />
       <div className="landing__content pg-pd flex flex-01 fh">
         <div className="landing__address-form-wrapper">
           <h1>Order food to your door</h1>

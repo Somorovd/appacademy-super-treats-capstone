@@ -6,7 +6,12 @@ import Logo from "../utils/Logo";
 import UserMenu from "../UserMenu";
 import "./PageHeader.css";
 
-export default function PageHeader({ backgroundColor, color, highlight }) {
+export default function PageHeader({
+  backgroundColor,
+  color,
+  highlight,
+  auth,
+}) {
   const history = useHistory();
   const { setModalContent, setModalClass } = useModal();
 
@@ -35,7 +40,7 @@ export default function PageHeader({ backgroundColor, color, highlight }) {
         />
       </div>
       <div className="header-right flex">
-        {!user && (
+        {auth && (
           <>
             <button
               className="header-login"
