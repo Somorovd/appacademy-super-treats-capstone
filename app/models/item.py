@@ -42,3 +42,11 @@ class Item(db.Model):
             dct["updatedAt"] = self.updated_at
 
         return dct
+
+    def cart_to_dict(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "price": self.price,
+            "image": self.image,
+        }

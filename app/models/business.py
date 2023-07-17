@@ -96,3 +96,11 @@ class Business(db.Model):
                 }
             )
         return dct
+
+    def cart_to_dict(self):
+        return {
+            "id": self.id,
+            "address": self.address,
+            "deliveryFee": self.delivery_fee,
+            "name": self.name,
+        }

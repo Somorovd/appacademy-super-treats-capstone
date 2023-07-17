@@ -39,9 +39,9 @@ class Cart(db.Model):
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
-            "user": self.user.to_dict(),
-            "business": self.business.to_dict(),
-            "cartItems": [i.to_dict() for i in self.items],
+            "user_id": self.user_id,
+            "business": self.business.cart_to_dict(),
+            "cartItems": [i.to_dict() for i in self.cart_items],
             "count": self.item_count,
             "price": self.total_price,
         }

@@ -24,8 +24,17 @@ class CartItem(db.Model):
 
     item = db.relationship("Item")
 
+    @property
+    def price(self):
+        return self.item.price * self.quantity
+
     def to_dict(self, timestamps=False):
-        dct = {"id": self.id, "quantity": self.quantity, "item": self.item.to_dict()}
+        dct = {
+            "id": self.id,
+            "quantity": self.quantity,
+            "item": self.item.cart_to_dict(),
+            "price": self.price,
+        }
 
         if timestamps:
             dct["createdAt"] = self.created_at
