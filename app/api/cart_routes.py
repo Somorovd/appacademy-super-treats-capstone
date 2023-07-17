@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.forms.create_cart_item_form import CreateCartItemForm
+from app.forms.edit_cart_item_form import EditCartItemForm
 from ..utils.helpers import validation_errors_to_dict
 
 from app.models import db, Cart, CartItem, Item, Business
@@ -60,6 +61,33 @@ def add_item():
     db.session.commit()
 
     return {"message": "item added successfully"}
+
+
+@cart_routes.route("/<int:cart_id>/items/<int:item_id>/edit", methods=["PUT"])
+@login_required
+def edit_cart_item(cart_id, item_id):
+    form = EditCartItemForm()
+    form["csrf_token"].data = request.cookies.get("csrf_token")
+
+    if not form.validate_on_submit():
+        return {"errors": validation_errors_to_dict(form.errors)}, 400
+
+    cart = Cart.query.get(cart_id)
+    cart_item = CartItem.query.get(item_id)
+
+    if not cart:
+        return {"errors": "cart not found"}, 404
+
+    if not cart.user_id == current_user.id:
+        return {"errors": "not authorized"}, 401
+
+    if not cart_item:
+        return {"errors": "item not found"}, 404
+
+    cart_item.quantity = form.data["quantity"]
+    db.session.commit()
+
+    return {"cartItem": cart_item.to_dict()}
 
 
 @cart_routes.route("/<int:cart_id>/delete", methods=["DELETE"])
