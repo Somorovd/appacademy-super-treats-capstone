@@ -6,6 +6,11 @@
   padding: 40px 0px;
 }
 
+.filter-sidebar input,
+.filter-sidebar label {
+  cursor: pointer;
+}
+
 .filter-sidebar__section {
   margin-bottom: 10px;
 }
