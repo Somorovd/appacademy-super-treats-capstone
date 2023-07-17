@@ -8,11 +8,20 @@ from app.models import db, Cart, CartItem, Item, Business
 cart_routes = Blueprint("carts", __name__)
 
 
-@cart_routes.route("")
+@cart_routes.route("/current")
 @login_required
 def user_carts():
     carts = Cart.query.filter(Cart.user_id == current_user.id).all()
     return {"carts": {cart.id: cart.to_dict() for cart in carts}}
+
+
+@cart_routes.route("/<int:cart_id>")
+@login_required
+def get_cart(cart_id):
+    cart = Cart.query.get(cart_id)
+    if not cart:
+        return {"errors": "cart not found"}
+    return {"cart": cart.to_dict()}
 
 
 @cart_routes.route("/add_item", methods=["POST"])
@@ -27,7 +36,7 @@ def add_item():
     item = Item.query.get(form.data["item_id"])
 
     if not item:
-        return {"error": "item not found"}, 404
+        return {"errors": "item not found"}, 404
 
     cart = (
         Cart.query.filter(Cart.user_id == current_user.id)
@@ -51,3 +60,45 @@ def add_item():
     db.session.commit()
 
     return {"message": "item added successfully"}
+
+
+@cart_routes.route("/<int:cart_id>/delete", methods=["DELETE"])
+@login_required
+def delete_cart(cart_id):
+    cart = Cart.query.get(cart_id)
+
+    if not cart:
+        return {"errors": "cart not found"}, 404
+
+    if not cart.user_id == current_user.id:
+        return {"errors": "not authorized"}, 401
+
+    db.session.delete(cart)
+    db.session.commit()
+
+    return {"message": "successfully deleted"}
+
+
+@cart_routes.route("/<int:cart_id>/items/<int:item_id>/delete", methods=["DELETE"])
+@login_required
+def delete_cart_item(cart_id, item_id):
+    cart = Cart.query.get(cart_id)
+    cart_item = CartItem.query.get(item_id)
+
+    if not cart:
+        return {"errors": "cart not found"}, 404
+
+    if not cart.user_id == current_user.id:
+        return {"errors": "not authorized"}, 401
+
+    if not cart_item:
+        return {"errors": "item not found"}, 404
+
+    db.session.delete(cart_item)
+    db.session.commit()
+
+    if not cart.cart_items:
+        db.session.delete(cart)
+        db.session.commit()
+
+    return {"message": "successfully deleted"}
