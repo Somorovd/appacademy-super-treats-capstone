@@ -2,7 +2,7 @@
   height: 100vh;
   grid-area: menu;
   padding: 40px;
-  background-color: lightgray;
+  background-color: #E4E2DF;
   position: sticky;
   top: 0px;
   left: 0px;
@@ -35,5 +35,5 @@
 
 
 .menu-link.active {
-  color: #4e937a
+  color: green
 }

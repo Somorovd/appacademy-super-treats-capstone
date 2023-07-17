@@ -8,6 +8,7 @@ export default function CreateBusinessPage() {
       <PageHeader
         backgroundColor={"black"}
         color={"white"}
+        highlight={"green"}
       />
       <div className="create-business-content fh">
         <div className="create-business-content__tagline flex flex-11">

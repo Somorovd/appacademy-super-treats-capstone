@@ -8,7 +8,7 @@ export default function BusinessMenu() {
   return (
     <div className="business-menu flex-c">
       <section>
-        <Logo />
+        <Logo highlight={"green"} />
         <NavLink
           exact
           to="/business"
