@@ -6,6 +6,7 @@ import PageHeader from "../PageHeader";
 import BusinessCard from "./BusinessCard";
 import FilterIcon from "./FilterIcon/FilterIcon";
 import FilterSidebar from "./FilterSidebar";
+import CartMenu from "../CartMenu";
 import "./BusinessBrowsingPage.css";
 
 const filterCategories = [
@@ -41,6 +42,7 @@ export default function BusinessBrowsingPage() {
     <div className="business-browsing">
       <header className="business-browsing__header">
         <PageHeader />
+        <CartMenu />
         <div className="pg-pd">
           <div className="filter-bar flex">
             {filterCategories.map((i) => (
