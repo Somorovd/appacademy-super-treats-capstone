@@ -84,6 +84,7 @@ export default function LoggedInUserMenu() {
           Add your business
         </Link>
       </section>
+      <footer>* Coming Soon</footer>
     </>
   );
 }
