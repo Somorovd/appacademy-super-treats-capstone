@@ -1,0 +1,17 @@
+.carts-menu__wrapper {
+  width: fit-content;
+  position: fixed;
+  top: 40px;
+  right: 0px;
+  z-index: 10;
+}
+
+.carts-menu {
+  background-color: black;
+  color: white;
+  border-radius: 3rem;
+}
+
+.carts-menu__all {
+  gap: 10px;
+}

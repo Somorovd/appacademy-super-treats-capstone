@@ -4,7 +4,7 @@ from app.forms.create_cart_item_form import CreateCartItemForm
 from app.forms.edit_cart_item_form import EditCartItemForm
 from ..utils.helpers import validation_errors_to_dict
 
-from app.models import db, Cart, CartItem, Item, Business
+from app.models import db, Cart, CartItem, Item
 
 cart_routes = Blueprint("carts", __name__)
 
@@ -13,7 +13,7 @@ cart_routes = Blueprint("carts", __name__)
 @login_required
 def user_carts():
     carts = Cart.query.filter(Cart.user_id == current_user.id).all()
-    return {"carts": {cart.id: cart.to_dict() for cart in carts}}
+    return {"carts": {cart.business_id: cart.to_dict() for cart in carts}}
 
 
 @cart_routes.route("/<int:cart_id>")
