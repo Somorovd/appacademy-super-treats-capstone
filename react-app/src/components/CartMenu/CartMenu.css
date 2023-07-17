@@ -1,5 +1,5 @@
 .carts-menu__wrapper {
-  width: fit-content;
+  /* width: fit-content; */
   position: fixed;
   top: 40px;
   right: 0px;
@@ -12,6 +12,18 @@
   border-radius: 3rem;
 }
 
-.carts-menu__all {
+.all-carts {
   gap: 10px;
+  position: relative;
+}
+
+.all-carts__dropdown {
+  margin-right: 40px;
+  position: absolute;
+  top: 100%;
+  right: 0px;
+  border: 3px solid darkmagenta;
+  width: 400px;
+  max-height: 550px;
+  overflow-y: scroll;
 }

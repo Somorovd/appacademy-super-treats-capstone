@@ -112,3 +112,7 @@ button {
   color: firebrick;
   font-style: italic;
 }
+
+.hidden {
+  visibility: hidden;
+}

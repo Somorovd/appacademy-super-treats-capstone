@@ -3,17 +3,20 @@ import { useParams } from "react-router-dom";
 
 export default function AllCartsMenu() {
   const { businessId } = useParams();
-  const carts = useSelector((state) => state.carts);
+  const cartsObj = useSelector((state) => state.carts);
+  const carts = Object.values(cartsObj);
 
   return (
-    <div className="carts-menu__all flex flex-11">
-      <i className="fa-solid fa-cart-shopping"></i>
-      {!businessId && (
-        <>
-          <span>{Object.keys(carts)?.length} carts</span>
-          <i className="fa-solid fa-angle-down"></i>
-        </>
-      )}
-    </div>
+    <>
+      <div className="all-carts flex flex-11">
+        <i className="fa-solid fa-cart-shopping"></i>
+        {!businessId && (
+          <>
+            <span>{carts?.length || 0} carts</span>
+            <i className="fa-solid fa-angle-down"></i>
+          </>
+        )}
+      </div>
+    </>
   );
 }
