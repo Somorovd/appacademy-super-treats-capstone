@@ -92,28 +92,27 @@ export default function ItemEditPage() {
 
   return (
     <div className="">
+      <header className="business-header">
+        <Link to={`/business/${businessId}/items`}>
+          <i className="fa-solid fa-arrow-left ft-15"></i>
+        </Link>
+        <div className="item-actions flex">
+          <button
+            className="bt-pd"
+            onClick={handleDelete}
+          >
+            Delete
+          </button>
+          <button className="bt-black bt-pd">Save</button>
+        </div>
+      </header>
       <form
-        className="create-item-form flex flex-c"
+        className="create-item-form flex-c flex-01"
         onSubmit={handleSubmit}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.preventDefault();
         }}
       >
-        <header className="business-header">
-          <Link to={`/business/${businessId}/items`}>
-            <i className="fa-solid fa-arrow-left ft-15"></i>
-          </Link>
-          <div className="item-actions flex">
-            <button
-              className="bt-pd"
-              onClick={handleDelete}
-            >
-              Delete
-            </button>
-            <button className="bt-black bt-pd">Save</button>
-          </div>
-        </header>
-
         <div className="create-item__name">
           <input
             placeholder="Name..."
@@ -134,7 +133,9 @@ export default function ItemEditPage() {
             }}
             onLoad={(e) => (e.target.style = "object-fit: cover")}
           />
-          <label htmlFor="image">Item Picture</label>
+          <label htmlFor="image">
+            Item Picture (<em>optional</em> )
+          </label>
           <input
             id="image"
             value={imageInput}
@@ -145,7 +146,9 @@ export default function ItemEditPage() {
         </div>
 
         <div className="create-item__about">
-          <label htmlFor="about">Description</label>
+          <label htmlFor="about">
+            Description (<em>optional</em> )
+          </label>
           <textarea
             id="about"
             value={about}
