@@ -67,7 +67,8 @@ export default function ItemEditPage() {
     setErrors(res.errors || {});
 
     if (!res.errors && !isEditting)
-      history.push(`/business/${businessId}/items/${res.item.id}`);
+      history.push(`/business/${businessId}/items`);
+    else console.log(res.errors);
   };
 
   const onDelete = async () => {
@@ -92,20 +93,6 @@ export default function ItemEditPage() {
 
   return (
     <div className="">
-      <header className="business-header">
-        <Link to={`/business/${businessId}/items`}>
-          <i className="fa-solid fa-arrow-left ft-15"></i>
-        </Link>
-        <div className="item-actions flex">
-          <button
-            className="bt-pd"
-            onClick={handleDelete}
-          >
-            Delete
-          </button>
-          <button className="bt-black bt-pd">Save</button>
-        </div>
-      </header>
       <form
         className="create-item-form flex-c flex-01"
         onSubmit={handleSubmit}
@@ -113,6 +100,20 @@ export default function ItemEditPage() {
           if (e.key === "Enter") e.preventDefault();
         }}
       >
+        <header className="business-header fw">
+          <Link to={`/business/${businessId}/items`}>
+            <i className="fa-solid fa-arrow-left ft-15"></i>
+          </Link>
+          <div className="item-actions flex">
+            <button
+              className="bt-pd"
+              onClick={handleDelete}
+            >
+              Delete
+            </button>
+            <button className="bt-black bt-pd">Save</button>
+          </div>
+        </header>
         <div className="create-item__name">
           <input
             placeholder="Name..."
