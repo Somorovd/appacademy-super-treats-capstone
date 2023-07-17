@@ -1,5 +1,5 @@
 .business-card {
-  height: 188px;
+  height: 200px;
   gap: 15px;
   cursor: pointer;
   border-radius: 10px;
@@ -59,6 +59,9 @@
   font-weight: bold;
   padding: 5px;
   width: fit-content;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background-color: #DDD;
 }
 
 .business-card__delivery {

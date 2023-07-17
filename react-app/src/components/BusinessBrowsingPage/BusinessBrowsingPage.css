@@ -1,36 +1,26 @@
 .filter-bar {
-  border: 1px solid black;
-  height: 70px;
-  gap: 20px;
-}
-
-.filter-icon img {
-  width: 50px;
-  aspect-ratio: 1;
-  background-color: cornflowerblue;
-  border-radius: 50%;
-  border: 1px solid cornflowerblue;
+  padding: 20px 0px;
+  border-bottom: 1px solid lightgrey;
+  justify-content: space-between;
 }
 
 .deals-bar {
-  border: 1px solid black;
-  height: 150px;
-  padding: 10px;
-  gap: 10px;
+  height: fit-content;
+  padding: 50px 0px;
+  gap: 24px;
 }
 
 .deal-card {
-  height: 100%;
   background-color: darkgoldenrod;
   width: 33%;
+  aspect-ratio: 2.5 / 1;
   border-radius: 10px;
   padding: 10px;
 }
 
-.filter-sidebar {
-  width: 500px;
-  height: 600px;
-  border: 1px solid black;
+.business-browsing__body {
+  position: relative;
+  gap: 40px;
 }
 
 .business-browsing__content {

@@ -1,0 +1,20 @@
+.filter-icon {
+  flex-basis: 0;
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.filter-icon img {
+  width: 55px;
+  aspect-ratio: 1;
+  background-color: lightgray;
+  border: 1px solid lightgray;
+  border-radius: 50%;
+}
+
+.filter-icon p {
+  font-size: 0.9rem;
+}
