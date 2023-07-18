@@ -6,11 +6,18 @@
 .create-item-form label,
 .create-item-form textarea {
   display: block;
-  width: 100%;
+  width: 550px;
+}
+
+.create-item-form input:focus,
+.create-item-form textarea:focus {
+  border: 2px solid black;
 }
 
 .create-item-form input,
 .create-item-form textarea {
+  border: 2px solid white 1px solid black;
+  outline: none;
   padding: 0.8rem;
 }
 
