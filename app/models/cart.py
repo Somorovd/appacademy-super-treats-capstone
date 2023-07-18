@@ -13,6 +13,7 @@ class Cart(db.Model):
     business_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("businesses.id"))
     )
+    address = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(
         db.DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
@@ -40,6 +41,7 @@ class Cart(db.Model):
         dct = {
             "id": self.id,
             "userId": self.user_id,
+            "address": self.address,
             "business": self.business.cart_to_dict(),
             "cartItems": {i.id: i.to_dict() for i in self.cart_items},
             "count": self.item_count,

@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.forms.create_cart_item_form import CreateCartItemForm
+from app.forms.edit_cart_form import EditCartForm
 from app.forms.edit_cart_item_form import EditCartItemForm
 from ..utils.helpers import validation_errors_to_dict
 
@@ -49,6 +50,7 @@ def add_item():
         cart = Cart(
             user_id=current_user.id,
             business_id=item.business.id,
+            address=form.data["address"],
         )
         db.session.add(cart)
         db.session.commit()
@@ -58,6 +60,25 @@ def add_item():
     )
 
     db.session.add(cart_item)
+    db.session.commit()
+
+    return {"cart": cart.to_dict()}
+
+
+@cart_routes.route("/<int:cart_id>/edit", methods=["PUT"])
+def edit_cart(cart_id):
+    form = EditCartForm()
+    form["csrf_token"].data = request.cookies.get("csrf_token")
+
+    if not form.validate_on_submit():
+        return {"errors": validation_errors_to_dict(form.errors)}, 400
+
+    cart = Cart.query.get(cart_id)
+
+    if not cart:
+        return {"errors": "cart not found"}, 404
+
+    cart.address = form.data["address"]
     db.session.commit()
 
     return {"cart": cart.to_dict()}

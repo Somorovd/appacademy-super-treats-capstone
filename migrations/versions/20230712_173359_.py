@@ -116,6 +116,7 @@ def upgrade():
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("user_id", sa.Integer(), nullable=True),
         sa.Column("business_id", sa.Integer(), nullable=True),
+        sa.Column("address", sa.String(length=255), nullable=False),
         sa.Column(
             "created_at",
             sa.DateTime(timezone=True),
