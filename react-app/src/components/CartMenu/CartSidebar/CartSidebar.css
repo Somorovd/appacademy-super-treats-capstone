@@ -4,6 +4,8 @@
   position: relative;
   z-index: 20;
   padding: 20px;
+  gap: 20px;
+  overflow-y: auto;
 }
 
 .cart-sidebar>div {
@@ -15,6 +17,11 @@
   overflow-wrap: break-word;
 }
 
+.cart-sidebar h2:hover {
+  text-decoration: 1px solid underline;
+  cursor: pointer;
+}
+
 .cart-sidebar__dropdown {
   min-width: 50px;
 }
@@ -22,6 +29,11 @@
 .cart-sidebar__summary {
   padding: 10px 0px;
   border-bottom: 1px solid lightgray;
+}
+
+.cart-sidebar__subtotal {
+  padding: 10px 0px;
+  border-top: 1px solid lightgray;
 }
 
 .cart-item-list {

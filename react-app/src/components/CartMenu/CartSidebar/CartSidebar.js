@@ -51,10 +51,10 @@ export default function CartSidebar({ cart }) {
         >
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <div>Carts</div>
+        <div>10 Carts</div>
       </div>
-      <div className="flex">
-        <h2> Cart for {cart.business.name} </h2>
+      <div className="flex flex-b1">
+        <h2 onClick={handleAddItems}>{cart.business.name} </h2>
         <button
           className="cart-sidebar__dropdown-button bt-pd flex flex-11"
           onClick={openMenu}
@@ -91,21 +91,23 @@ export default function CartSidebar({ cart }) {
           </li>
         </ul>
       </div>
-      <div>
-        <div className="cart-sidebar__summary flex flex-b1">
-          <span>{cartItems.length} items</span>
-          <span>
-            Subtotal: <strong>${cart.price}</strong>
-          </span>
-        </div>
-        <div className="cart-item-list flex-c">
-          {cartItems.map((i) => (
-            <CartItemCard
-              cartItem={i}
-              key={i.id}
-            />
-          ))}
-        </div>
+      <div className="cart-sidebar__summary flex flex-b1">
+        <span>{cartItems.length} items</span>
+        <span>
+          Subtotal: <strong>${cart.price}</strong>
+        </span>
+      </div>
+      <div className="cart-item-list flex-c">
+        {cartItems.map((i) => (
+          <CartItemCard
+            cartItem={i}
+            key={i.id}
+          />
+        ))}
+      </div>
+      <div className="cart-sidebar__subtotal flex flex-b1 ft-15">
+        <p>Subtotal</p>
+        <p>${cart.price}</p>
       </div>
     </div>
   );
