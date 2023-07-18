@@ -24,7 +24,7 @@ export default function ItemBrowsingPage() {
     <div className="business-browsing">
       <CartMenu />
       <header className="business-browsing__header">
-        <PageHeader />
+        <PageHeader auth={true} />
         <div className="pg-pd">
           <h1> {business.name} </h1>
           <div className="item-grid">

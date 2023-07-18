@@ -42,7 +42,7 @@ export default function BusinessBrowsingPage() {
     <div className="business-browsing">
       <CartMenu />
       <header className="business-browsing__header">
-        <PageHeader />
+        <PageHeader auth={true} />
         <div className="pg-pd">
           <div className="filter-bar flex">
             {filterCategories.map((i) => (

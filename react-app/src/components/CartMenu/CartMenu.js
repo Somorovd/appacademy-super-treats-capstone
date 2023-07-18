@@ -14,6 +14,7 @@ export default function CartMenu() {
   const cartsDropdownRef = useRef();
   const [hidden, setHidden] = useState(true);
 
+  const user = useSelector((state) => state.session.user);
   const cartsObj = useSelector((state) => state.carts);
   const carts = Object.values(cartsObj);
   const currentCart = carts[businessId];
@@ -33,6 +34,8 @@ export default function CartMenu() {
   const closeMenu = (e) => {
     setHidden(true);
   };
+
+  if (!user) return null;
 
   return (
     <div

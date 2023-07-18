@@ -6,6 +6,7 @@ import "./ItemCard.css";
 export default function ItemCard({ itemId }) {
   const dispatch = useDispatch();
   const item = useSelector((state) => state.items.allItems[itemId]);
+  const user = useSelector((state) => state.session.user);
 
   const addToCart = () => {
     const itemObj = {
@@ -19,12 +20,14 @@ export default function ItemCard({ itemId }) {
   return (
     <div className="item-card">
       <p>{item.name}</p>
-      <button
-        className="bt-black bt-pd add-to-cart flex flex-11"
-        onClick={addToCart}
-      >
-        <i className="fa-solid fa-plus"></i>
-      </button>
+      {user && (
+        <button
+          className="bt-black bt-pd add-to-cart flex flex-11"
+          onClick={addToCart}
+        >
+          <i className="fa-solid fa-plus"></i>
+        </button>
+      )}
     </div>
   );
 }
