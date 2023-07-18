@@ -2,7 +2,8 @@ const GET_ONE_ITEM = "items/GET_ONE_ITEM";
 const CREATE_ITEM = "items/CREATE_ITEM";
 const UPDATE_ITEM = "items/UPDATE_ITEM";
 const DELETE_ITEM = "items/DELETE_ITEM";
-const GET_ONE_BUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
+const GET_ONE_USERBUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
+const GET_ONE_BUSINESS = "businesses/GET_ONE_BUSINESS";
 
 const actionGetOneItem = (item) => ({
   type: GET_ONE_ITEM,
@@ -108,6 +109,10 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     case GET_ONE_BUSINESS: {
+      newState.allItems = { ...action.payload.items };
+      return newState;
+    }
+    case GET_ONE_USERBUSINESS: {
       newState.allItems = { ...action.payload.items };
       return newState;
     }

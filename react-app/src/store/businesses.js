@@ -1,4 +1,5 @@
 const GET_ALL_BUSINESSES = "businesses/GET_ALL_BUSINESSES";
+const GET_ONE_BUSINESS = "businesses/GET_ONE_BUSINESS";
 const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
 const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
 
@@ -7,15 +8,24 @@ const actionGetAllBusinesses = (businesses) => ({
   payload: businesses,
 });
 
+const actionGetOneBusiness = (business) => ({
+  type: GET_ONE_BUSINESS,
+  payload: business,
+});
+
 export const thunkGetAllBusinesses = () => async (dispatch) => {
   const res = await fetch("/api/businesses/all");
   const resBody = await res.json();
 
-  if (res.ok) {
-    const businesses = {};
-    for (let b of resBody.businesses) businesses[b.id] = b;
-    dispatch(actionGetAllBusinesses(businesses));
-  }
+  if (res.ok) dispatch(actionGetAllBusinesses(resBody.businesses));
+  return resBody;
+};
+
+export const thunkGetOneBusiness = (businessId) => async (dispatch) => {
+  const res = await fetch(`/api/businesses/${businessId}`);
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionGetOneBusiness(resBody.business));
   return resBody;
 };
 
@@ -30,6 +40,11 @@ export default function reducer(state = initialState, action) {
     case GET_ALL_BUSINESSES: {
       const allBusinesses = action.payload;
       newState.allBusinesses = allBusinesses;
+      return newState;
+    }
+    case GET_ONE_BUSINESS: {
+      newState.singleBusiness = { ...action.payload };
+      newState.singleBusiness.items = Object.keys(action.payload.items);
       return newState;
     }
     case CREATE_BUSINESS: {

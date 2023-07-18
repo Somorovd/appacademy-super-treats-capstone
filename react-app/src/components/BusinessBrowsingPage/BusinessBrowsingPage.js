@@ -67,6 +67,7 @@ export default function BusinessBrowsingPage() {
           {allBusinesses.map((b) => (
             <BusinessCard
               business={b}
+              isBrowsing={true}
               key={b.id}
             />
           ))}

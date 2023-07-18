@@ -1,8 +1,13 @@
+import { useHistory } from "react-router-dom";
 import "./BusinessCard.css";
 
-export default function BusinessCard({ business, isBusinessPage }) {
+export default function BusinessCard({ business, isBrowsing }) {
+  const history = useHistory();
   return (
-    <div className="business-card">
+    <div
+      className="business-card"
+      onClick={() => isBrowsing && history.push(`/feed/${business.id}`)}
+    >
       <header>
         <img
           className="business-card__image fw fh"
@@ -15,7 +20,7 @@ export default function BusinessCard({ business, isBusinessPage }) {
         <p className="business-card__rating">
           {(Math.random() * 2.5 + 2.5).toFixed(1)}
         </p>
-        {isBusinessPage && (
+        {!isBrowsing && (
           <p className="business-card__address">{business.address}</p>
         )}
         <p className="business-card__delivery">
