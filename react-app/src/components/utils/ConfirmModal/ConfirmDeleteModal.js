@@ -1,4 +1,4 @@
-import ConfirmModal from "./ConfirmModal";
+import { ConfirmModal } from "./ConfirmModal";
 import "./ConfirmModal.css";
 
 const ConfirmDeleteBody = ({ deleteName }) => {
@@ -6,7 +6,7 @@ const ConfirmDeleteBody = ({ deleteName }) => {
     <div className="confirm-delete flex-c">
       <h2>
         Are you sure you want to delete{" "}
-        <span className="delete-name">{deleteName}</span>?
+        <span className="modal-highlight">{deleteName}</span>?
       </h2>
       <p>This is action cannot be undone</p>
     </div>

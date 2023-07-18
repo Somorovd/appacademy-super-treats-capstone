@@ -9,11 +9,30 @@ import {
   thunkUpdateItem,
   thunkDeleteItem,
 } from "../../../store/items";
-import { ConfirmDeleteModal } from "../../utils/ConfirmModal";
+import { ConfirmModal, ConfirmDeleteModal } from "../../utils/ConfirmModal";
 import "./ItemEditPage.css";
 
 const defaultImage =
   "https://cdn.discordapp.com/attachments/723759214123679836/1129101930510172180/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
+
+const ConfirmPriceModal = ({ name, onConfirm }) => {
+  const ConfirmBody = (
+    <div className="confirm-price">
+      <h2>
+        The price on <span className="modal-highlight">{name}</span> is set to
+        $0. If you continue this item with be free.
+      </h2>
+    </div>
+  );
+
+  return (
+    <ConfirmModal
+      ConfirmBody={ConfirmBody}
+      onConfirm={onConfirm}
+      confirmText={"Continue"}
+    />
+  );
+};
 
 export default function ItemEditPage() {
   const dispatch = useDispatch();
@@ -48,8 +67,20 @@ export default function ItemEditPage() {
     setPrice(item?.price || "");
   }, [item, isEditting]);
 
-  const handleSubmit = async (e) => {
+  const checkSubmit = (e) => {
     e.preventDefault();
+    if (price === 0) {
+      setModalContent(
+        <ConfirmPriceModal
+          name={name}
+          onConfirm={handleSubmit}
+        />
+      );
+    } else handleSubmit();
+  };
+
+  const handleSubmit = async (e) => {
+    e?.preventDefault();
 
     const itemObj = {
       id: item?.id,
@@ -95,7 +126,7 @@ export default function ItemEditPage() {
     <div className="">
       <form
         className="create-item-form flex-c flex-01"
-        onSubmit={handleSubmit}
+        onSubmit={checkSubmit}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.preventDefault();
         }}

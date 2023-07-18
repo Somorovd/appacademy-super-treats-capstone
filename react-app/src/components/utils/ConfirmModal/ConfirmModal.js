@@ -2,7 +2,7 @@ import { useModal } from "../../../context/Modal";
 
 import "./ConfirmModal.css";
 
-export default function ConfirmModal({
+export function ConfirmModal({
   ConfirmBody,
   cancelText,
   confirmText,
