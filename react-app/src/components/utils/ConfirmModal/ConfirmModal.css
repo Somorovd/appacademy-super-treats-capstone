@@ -13,12 +13,12 @@
   padding: 1rem;
 }
 
-.confirm-delete h2 {
+.confirm-modal h2 {
   text-overflow: ellipsis;
   overflow: hidden;
   max-width: 100%;
 }
 
 .modal-highlight {
-  color: #4e937a;
+  color: green;
 }
