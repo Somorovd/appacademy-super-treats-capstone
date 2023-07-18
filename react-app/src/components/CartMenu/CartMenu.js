@@ -31,9 +31,7 @@ export default function CartMenu() {
   };
 
   const closeMenu = (e) => {
-    if (cartsDropdownRef.current && cartsDropdownRef.current.contains(e.target))
-      return;
-    else setHidden(true);
+    setHidden(true);
   };
 
   return (

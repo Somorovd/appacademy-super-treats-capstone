@@ -1,0 +1,29 @@
+.cart-sidebar {
+  width: 450px;
+  height: 100vh;
+  position: relative;
+  z-index: 20;
+  padding: 20px;
+}
+
+.cart-sidebar>div {
+  max-width: 100%;
+}
+
+.cart-sidebar h2 {
+  width: 100%;
+  overflow-wrap: break-word;
+}
+
+.cart-sidebar__dropdown {
+  min-width: 50px;
+}
+
+.cart-sidebar__summary {
+  padding: 10px 0px;
+  border-bottom: 1px solid lightgray;
+}
+
+.cart-item-list {
+  gap: 20px;
+}
