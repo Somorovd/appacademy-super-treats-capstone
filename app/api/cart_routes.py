@@ -60,7 +60,7 @@ def add_item():
     db.session.add(cart_item)
     db.session.commit()
 
-    return {"message": "item added successfully"}
+    return {"cart": cart.to_dict()}
 
 
 @cart_routes.route("/<int:cart_id>/items/<int:item_id>/edit", methods=["PUT"])

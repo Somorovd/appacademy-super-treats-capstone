@@ -1,0 +1,12 @@
+.item-card {
+  min-width: 0px;
+  max-width: 250px;
+  aspect-ratio: 1;
+  border: 1px solid black;
+  overflow: hidden;
+}
+
+.add-to-cart {
+  aspect-ratio: 1;
+  border-radius: 3rem;
+}

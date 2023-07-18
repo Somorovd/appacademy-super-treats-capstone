@@ -3,6 +3,7 @@ import "./CartCard.css";
 
 export default function CartCard({ cart }) {
   const address = useSelector((state) => state.session.address);
+  if (!cart.business) return null;
   return (
     <div className="cart-card">
       <div className="cart-card__image"></div>

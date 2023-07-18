@@ -5,14 +5,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { thunkGetOneBusiness } from "../../store/businesses";
 import PageHeader from "../PageHeader";
 import CartMenu from "../CartMenu";
+import ItemCard from "./ItemCard";
 import "./ItemBrowsingPage.css";
 
 export default function ItemBrowsingPage() {
   const dispatch = useDispatch();
   const { businessId } = useParams();
   const business = useSelector((state) => state.businesses.singleBusiness);
-  const itemsObj = useSelector((state) => state.items.allItems);
-  const items = Object.values(itemsObj);
+  const itemIds = business.items;
 
   useEffect(() => {
     dispatch(thunkGetOneBusiness(businessId));
@@ -28,13 +28,8 @@ export default function ItemBrowsingPage() {
         <div className="pg-pd">
           <h1> {business.name} </h1>
           <div className="item-grid">
-            {items.map((i) => (
-              <div className="item-card">
-                <p>{i.name}</p>
-                <button className="bt-black bt-pd add-to-cart flex flex-11">
-                  <i className="fa-solid fa-plus"></i>
-                </button>
-              </div>
+            {itemIds.map((i) => (
+              <ItemCard itemId={i} />
             ))}
           </div>
         </div>
