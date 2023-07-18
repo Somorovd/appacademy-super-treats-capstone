@@ -9,11 +9,30 @@ import {
   thunkUpdateItem,
   thunkDeleteItem,
 } from "../../../store/items";
-import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
+import { ConfirmModal, ConfirmDeleteModal } from "../../utils/ConfirmModal";
 import "./ItemEditPage.css";
 
 const defaultImage =
   "https://cdn.discordapp.com/attachments/723759214123679836/1129101930510172180/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
+
+const ConfirmPriceModal = ({ name, onConfirm }) => {
+  const ConfirmBody = (
+    <div className="confirm-price">
+      <h2>
+        The price on <span className="modal-highlight">{name}</span> is set to
+        $0. If you continue this item with be free.
+      </h2>
+    </div>
+  );
+
+  return (
+    <ConfirmModal
+      ConfirmBody={ConfirmBody}
+      onConfirm={onConfirm}
+      confirmText={"Continue"}
+    />
+  );
+};
 
 export default function ItemEditPage() {
   const dispatch = useDispatch();
@@ -48,8 +67,20 @@ export default function ItemEditPage() {
     setPrice(item?.price || "");
   }, [item, isEditting]);
 
-  const handleSubmit = async (e) => {
+  const checkSubmit = (e) => {
     e.preventDefault();
+    if (price === 0) {
+      setModalContent(
+        <ConfirmPriceModal
+          name={name}
+          onConfirm={handleSubmit}
+        />
+      );
+    } else handleSubmit();
+  };
+
+  const handleSubmit = async (e) => {
+    e?.preventDefault();
 
     const itemObj = {
       id: item?.id,
@@ -67,7 +98,8 @@ export default function ItemEditPage() {
     setErrors(res.errors || {});
 
     if (!res.errors && !isEditting)
-      history.push(`/business/${businessId}/items/${res.item.id}`);
+      history.push(`/business/${businessId}/items`);
+    else console.log(res.errors);
   };
 
   const onDelete = async () => {
@@ -93,13 +125,13 @@ export default function ItemEditPage() {
   return (
     <div className="">
       <form
-        className="create-item-form flex flex-c"
-        onSubmit={handleSubmit}
+        className="create-item-form flex-c flex-01"
+        onSubmit={checkSubmit}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.preventDefault();
         }}
       >
-        <header className="business-header">
+        <header className="business-header fw">
           <Link to={`/business/${businessId}/items`}>
             <i className="fa-solid fa-arrow-left ft-15"></i>
           </Link>
@@ -113,7 +145,6 @@ export default function ItemEditPage() {
             <button className="bt-black bt-pd">Save</button>
           </div>
         </header>
-
         <div className="create-item__name">
           <input
             placeholder="Name..."
@@ -134,7 +165,9 @@ export default function ItemEditPage() {
             }}
             onLoad={(e) => (e.target.style = "object-fit: cover")}
           />
-          <label htmlFor="image">Item Picture</label>
+          <label htmlFor="image">
+            Item Picture (<em>optional</em> )
+          </label>
           <input
             id="image"
             value={imageInput}
@@ -145,7 +178,9 @@ export default function ItemEditPage() {
         </div>
 
         <div className="create-item__about">
-          <label htmlFor="about">Description</label>
+          <label htmlFor="about">
+            Description (<em>optional</em> )
+          </label>
           <textarea
             id="about"
             value={about}

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useModal } from "../../../context/Modal";
 
 import { thunkDeleteBusiness } from "../../../store/userBusinesses";
-import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
+import { ConfirmDeleteModal } from "../../utils/ConfirmModal";
 import CreateBusinessForm from "../CreateBusinessPage/CreateBusinessForm";
 
 import "./BusinessInfoPage.css";
