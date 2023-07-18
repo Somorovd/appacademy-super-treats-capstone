@@ -9,7 +9,7 @@ import {
   thunkUpdateItem,
   thunkDeleteItem,
 } from "../../../store/items";
-import ConfirmDeleteModal from "../../utils/ConfirmDeleteModal";
+import { ConfirmDeleteModal } from "../../utils/ConfirmModal";
 import "./ItemEditPage.css";
 
 const defaultImage =
