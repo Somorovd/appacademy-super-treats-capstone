@@ -11,6 +11,7 @@ export default function ItemCard({ itemId }) {
     const itemObj = {
       item_id: item.id,
       quantity: 1,
+      address: localStorage.getItem("current-address"),
     };
     dispatch(thunkAddToCart(itemObj));
   };
