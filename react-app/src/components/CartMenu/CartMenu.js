@@ -17,8 +17,6 @@ export default function CartMenu() {
   const carts = Object.values(cartsObj);
   const currentCart = cartsObj[businessId];
 
-  console.log("CART", currentCart);
-
   useEffect(() => {
     dispatch(thunkGetAllCarts());
   }, [dispatch]);
