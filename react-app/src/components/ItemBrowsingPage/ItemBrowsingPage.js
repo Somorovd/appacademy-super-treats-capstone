@@ -26,10 +26,17 @@ export default function ItemBrowsingPage() {
       <header className="business-browsing__header">
         <PageHeader />
         <div className="pg-pd">
-          <h1> ItemBrowsingPage </h1>
-          {items.map((i) => (
-            <p>{i.name}</p>
-          ))}
+          <h1> {business.name} </h1>
+          <div className="item-grid">
+            {items.map((i) => (
+              <div className="item-card">
+                <p>{i.name}</p>
+                <button className="bt-black bt-pd add-to-cart flex flex-11">
+                  <i className="fa-solid fa-plus"></i>
+                </button>
+              </div>
+            ))}
+          </div>
         </div>
       </header>
     </div>
