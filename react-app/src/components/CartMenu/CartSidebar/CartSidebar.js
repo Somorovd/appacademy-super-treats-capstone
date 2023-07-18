@@ -38,7 +38,7 @@ export default function CartSidebar({ cart }) {
   };
 
   const handleClearCart = () => {
-    dispatch(thunkDeleteCart(cart.id));
+    dispatch(thunkDeleteCart(cart));
     closeModal();
   };
 

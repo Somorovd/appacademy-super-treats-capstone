@@ -1,5 +1,6 @@
 const GET_ALL_CARTS = "carts/GET_ALL_CARTS";
 const ADD_TO_CART = "carts/ADD_TO_CART";
+const DELETE_CART = "carts/DELETE_CART";
 
 const actionGetAllCarts = (carts) => ({
   type: GET_ALL_CARTS,
@@ -8,6 +9,11 @@ const actionGetAllCarts = (carts) => ({
 
 const actionAddToCart = (cart) => ({
   type: ADD_TO_CART,
+  payload: cart,
+});
+
+const actionDeleteCart = (cart) => ({
+  type: DELETE_CART,
   payload: cart,
 });
 
@@ -33,6 +39,16 @@ export const thunkAddToCart = (item) => async (dispatch) => {
   return resBody;
 };
 
+export const thunkDeleteCart = (cart) => async (dispatch) => {
+  const res = await fetch(`/api/carts/${cart.id}/delete`, {
+    method: "delete",
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionDeleteCart(cart));
+  return resBody;
+};
+
 const initialState = {};
 
 export default function reducer(state = initialState, action) {
@@ -42,6 +58,11 @@ export default function reducer(state = initialState, action) {
     }
     case ADD_TO_CART: {
       return { ...state, [action.payload.business.id]: { ...action.payload } };
+    }
+    case DELETE_CART: {
+      const newState = { ...state };
+      delete newState[action.payload.business.id];
+      return newState;
     }
     default:
       return state;
