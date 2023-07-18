@@ -27,3 +27,45 @@
 .cart-item-list {
   gap: 20px;
 }
+
+.close-sidebar {
+  background-color: white;
+}
+
+.cart-sidebar__dropdown-button {
+  aspect-ratio: 1;
+  border-radius: 50%;
+  position: relative;
+}
+
+.cart-sidebar__dropdown {
+  width: 300px;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  position: absolute;
+  top: 95px;
+  right: 20px;
+  background-color: white;
+  box-shadow: 0px 0px 8px lightgray;
+}
+
+.cart-sidebar__dropdown li {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+}
+
+.cart-sidebar__dropdown li:hover {
+  background-color: #E8E8E8;
+}
+
+.cart-sidebar__dropdown li div:first-child {
+  aspect-ratio: 1;
+}
+
+.cart-sidebar__dropdown li:not(:last-child) div:last-child {
+  border-bottom: 1px solid lightgray;
+}
+
+.delete-cart {
+  color: red;
+}
