@@ -9,6 +9,14 @@
   gap: 10px;
 }
 
+.cart-card:hover {
+  background-color: #EEE;
+}
+
+.cart-card:hover img {
+  border: 1px solid #EEE;
+}
+
 .cart-card+.cart-card {
   border-top: 1px solid lightgray;
 }
@@ -38,6 +46,14 @@
   width: 100%;
 }
 
-.cart-cart__icons {
+.cart-card__icons {
   grid-area: icons;
+  gap: 10px;
+}
+
+.cart-size {
+  width: 1.5rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  font-size: 0.8rem;
 }

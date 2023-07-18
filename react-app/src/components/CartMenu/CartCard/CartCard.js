@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { useModal } from "../../../context/Modal";
 
 import CartSidebar from "../CartSidebar";
@@ -6,6 +5,8 @@ import "./CartCard.css";
 
 export default function CartCard({ cart }) {
   const { setModalContent } = useModal();
+
+  const cartItems = Object.values(cart.cartItems);
 
   const handleClick = () => {
     setModalContent(<CartSidebar cart={cart} />);
@@ -26,7 +27,14 @@ export default function CartCard({ cart }) {
         <p>Subtotal: ${cart.price}</p>
         <p>Deliver to {cart.address}</p>
       </div>
-      <div className="cart-card__icons"></div>
+      <div className="cart-card__icons flex flex-11">
+        <span className="cart-size bt-black flex flex-11">
+          {cartItems.length}
+        </span>
+        <span>
+          <i className="fa-solid fa-chevron-right"></i>
+        </span>
+      </div>
     </div>
   );
 }
