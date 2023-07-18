@@ -12,7 +12,9 @@ const bgImg = "/src/resources/images/landing-page-background.png";
 export default function LandingPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const [address, setAddress] = useState("");
+  const [address, setAddress] = useState(
+    sessionStorage.getItem("current-address") || ""
+  );
   const [delivery, setDelivery] = useState("delivery");
 
   const user = useSelector((state) => state.session.user);
@@ -20,9 +22,11 @@ export default function LandingPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     await dispatch(thunkSetLocation(address, delivery));
-    localStorage.setItem("current-address", address);
+    sessionStorage.setItem("current-address", address);
     history.push("/feed");
   };
+
+  if (sessionStorage.getItem("current-address")) history.push("/feed");
 
   return (
     <div className="landing-page fh flex-c">
