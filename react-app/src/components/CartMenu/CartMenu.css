@@ -7,6 +7,7 @@
 
 .carts-menu {
   border-radius: 3rem;
+  overflow: hidden;
 }
 
 .all-carts {
@@ -23,4 +24,22 @@
   width: 400px;
   max-height: 550px;
   overflow-y: scroll;
+  color: black;
+}
+
+.single-cart {
+  gap: 5px;
+  padding: 5px;
+}
+
+.single-cart img {
+  aspect-ratio: 1;
+  width: 35px;
+  border-radius: 35px;
+  object-fit: cover;
+}
+
+
+.cart-bt+.cart-bt {
+  border-left: 1px solid lightgray;
 }

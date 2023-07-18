@@ -1,14 +1,37 @@
-import { useSelector } from "react-redux";
+import { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
+import CartCard from "./CartCard";
 
 export default function AllCartsMenu() {
   const { businessId } = useParams();
+  const cartsDropdownRef = useRef();
+  const [hidden, setHidden] = useState(true);
+
   const cartsObj = useSelector((state) => state.carts);
   const carts = Object.values(cartsObj);
 
+  const openMenu = (e) => {
+    e.stopPropagation();
+    if (hidden) setHidden(false);
+    else closeMenu(e);
+  };
+
+  const closeMenu = (e) => {
+    setHidden(true);
+  };
+
+  useEffect(() => {
+    document.addEventListener("click", closeMenu);
+    return () => document.removeEventListener("click", closeMenu);
+  }, []);
+
   return (
     <>
-      <div className="all-carts flex flex-11">
+      <div
+        className="cart-bt all-carts flex flex-11 bt-pd bt-black"
+        onClick={openMenu}
+      >
         <i className="fa-solid fa-cart-shopping"></i>
         {!businessId && (
           <>
@@ -17,6 +40,16 @@ export default function AllCartsMenu() {
           </>
         )}
       </div>
+      {carts.length !== 0 && (
+        <div
+          className={"all-carts__dropdown " + (hidden ? "hidden" : "")}
+          ref={cartsDropdownRef}
+        >
+          {carts.map((cart) => (
+            <CartCard cart={cart} />
+          ))}
+        </div>
+      )}
     </>
   );
 }

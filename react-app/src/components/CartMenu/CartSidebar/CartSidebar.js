@@ -1,8 +1,12 @@
+import { useModal } from "../../../context/Modal";
 import CartItemCard from "../CartItemCard";
 import "./CartSidebar.css";
 
 export default function CartSidebar({ cart }) {
   const cartItems = Object.values(cart.cartItems);
+
+  const { setModalClass } = useModal();
+  setModalClass("flex flex-20 fh");
 
   return (
     <div className="cart-sidebar flex-c">

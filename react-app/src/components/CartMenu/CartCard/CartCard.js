@@ -5,11 +5,10 @@ import CartSidebar from "../CartSidebar";
 import "./CartCard.css";
 
 export default function CartCard({ cart }) {
-  const { setModalContent, setModalClass } = useModal();
+  const { setModalContent } = useModal();
   const address = useSelector((state) => state.session.address);
 
   const handleClick = () => {
-    setModalClass("flex flex-20 fh");
     setModalContent(<CartSidebar cart={cart} />);
   };
 
