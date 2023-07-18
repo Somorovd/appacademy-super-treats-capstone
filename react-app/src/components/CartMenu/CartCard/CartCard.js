@@ -6,7 +6,6 @@ import "./CartCard.css";
 
 export default function CartCard({ cart }) {
   const { setModalContent } = useModal();
-  const address = useSelector((state) => state.session.address);
 
   const handleClick = () => {
     setModalContent(<CartSidebar cart={cart} />);
@@ -17,11 +16,15 @@ export default function CartCard({ cart }) {
       className="cart-card"
       onClick={handleClick}
     >
-      <div className="cart-card__image"></div>
+      <img
+        className="cart-card__image"
+        src={cart.business.image}
+        alt=""
+      />
       <div className="cart-card__info flex-c">
         <h3 className="cart-card__name">{cart.business.name}</h3>
         <p>Subtotal: ${cart.price}</p>
-        <p>Deliver to {address}</p>
+        <p>Deliver to {cart.address}</p>
       </div>
       <div className="cart-card__icons"></div>
     </div>

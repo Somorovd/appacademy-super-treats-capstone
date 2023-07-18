@@ -103,4 +103,5 @@ class Business(db.Model):
             "address": self.address,
             "deliveryFee": self.delivery_fee,
             "name": self.name,
+            "image": self.image,
         }

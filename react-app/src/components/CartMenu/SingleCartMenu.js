@@ -9,20 +9,22 @@ export default function SingleCartMenu() {
   const { setModalContent } = useModal();
 
   const handleClick = () => {
-    setModalContent(<CartSidebar cart={cart}/>);
+    setModalContent(<CartSidebar cart={cart} />);
   };
 
   if (!cart) return null;
 
   return (
     <div
-      className="cart-bt single-cart flex flex-01 bt-black"
+      className="cart-bt single-cart flex flex-11 bt-black"
       onClick={handleClick}
     >
-      <img
-        src={business.image}
-        alt=""
-      />
+      {business.image && (
+        <img
+          src={business.image}
+          alt=""
+        />
+      )}
       <span>{Object.values(cart.cartItems).length} items</span>
     </div>
   );
