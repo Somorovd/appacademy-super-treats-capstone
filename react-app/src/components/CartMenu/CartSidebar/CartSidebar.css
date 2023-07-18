@@ -81,3 +81,7 @@
 .delete-cart {
   color: red;
 }
+
+.cart-sidebar__cart-dropdown-button:hover {
+  text-decoration: 1px solid underline;
+}

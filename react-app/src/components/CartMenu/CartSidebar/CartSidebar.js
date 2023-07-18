@@ -1,11 +1,11 @@
 import { useRef, useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 import CartItemCard from "../CartItemCard";
 
 import { thunkDeleteCart } from "../../../store/carts";
 import "./CartSidebar.css";
-import { useDispatch } from "react-redux";
 
 export default function CartSidebar({ cart }) {
   const dispatch = useDispatch();
@@ -14,8 +14,11 @@ export default function CartSidebar({ cart }) {
   const [hidden, setHidden] = useState(true);
 
   const { setModalClass, closeModal } = useModal();
-  setModalClass("flex flex-20 fh");
   const cartItems = Object.values(cart.cartItems);
+
+  const allCarts = useSelector((state) => state.carts);
+
+  setModalClass("flex flex-20 fh");
 
   const openMenu = (e) => {
     e.stopPropagation();
@@ -51,7 +54,10 @@ export default function CartSidebar({ cart }) {
         >
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <div>10 Carts</div>
+        <div className="cart-sidebar__cart-dropdown-button">
+          Carts ({Object.values(allCarts).length}){" "}
+          <i className="fa-solid fa-chevron-down"></i>
+        </div>
       </div>
       <div className="flex flex-b1">
         <h2 onClick={handleAddItems}>{cart.business.name} </h2>
