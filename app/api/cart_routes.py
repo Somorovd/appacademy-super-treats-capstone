@@ -55,11 +55,23 @@ def add_item():
         db.session.add(cart)
         db.session.commit()
 
-    cart_item = CartItem(
-        cart_id=cart.id, item_id=form.data["item_id"], quantity=form.data["quantity"]
-    )
+    cart_item = (
+        CartItem.query.join(Item)
+        .filter(CartItem.cart_id == cart.id)
+        .filter(Item.id == form.data["item_id"])
+    ).one_or_none()
 
-    db.session.add(cart_item)
+    if not cart_item:
+        cart_item = CartItem(
+            cart_id=cart.id,
+            item_id=form.data["item_id"],
+            quantity=form.data["quantity"],
+        )
+
+        db.session.add(cart_item)
+    else:
+        cart_item.quantity += form.data["quantity"]
+
     db.session.commit()
 
     return {"cart": cart.to_dict()}
