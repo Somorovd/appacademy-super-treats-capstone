@@ -26,7 +26,7 @@ export default function SingleCartMenu() {
           alt=""
         />
       )}
-      <span>{Object.values(cart.cartItems).length} items</span>
+      <span>{cart.count} items</span>
     </div>
   );
 }
