@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { thunkDeleteCartItem, thunkEditCartItem } from "../../../store/carts";
 import "./CartItemCard.css";
+import { useEffect } from "react";
 
 export default function CartItemCard({ businessId, cartItemId }) {
   const dispatch = useDispatch();
@@ -19,6 +20,12 @@ export default function CartItemCard({ businessId, cartItemId }) {
     dispatch(thunkDeleteCartItem(cartItemObj));
   };
 
+  useEffect(() => {
+    return () => {
+      if (!cartItem.item) handleDelete();
+    };
+  }, []);
+
   const handleChangeQuantity = (e) => {
     if (e.target.value === cartItem.quantity) return;
     if (e.target.value === "0") return handleDelete();
@@ -34,31 +41,42 @@ export default function CartItemCard({ businessId, cartItemId }) {
 
   return (
     <div className="cart-item-card flex-c">
-      <div className="flex flex-b1">
-        <p className="cart-item-card__name">{cartItem.item.name}</p>
-        <img
-          src={cartItem.item.image}
-          alt=""
-        />
-      </div>
-      <div className="flex flex-b1">
-        <select
-          value={cartItem.quantity}
-          onChange={handleChangeQuantity}
-          className="quantity-select"
-        >
-          <option value={0}>Remove</option>
-          {Array.from({ length: 98 }, (_, i) => (
-            <option
-              value={i + 1}
-              key={i + 1}
+      {cartItem.item ? (
+        <>
+          <div className="flex flex-b1">
+            <p className="cart-item-card__name">{cartItem.item.name}</p>
+            <img
+              src={cartItem.item.image}
+              alt=""
+            />
+          </div>
+          <div className="flex flex-b1">
+            <select
+              value={cartItem.quantity}
+              onChange={handleChangeQuantity}
+              className="quantity-select"
             >
-              {i + 1}
-            </option>
-          ))}
-        </select>
-        <span>${cartItem.price}</span>
-      </div>
+              <option value={0}>Remove</option>
+              {Array.from({ length: 98 }, (_, i) => (
+                <option
+                  value={i + 1}
+                  key={i + 1}
+                >
+                  {i + 1}
+                </option>
+              ))}
+            </select>
+            <span>${cartItem.price}</span>
+          </div>
+        </>
+      ) : (
+        <>
+          <p className="auth-error">An item is no longer available</p>
+          <p className="auth-error">
+            This notification will be removed on closing
+          </p>
+        </>
+      )}
     </div>
   );
 }

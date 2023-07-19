@@ -9,7 +9,7 @@ class CartItem(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    quantity = db.Column(db.Integer, nullable=False)
+    _quantity = db.Column(db.Integer, nullable=False)
     item_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("items.id")), nullable=False
     )
@@ -26,13 +26,21 @@ class CartItem(db.Model):
 
     @property
     def price(self):
-        return self.item.price * self.quantity
+        return self.item.price * self._quantity if self.item else 0
+
+    @property
+    def quantity(self):
+        return self._quantity if self.item else 0
+
+    @quantity.setter
+    def quantity(self, val):
+        self._quantity = val
 
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
             "quantity": self.quantity,
-            "item": self.item.cart_to_dict(),
+            "item": self.item.cart_to_dict() if self.item else None,
             "price": self.price,
             "cartId": self.cart_id,
         }
