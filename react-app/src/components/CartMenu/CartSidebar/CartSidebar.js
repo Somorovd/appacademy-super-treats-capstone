@@ -16,7 +16,7 @@ export default function CartSidebar({ businessId }) {
   const cart = useSelector((state) => state.carts[businessId]);
   const allCarts = useSelector((state) => state.carts);
 
-  const { setModalClass, closeModal } = useModal();
+  const { closeModal } = useModal();
   const cartItems = Object.values(cart?.cartItems || {});
 
   const openMenu = (e) => {
@@ -99,7 +99,7 @@ export default function CartSidebar({ businessId }) {
         </ul>
       </div>
       <div className="cart-sidebar__summary flex flex-b1">
-        <span>{cartItems.length} items</span>
+        <span>{cart.count} items</span>
         <span>
           Subtotal: <strong>${cart.price}</strong>
         </span>

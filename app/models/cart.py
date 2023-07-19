@@ -53,3 +53,9 @@ class Cart(db.Model):
             dct["updatedAt"] = self.updated_at
 
         return dct
+
+    def to_dict_agg(self):
+        return {
+            "count": self.item_count,
+            "price": self.total_price,
+        }

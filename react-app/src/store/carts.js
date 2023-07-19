@@ -18,9 +18,9 @@ const actionDeleteCart = (cart) => ({
   payload: cart,
 });
 
-const actionEditCartItem = (cartItem) => ({
+const actionEditCartItem = ({ cartItem, cart }) => ({
   type: EDIT_CART_ITEM,
-  payload: cartItem,
+  payload: { cartItem, cart },
 });
 
 export const thunkGetAllCarts = () => async (dispatch) => {
@@ -68,7 +68,7 @@ export const thunkEditCartItem = (cartItem) => async (dispatch) => {
   );
   const resBody = await res.json();
 
-  if (res.ok) dispatch(actionEditCartItem(resBody.cartItem));
+  if (res.ok) dispatch(actionEditCartItem(resBody));
   return resBody;
 };
 
@@ -88,13 +88,14 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     case EDIT_CART_ITEM: {
+      const { cartItem, cart } = action.payload;
       const newState = { ...state };
-      const cart = { ...newState[action.payload.item.businessId] };
-      cart.cartItems = {
-        ...cart.cartItems,
-        [action.payload.id]: { ...action.payload },
+      const newCart = { ...newState[cartItem.item.businessId], ...cart };
+      newCart.cartItems = {
+        ...newCart.cartItems,
+        [cartItem.id]: { ...cartItem },
       };
-      newState[action.payload.item.businessId] = cart;
+      newState[cartItem.item.businessId] = newCart;
       return newState;
     }
     default:

@@ -108,7 +108,7 @@ def edit_cart_item(cart_id, item_id):
     cart_item.quantity = form.data["quantity"]
     db.session.commit()
 
-    return {"cartItem": cart_item.to_dict()}
+    return {"cartItem": cart_item.to_dict(), "cart": cart.to_dict_agg()}
 
 
 @cart_routes.route("/<int:cart_id>/delete", methods=["DELETE"])
