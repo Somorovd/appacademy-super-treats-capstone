@@ -43,7 +43,7 @@ export default function CartItemCard({ businessId, cartItemId }) {
     <div className="cart-item-card flex-c">
       {cartItem.item ? (
         <>
-          <div className="flex flex-b1">
+          <div className="flex flex-b1 g10">
             <p className="cart-item-card__name">{cartItem.item.name}</p>
             <img
               src={cartItem.item.image}

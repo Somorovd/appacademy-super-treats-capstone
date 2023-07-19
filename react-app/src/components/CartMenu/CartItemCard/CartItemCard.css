@@ -7,6 +7,8 @@
 
 .cart-item-card__name {
   align-self: flex-start;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .quantity-select,

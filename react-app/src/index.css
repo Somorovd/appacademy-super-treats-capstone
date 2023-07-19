@@ -97,6 +97,10 @@
   width: 100%;
 }
 
+.g10 {
+  gap: 10px;
+}
+
 button {
   cursor: pointer;
   border: none;
