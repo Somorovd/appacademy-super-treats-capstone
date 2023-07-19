@@ -6,6 +6,7 @@ import { thunkGetOneBusiness } from "../../store/businesses";
 import PageHeader from "../PageHeader";
 import CartMenu from "../CartMenu";
 import ItemCard from "./ItemCard";
+import CategorySidebar from "./CategorySidebar";
 import "./ItemBrowsingPage.css";
 
 export default function ItemBrowsingPage() {
@@ -26,18 +27,18 @@ export default function ItemBrowsingPage() {
       <CartMenu />
       <header className="business-browsing__header">
         <PageHeader auth={true} />
-        <div className="pg-pd">
-          <h1> {business.name} </h1>
-          <div className="item-grid">
-            {itemIds.map((i) => (
-              <ItemCard
-                itemId={i}
-                key={i}
-              />
-            ))}
-          </div>
-        </div>
       </header>
+      <div className="business-browsing__body flex pg-pd">
+        <CategorySidebar />
+        <div className="item-grid fw">
+          {itemIds.map((i) => (
+            <ItemCard
+              itemId={i}
+              key={i}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

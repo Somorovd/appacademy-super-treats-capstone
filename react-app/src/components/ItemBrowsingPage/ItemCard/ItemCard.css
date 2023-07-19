@@ -1,10 +1,31 @@
 .item-card {
-  min-width: 0px;
-  max-width: 250px;
-  aspect-ratio: 1;
   border: 1px solid black;
   overflow: hidden;
+  flex-grow: 0;
 }
+
+.item-card--image {
+  flex-basis: calc(25% - calc(var(--gap)/4*3));
+  flex-shrink: 0;
+  order: 0;
+}
+
+.item-card--no-image {
+  flex-basis: calc(50% - calc(var(--gap)/2));
+  flex-shrink: 1;
+  order: 1;
+}
+
+.item-card--image+.item-card--no-image {
+  margin-left: 0.5px;
+}
+
+.item-card__name {
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.item-card__image {}
 
 .add-to-cart {
   aspect-ratio: 1;

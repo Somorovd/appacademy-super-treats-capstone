@@ -20,8 +20,12 @@ export default function ItemCard({ itemId }) {
   if (!item) return null;
 
   return (
-    <div className="item-card">
-      <p>{item.name}</p>
+    <div
+      className={
+        "item-card " + (item.image ? "item-card--image" : "item-card--no-image")
+      }
+    >
+      <p className="item-card__name">{item.name}</p>
       {user && (
         <button
           className="bt-black bt-pd add-to-cart flex flex-11"
