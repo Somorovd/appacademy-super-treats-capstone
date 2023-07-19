@@ -7,16 +7,17 @@ import CartItemCard from "../CartItemCard";
 import { thunkDeleteCart } from "../../../store/carts";
 import "./CartSidebar.css";
 
-export default function CartSidebar({ cart }) {
+export default function CartSidebar({ businessId }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const dropdownRef = useRef();
   const [hidden, setHidden] = useState(true);
 
-  const { setModalClass, closeModal } = useModal();
-  const cartItems = Object.values(cart.cartItems);
-
+  const cart = useSelector((state) => state.carts[businessId]);
   const allCarts = useSelector((state) => state.carts);
+
+  const { setModalClass, closeModal } = useModal();
+  const cartItems = Object.values(cart?.cartItems || {});
 
   setModalClass("flex flex-20 fh");
 
@@ -44,6 +45,8 @@ export default function CartSidebar({ cart }) {
     dispatch(thunkDeleteCart(cart));
     closeModal();
   };
+
+  if (!cart) return null;
 
   return (
     <div className="cart-sidebar flex-c">
@@ -106,7 +109,8 @@ export default function CartSidebar({ cart }) {
       <div className="cart-item-list flex-c">
         {cartItems.map((i) => (
           <CartItemCard
-            cartItem={i}
+            businessId={businessId}
+            cartItemId={i.id}
             key={i.id}
           />
         ))}

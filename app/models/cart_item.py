@@ -34,6 +34,7 @@ class CartItem(db.Model):
             "quantity": self.quantity,
             "item": self.item.cart_to_dict(),
             "price": self.price,
+            "cartId": self.cart_id,
         }
 
         if timestamps:

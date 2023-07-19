@@ -9,7 +9,7 @@ export default function SingleCartMenu() {
   const { setModalContent } = useModal();
 
   const handleClick = () => {
-    setModalContent(<CartSidebar cart={cart} />);
+    setModalContent(<CartSidebar businessId={cart.business.id} />);
   };
 
   if (!cart) return null;

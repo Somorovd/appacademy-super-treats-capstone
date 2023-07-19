@@ -1,11 +1,29 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+
+import { thunkEditCartItem } from "../../../store/carts";
 import "./CartItemCard.css";
 
-export default function CartItemCard({ cartItem }) {
+export default function CartItemCard({ businessId, cartItemId }) {
+  const dispatch = useDispatch();
+
+  const cartItem = useSelector(
+    (state) => state.carts[businessId].cartItems[cartItemId]
+  );
+
   const [quantity, setQuantity] = useState(cartItem.quantity);
 
-  const handleChangeQuantity = (e) => {
-    setQuantity(e.target.value);
+  const handleChangeQuantity = async (e) => {
+    if (e.target.value === quantity) return;
+
+    const cartItemObj = {
+      id: cartItem.id,
+      cartId: cartItem.cartId,
+      quantity: e.target.value,
+    };
+
+    const res = await dispatch(thunkEditCartItem(cartItemObj));
+    if (!res.errors) setQuantity(e.target.value);
   };
 
   return (

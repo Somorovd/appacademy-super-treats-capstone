@@ -49,4 +49,5 @@ class Item(db.Model):
             "name": self.name,
             "price": self.price,
             "image": self.image,
+            "businessId": self.business_id,
         }

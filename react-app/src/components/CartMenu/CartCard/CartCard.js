@@ -9,7 +9,7 @@ export default function CartCard({ cart }) {
   const cartItems = Object.values(cart.cartItems);
 
   const handleClick = () => {
-    setModalContent(<CartSidebar cart={cart} />);
+    setModalContent(<CartSidebar businessId={cart.business.id} />);
   };
 
   return (
