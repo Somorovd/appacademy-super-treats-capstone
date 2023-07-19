@@ -40,7 +40,7 @@ export default function PageHeader({
         />
       </div>
       <div className="header-right flex">
-        {auth && (
+        {!user && auth && (
           <>
             <button
               className="header-login"

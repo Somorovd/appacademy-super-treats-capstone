@@ -1,0 +1,25 @@
+.cart-item-card img {
+  height: 45px;
+  aspect-ratio: 1;
+  object-fit: fill;
+  gap: 10px;
+}
+
+.cart-item-card__name {
+  align-self: flex-start;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.quantity-select,
+.quantity-select option {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 3rem;
+  background-color: #EEE;
+  width: 50px;
+}
+
+.quantity-select:hover {
+  background-color: lightgray;
+}

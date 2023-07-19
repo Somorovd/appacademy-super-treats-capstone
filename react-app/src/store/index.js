@@ -4,6 +4,7 @@ import session from "./session";
 import businesses from "./businesses";
 import userBusinesses from "./userBusinesses";
 import items from "./items";
+import carts from "./carts";
 
 const CLEAR_ALL = "app/CLEAR_ALL";
 
@@ -17,6 +18,7 @@ const appReducer = combineReducers({
   businesses,
   userBusinesses,
   items,
+  carts,
 });
 
 const rootReducer = (state, action) => {

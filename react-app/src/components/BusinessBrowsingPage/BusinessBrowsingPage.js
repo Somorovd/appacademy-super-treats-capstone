@@ -6,6 +6,7 @@ import PageHeader from "../PageHeader";
 import BusinessCard from "./BusinessCard";
 import FilterIcon from "./FilterIcon/FilterIcon";
 import FilterSidebar from "./FilterSidebar";
+import CartMenu from "../CartMenu";
 import "./BusinessBrowsingPage.css";
 
 const filterCategories = [
@@ -39,13 +40,15 @@ export default function BusinessBrowsingPage() {
 
   return (
     <div className="business-browsing">
+      <CartMenu />
       <header className="business-browsing__header">
-        <PageHeader />
+        <PageHeader auth={true} />
         <div className="pg-pd">
           <div className="filter-bar flex">
-            {filterCategories.map((i) => (
+            {filterCategories.map((cat, i) => (
               <FilterIcon
-                text={i}
+                text={cat}
+                key={i}
                 src=""
               />
             ))}
@@ -65,6 +68,7 @@ export default function BusinessBrowsingPage() {
           {allBusinesses.map((b) => (
             <BusinessCard
               business={b}
+              isBrowsing={true}
               key={b.id}
             />
           ))}

@@ -69,7 +69,7 @@ export default function ItemEditPage() {
 
   const checkSubmit = (e) => {
     e.preventDefault();
-    if (price === 0) {
+    if (Number(price) === 0) {
       setModalContent(
         <ConfirmPriceModal
           name={name}

@@ -7,6 +7,7 @@ import LoginFormPage from "./components/auth/LoginFormPage";
 import LandingPage from "./components/LandingPage";
 import BusinessBrowsingPage from "./components/BusinessBrowsingPage";
 import BusinessRouter from "./components/BusinessRouter";
+import ItemBrowsingPage from "./components/ItemBrowsingPage";
 import Page404 from "./components/Page404";
 
 function App() {
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route path="/feed/:businessId">
+            <ItemBrowsingPage />
           </Route>
           <Route path="/feed">
             <BusinessBrowsingPage />

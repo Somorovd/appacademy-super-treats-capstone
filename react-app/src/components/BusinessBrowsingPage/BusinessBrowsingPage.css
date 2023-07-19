@@ -28,5 +28,4 @@
   grid-template-columns: repeat(3, 1fr);
   height: fit-content;
   gap: 24px;
-  padding: 20px;
 }

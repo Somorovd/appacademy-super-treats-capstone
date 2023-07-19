@@ -13,6 +13,7 @@ class Cart(db.Model):
     business_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("businesses.id"))
     )
+    address = db.Column(db.String(255), nullable=False)
     created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
     updated_at = db.Column(
         db.DateTime(timezone=True), server_default=func.now(), onupdate=func.now()
@@ -20,7 +21,9 @@ class Cart(db.Model):
 
     user = db.relationship("User", back_populates="carts")
     business = db.relationship("Business", back_populates="carts")
-    cart_items = db.relationship("CartItem")
+    cart_items = db.relationship(
+        "CartItem", back_populates="cart", cascade="all, delete-orphan"
+    )
 
     @property
     def item_count(self):
@@ -39,9 +42,10 @@ class Cart(db.Model):
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
-            "user": self.user.to_dict(),
-            "business": self.business.to_dict(),
-            "cartItems": [i.to_dict() for i in self.items],
+            "userId": self.user_id,
+            "address": self.address,
+            "business": self.business.cart_to_dict(),
+            "cartItems": {i.id: i.to_dict() for i in self.cart_items},
             "count": self.item_count,
             "price": self.total_price,
         }
@@ -51,3 +55,10 @@ class Cart(db.Model):
             dct["updatedAt"] = self.updated_at
 
         return dct
+
+    def to_dict_agg(self):
+        return {
+            "count": self.item_count,
+            "price": self.total_price,
+            "businessId": self.business_id,
+        }
