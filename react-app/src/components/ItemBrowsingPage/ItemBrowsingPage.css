@@ -2,5 +2,5 @@
   display: flex;
   flex-wrap: wrap;
   --gap: 20px;
-  gap: var(--gap);
+  gap: 8px var(--gap);
 }

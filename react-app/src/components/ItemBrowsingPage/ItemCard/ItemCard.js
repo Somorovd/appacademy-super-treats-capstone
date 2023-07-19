@@ -25,15 +25,21 @@ export default function ItemCard({ itemId }) {
         "item-card " + (item.image ? "item-card--image" : "item-card--no-image")
       }
     >
+      <img
+        className="item-card__image"
+        src={item.image}
+        alt=""
+      />
       <p className="item-card__name">{item.name}</p>
       {user && (
         <button
-          className="bt-black bt-pd add-to-cart flex flex-11"
+          className="add-to-cart bt-black bt-pd flex flex-11"
           onClick={addToCart}
         >
           <i className="fa-solid fa-plus"></i>
         </button>
       )}
+      <p className="item-card__price">${item.price}</p>
     </div>
   );
 }
