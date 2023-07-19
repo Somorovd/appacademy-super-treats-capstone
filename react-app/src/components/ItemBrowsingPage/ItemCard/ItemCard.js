@@ -17,6 +17,8 @@ export default function ItemCard({ itemId }) {
     dispatch(thunkAddToCart(itemObj));
   };
 
+  if (!item) return null;
+
   return (
     <div className="item-card">
       <p>{item.name}</p>
