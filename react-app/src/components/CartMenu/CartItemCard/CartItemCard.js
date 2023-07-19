@@ -66,7 +66,7 @@ export default function CartItemCard({ businessId, cartItemId }) {
                 </option>
               ))}
             </select>
-            <span>${cartItem.price}</span>
+            <span className="cart-item-card__price">${cartItem.price}</span>
           </div>
         </>
       ) : (

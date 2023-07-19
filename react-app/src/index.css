@@ -1,13 +1,25 @@
 @font-face {
   font-family: "UberMove";
+  src: url("./resources/UberMoveLight.otf");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "UberMove";
+  src: url("./resources/UberMoveRegular.otf");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "UberMove";
   src: url("./resources/UberMoveMedium.otf");
-  font-weight: normal;
+  font-weight: 700;
 }
 
 @font-face {
   font-family: "UberMove";
   src: url("./resources/UberMoveBold.otf");
-  font-weight: bold;
+  font-weight: 900;
 }
 
 *,
@@ -25,17 +37,24 @@
   font-family: "UberMove", Arial, Helvetica, sans-serif;
 }
 
+input,
+select,
+option,
+textarea {
+  font-weight: 200;
+}
+
 #root {
   height: 100vh;
 }
 
 .logo {
   font-size: 1.8rem;
-  /* color: black !important; */
+  font-weight: 600;
 }
 
 .logo-b {
-  font-weight: bold;
+  font-weight: 900;
 }
 
 .pg-pd {

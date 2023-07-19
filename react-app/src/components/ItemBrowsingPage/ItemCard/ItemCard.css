@@ -1,10 +1,13 @@
 .item-card {
   overflow: hidden;
   flex-grow: 0;
-  padding: 5px;
+  padding: 8px;
   position: relative;
   box-shadow: none;
   transition: 0.5s box-shadow;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
 .item-card:hover {
@@ -28,16 +31,22 @@
   order: 1;
   height: 80px;
   align-self: flex-end;
+  justify-content: center;
 }
 
 .item-card__name {
   text-overflow: ellipsis;
   overflow: hidden;
+  font-weight: 600;
+}
+
+.item-card__price {
+  font-weight: 200;
 }
 
 .item-card--image>.item-card__image {
   width: 100%;
-  height: 200px;
+  height: 180px;
   object-fit: cover;
 }
 

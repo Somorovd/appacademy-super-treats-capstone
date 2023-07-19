@@ -35,7 +35,7 @@ export default function LandingPage() {
         style={{ width: window.screen.width, height: window.screen.height }}
       ></div>
       <PageHeader auth={!user} />
-      <div className="landing__content pg-pd flex flex-01 fh">
+      <div className="landing__content pg-pd fh">
         <div className="landing__address-form-wrapper">
           <h1>Order food to your door</h1>
           <form
@@ -49,6 +49,7 @@ export default function LandingPage() {
               required
             />
             <select
+              className="landing__delivery"
               value={delivery}
               onChange={(e) => setDelivery(e.target.value)}
             >
