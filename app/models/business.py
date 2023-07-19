@@ -61,7 +61,9 @@ class Business(db.Model):
     )
 
     user = db.relationship("User", back_populates="businesses")
-    carts = db.relationship("Cart", back_populates="business")
+    carts = db.relationship(
+        "Cart", back_populates="business", cascade="all, delete-orphan"
+    )
     items = db.relationship(
         "Item", back_populates="business", cascade="all, delete-orphan"
     )

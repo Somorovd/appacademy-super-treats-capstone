@@ -99,7 +99,7 @@ const initialState = {};
 export default function reducer(state = initialState, action) {
   switch (action.type) {
     case GET_ALL_CARTS: {
-      return { ...state, ...action.payload };
+      return { ...action.payload };
     }
     case ADD_TO_CART: {
       return { ...state, [action.payload.business.id]: { ...action.payload } };

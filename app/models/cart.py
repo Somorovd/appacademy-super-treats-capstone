@@ -28,15 +28,17 @@ class Cart(db.Model):
     @property
     def item_count(self):
         count = 0
-        for i in self.cart_items:
-            count = count + i.quantity
+        if self.business:
+            for i in self.cart_items:
+                count = count + i.quantity
         return count
 
     @property
     def total_price(self):
         price = 0
-        for i in self.cart_items:
-            price = price + i.price
+        if self.business:
+            for i in self.cart_items:
+                price = price + i.price
         return price
 
     def to_dict(self, timestamps=False):
@@ -44,7 +46,7 @@ class Cart(db.Model):
             "id": self.id,
             "userId": self.user_id,
             "address": self.address,
-            "business": self.business.cart_to_dict(),
+            "business": self.business.cart_to_dict() if self.business else None,
             "cartItems": {i.id: i.to_dict() for i in self.cart_items},
             "count": self.item_count,
             "price": self.total_price,
