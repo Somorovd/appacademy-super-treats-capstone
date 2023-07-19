@@ -1,7 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
 
-import { thunkEditCartItem } from "../../../store/carts";
+import { thunkDeleteCartItem, thunkEditCartItem } from "../../../store/carts";
 import "./CartItemCard.css";
 
 export default function CartItemCard({ businessId, cartItemId }) {
@@ -11,8 +10,18 @@ export default function CartItemCard({ businessId, cartItemId }) {
     (state) => state.carts[businessId].cartItems[cartItemId]
   );
 
-  const handleChangeQuantity = async (e) => {
+  const handleDelete = () => {
+    const cartItemObj = {
+      id: cartItem.id,
+      cartId: cartItem.cartId,
+      businessId,
+    };
+    dispatch(thunkDeleteCartItem(cartItemObj));
+  };
+
+  const handleChangeQuantity = (e) => {
     if (e.target.value === cartItem.quantity) return;
+    if (e.target.value === "0") return handleDelete();
 
     const cartItemObj = {
       id: cartItem.id,
@@ -26,7 +35,7 @@ export default function CartItemCard({ businessId, cartItemId }) {
   return (
     <div className="cart-item-card flex-c">
       <div className="flex flex-b1">
-        <p>{cartItem.item.name}</p>
+        <p className="cart-item-card__name">{cartItem.item.name}</p>
         <img
           src={cartItem.item.image}
           alt=""
@@ -38,10 +47,15 @@ export default function CartItemCard({ businessId, cartItemId }) {
           onChange={handleChangeQuantity}
           className="quantity-select"
         >
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
+          <option value={0}>Remove</option>
+          {Array.from({ length: 98 }, (_, i) => (
+            <option
+              value={i + 1}
+              key={i + 1}
+            >
+              {i + 1}
+            </option>
+          ))}
         </select>
         <span>${cartItem.price}</span>
       </div>

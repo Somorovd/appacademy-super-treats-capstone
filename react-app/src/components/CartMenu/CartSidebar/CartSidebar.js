@@ -44,7 +44,10 @@ export default function CartSidebar({ businessId }) {
     closeModal();
   };
 
-  if (!cart) return null;
+  if (!cart) {
+    closeModal();
+    return null;
+  }
 
   return (
     <div className="cart-sidebar flex-c">
@@ -61,7 +64,10 @@ export default function CartSidebar({ businessId }) {
         </div>
       </div>
       <div className="flex flex-b1">
-        <h2 onClick={handleAddItems}>{cart.business.name} </h2>
+        <div className="flex-c">
+          <h2 onClick={handleAddItems}>{cart.business.name} </h2>
+          <p>Deliver to {cart.address.split(/(\n|,)/)[0]}</p>
+        </div>
         <button
           className="cart-sidebar__dropdown-button bt-pd flex flex-11"
           onClick={openMenu}

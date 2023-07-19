@@ -149,5 +149,6 @@ def delete_cart_item(cart_id, item_id):
     if not cart.cart_items:
         db.session.delete(cart)
         db.session.commit()
+        return {"message": "successfully deleted"}
 
-    return {"message": "successfully deleted"}
+    return {"cart": cart.to_dict_agg()}

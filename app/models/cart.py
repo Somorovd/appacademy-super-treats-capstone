@@ -58,4 +58,5 @@ class Cart(db.Model):
         return {
             "count": self.item_count,
             "price": self.total_price,
+            "businessId": self.business_id,
         }
