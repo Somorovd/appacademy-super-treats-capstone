@@ -11,10 +11,8 @@ export default function CartItemCard({ businessId, cartItemId }) {
     (state) => state.carts[businessId].cartItems[cartItemId]
   );
 
-  const [quantity, setQuantity] = useState(cartItem.quantity);
-
   const handleChangeQuantity = async (e) => {
-    if (e.target.value === quantity) return;
+    if (e.target.value === cartItem.quantity) return;
 
     const cartItemObj = {
       id: cartItem.id,
@@ -22,8 +20,7 @@ export default function CartItemCard({ businessId, cartItemId }) {
       quantity: e.target.value,
     };
 
-    const res = await dispatch(thunkEditCartItem(cartItemObj));
-    if (!res.errors) setQuantity(e.target.value);
+    dispatch(thunkEditCartItem(cartItemObj));
   };
 
   return (
@@ -37,7 +34,7 @@ export default function CartItemCard({ businessId, cartItemId }) {
       </div>
       <div className="flex flex-b1">
         <select
-          value={quantity}
+          value={cartItem.quantity}
           onChange={handleChangeQuantity}
           className="quantity-select"
         >

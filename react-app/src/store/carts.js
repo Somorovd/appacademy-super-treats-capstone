@@ -90,8 +90,8 @@ export default function reducer(state = initialState, action) {
     case EDIT_CART_ITEM: {
       const newState = { ...state };
       const cart = { ...newState[action.payload.item.businessId] };
-      cart.cartItem = {
-        ...cart.cartItem,
+      cart.cartItems = {
+        ...cart.cartItems,
         [action.payload.id]: { ...action.payload },
       };
       newState[action.payload.item.businessId] = cart;
