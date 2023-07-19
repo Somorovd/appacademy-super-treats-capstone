@@ -20,6 +20,7 @@ export default function LoggedInUserMenu() {
 
   const handleSignout = async () => {
     await dispatch(logout());
+    sessionStorage.clear();
     modalNavigate("/");
   };
 
