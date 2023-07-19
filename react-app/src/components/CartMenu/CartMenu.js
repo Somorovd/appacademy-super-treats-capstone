@@ -27,7 +27,7 @@ export default function CartMenu() {
     <div className="carts-menu__wrapper pg-pd">
       <div className="carts-menu flex">
         {currentCart && <SingleCartMenu />}
-        {carts.length > 0 && <AllCartsMenu />}
+        {carts.length > 0 && <AllCartsMenu min={currentCart} />}
       </div>
     </div>
   );

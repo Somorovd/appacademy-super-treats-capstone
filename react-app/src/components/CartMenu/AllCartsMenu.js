@@ -1,9 +1,8 @@
-import { useRef, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import CartCard from "./CartCard";
+import AllCartsDropdown from "./AllCartsDropdown/AllCartsDropdown";
 
 export default function AllCartsMenu({ min }) {
-  const cartsDropdownRef = useRef();
   const [hidden, setHidden] = useState(true);
 
   const cartsObj = useSelector((state) => state.carts);
@@ -38,18 +37,11 @@ export default function AllCartsMenu({ min }) {
           </>
         )}
       </div>
-      {carts.length !== 0 && (
-        <div
-          className={"all-carts__dropdown " + (hidden ? "hidden" : "")}
-          ref={cartsDropdownRef}
-        >
-          {carts.map((cart) => (
-            <CartCard
-              cart={cart}
-              key={cart.id}
-            />
-          ))}
-        </div>
+      {!hidden && (
+        <AllCartsDropdown
+          top="100%"
+          right="0%"
+        />
       )}
     </>
   );

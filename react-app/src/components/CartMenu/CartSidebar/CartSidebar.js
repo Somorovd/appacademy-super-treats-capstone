@@ -6,12 +6,14 @@ import CartItemCard from "../CartItemCard";
 
 import { thunkDeleteCart } from "../../../store/carts";
 import "./CartSidebar.css";
+import AllCartsDropdown from "../AllCartsDropdown/AllCartsDropdown";
 
 export default function CartSidebar({ businessId }) {
   const dispatch = useDispatch();
   const history = useHistory();
-  const dropdownRef = useRef();
-  const [hidden, setHidden] = useState(true);
+  const cartActionsRef = useRef();
+  const [actionsHidden, setActionsHidden] = useState(true);
+  const [menuHidden, setMenuHidden] = useState(true);
 
   const cart = useSelector((state) => state.carts[businessId]);
   const allCarts = useSelector((state) => state.carts);
@@ -19,19 +21,33 @@ export default function CartSidebar({ businessId }) {
   const { closeModal } = useModal();
   const cartItems = Object.values(cart?.cartItems || {});
 
+  const openActions = (e) => {
+    e.stopPropagation();
+    if (actionsHidden) setActionsHidden(false);
+    else closeActions(e);
+  };
+
+  const closeActions = (e) => {
+    setActionsHidden(true);
+  };
+
   const openMenu = (e) => {
     e.stopPropagation();
-    if (hidden) setHidden(false);
+    if (menuHidden) setMenuHidden(false);
     else closeMenu(e);
   };
 
   const closeMenu = (e) => {
-    setHidden(true);
+    setMenuHidden(true);
   };
 
   useEffect(() => {
+    document.addEventListener("click", closeActions);
     document.addEventListener("click", closeMenu);
-    return () => document.removeEventListener("click", closeMenu);
+    return () => {
+      document.removeEventListener("click", closeActions);
+      document.removeEventListener("click", closeMenu);
+    };
   }, []);
 
   const handleAddItems = () => {
@@ -58,11 +74,24 @@ export default function CartSidebar({ businessId }) {
         >
           <i className="fa-solid fa-xmark"></i>
         </button>
-        <div className="cart-sidebar__cart-dropdown-button">
-          Carts ({Object.values(allCarts).length}){" "}
-          <i className="fa-solid fa-chevron-down"></i>
+
+        <div className="cart-sidebar__cart-dropdown-wrapper">
+          <div
+            className="cart-sidebar__cart-dropdown-button"
+            onClick={openMenu}
+          >
+            Carts ({Object.values(allCarts).length}){" "}
+            <i className="fa-solid fa-chevron-down"></i>
+          </div>
+          {!menuHidden && (
+            <AllCartsDropdown
+              top="100%"
+              right="-40px"
+            />
+          )}
         </div>
       </div>
+
       <div className="flex flex-b1">
         <div className="flex-c">
           <h2 onClick={handleAddItems}>{cart.business.name} </h2>
@@ -70,15 +99,15 @@ export default function CartSidebar({ businessId }) {
         </div>
         <button
           className="cart-sidebar__dropdown-button bt-pd flex flex-11"
-          onClick={openMenu}
+          onClick={openActions}
         >
           <i className="fa-solid fa-ellipsis"></i>
         </button>
         <ul
           className={
-            "cart-sidebar__dropdown flex-c" + (hidden ? " hidden" : "")
+            "cart-sidebar__dropdown flex-c" + (actionsHidden ? " hidden" : "")
           }
-          ref={dropdownRef}
+          ref={cartActionsRef}
         >
           <li>
             <div className="flex flex-11">

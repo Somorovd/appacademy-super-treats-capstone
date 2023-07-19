@@ -85,3 +85,7 @@
 .cart-sidebar__cart-dropdown-button:hover {
   text-decoration: 1px solid underline;
 }
+
+.cart-sidebar__cart-dropdown-wrapper {
+  position: relative;
+}
