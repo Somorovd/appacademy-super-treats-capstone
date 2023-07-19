@@ -19,8 +19,6 @@ export default function CartSidebar({ businessId }) {
   const { setModalClass, closeModal } = useModal();
   const cartItems = Object.values(cart?.cartItems || {});
 
-  setModalClass("flex flex-20 fh");
-
   const openMenu = (e) => {
     e.stopPropagation();
     if (hidden) setHidden(false);

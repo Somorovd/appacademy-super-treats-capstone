@@ -29,7 +29,10 @@ export default function ItemBrowsingPage() {
           <h1> {business.name} </h1>
           <div className="item-grid">
             {itemIds.map((i) => (
-              <ItemCard itemId={i} />
+              <ItemCard
+                itemId={i}
+                key={i}
+              />
             ))}
           </div>
         </div>

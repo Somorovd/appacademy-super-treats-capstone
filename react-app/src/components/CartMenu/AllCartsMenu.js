@@ -46,7 +46,10 @@ export default function AllCartsMenu() {
           ref={cartsDropdownRef}
         >
           {carts.map((cart) => (
-            <CartCard cart={cart} />
+            <CartCard
+              cart={cart}
+              key={cart.id}
+            />
           ))}
         </div>
       )}

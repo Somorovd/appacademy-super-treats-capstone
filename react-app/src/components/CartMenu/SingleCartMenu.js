@@ -6,9 +6,10 @@ export default function SingleCartMenu() {
   const business = useSelector((state) => state.businesses.singleBusiness);
   const cart = useSelector((state) => state.carts[business?.id]);
 
-  const { setModalContent } = useModal();
+  const { setModalContent, setModalClass } = useModal();
 
   const handleClick = () => {
+    setModalClass("flex flex-20 fh");
     setModalContent(<CartSidebar businessId={cart.business.id} />);
   };
 

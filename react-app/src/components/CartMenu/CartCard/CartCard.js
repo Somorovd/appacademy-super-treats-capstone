@@ -4,11 +4,12 @@ import CartSidebar from "../CartSidebar";
 import "./CartCard.css";
 
 export default function CartCard({ cart }) {
-  const { setModalContent } = useModal();
+  const { setModalContent, setModalClass } = useModal();
 
   const cartItems = Object.values(cart.cartItems);
 
   const handleClick = () => {
+    setModalClass("flex flex-20 fh");
     setModalContent(<CartSidebar businessId={cart.business.id} />);
   };
 

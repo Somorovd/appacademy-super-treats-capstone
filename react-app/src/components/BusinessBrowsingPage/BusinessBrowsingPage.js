@@ -45,9 +45,10 @@ export default function BusinessBrowsingPage() {
         <PageHeader auth={true} />
         <div className="pg-pd">
           <div className="filter-bar flex">
-            {filterCategories.map((i) => (
+            {filterCategories.map((cat, i) => (
               <FilterIcon
-                text={i}
+                text={cat}
+                key={i}
                 src=""
               />
             ))}

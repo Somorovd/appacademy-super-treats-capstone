@@ -25,8 +25,11 @@ export default function FilterSidebar() {
       <section className="filter-sidebar__section">
         <h3>Sort</h3>
         <div className="flex-c">
-          {orderOptions.map((o) => (
-            <div className="flex">
+          {orderOptions.map((o, i) => (
+            <div
+              className="flex"
+              key={i}
+            >
               <input
                 id={o}
                 className="order-radio"
@@ -49,8 +52,11 @@ export default function FilterSidebar() {
           </span>
         </h3>
         <div className="price-checks flex">
-          {Object.keys(priceRangeOptions).map((p) => (
-            <div className="flex">
+          {Object.keys(priceRangeOptions).map((p, i) => (
+            <div
+              className="flex"
+              key={i}
+            >
               <input
                 id={p}
                 type="checkbox"
