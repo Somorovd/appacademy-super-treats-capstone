@@ -23,6 +23,7 @@ class CartItem(db.Model):
     )
 
     item = db.relationship("Item")
+    cart = db.relationship("Cart", back_populates="cart_items")
 
     @property
     def price(self):

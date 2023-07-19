@@ -21,7 +21,9 @@ class Cart(db.Model):
 
     user = db.relationship("User", back_populates="carts")
     business = db.relationship("Business", back_populates="carts")
-    cart_items = db.relationship("CartItem", cascade="all, delete-orphan")
+    cart_items = db.relationship(
+        "CartItem", back_populates="cart", cascade="all, delete-orphan"
+    )
 
     @property
     def item_count(self):

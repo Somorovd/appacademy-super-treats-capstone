@@ -59,8 +59,8 @@ export default function CartSidebar({ businessId }) {
     closeModal();
   };
 
-  const handleClearCart = () => {
-    dispatch(thunkDeleteCart(cart));
+  const handleClearCart = async () => {
+    await dispatch(thunkDeleteCart(cart));
     closeModal();
   };
 
