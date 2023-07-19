@@ -26,7 +26,7 @@ export default function CartCard({ cart }) {
       <div className="cart-card__info flex-c">
         <h3 className="cart-card__name">{cart.business.name}</h3>
         <p>Subtotal: ${cart.price}</p>
-        <p>Deliver to {cart.address}</p>
+        <p>Deliver to {cart.address.split(/[,\n]/)[0]}</p>
       </div>
       <div className="cart-card__icons flex flex-11">
         <span className="cart-size bt-black flex flex-11">
