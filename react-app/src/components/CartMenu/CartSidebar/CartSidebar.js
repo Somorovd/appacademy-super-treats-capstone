@@ -19,7 +19,11 @@ export default function CartSidebar({ businessId }) {
   const allCarts = useSelector((state) => state.carts);
 
   const { closeModal } = useModal();
-  const cartItems = Object.values(cart?.cartItems || {});
+  const cartItems = Object.values(cart?.cartItems || {}).sort((a, b) => {
+    if (!a.item) return -1;
+    if (!b.item) return 1;
+    else return a.id - b.id;
+  });
 
   const openActions = (e) => {
     e.stopPropagation();
