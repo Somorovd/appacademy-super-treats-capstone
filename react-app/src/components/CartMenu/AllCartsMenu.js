@@ -1,10 +1,8 @@
 import { useRef, useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
 import CartCard from "./CartCard";
 
-export default function AllCartsMenu() {
-  const { businessId } = useParams();
+export default function AllCartsMenu({ min }) {
   const cartsDropdownRef = useRef();
   const [hidden, setHidden] = useState(true);
 
@@ -33,7 +31,7 @@ export default function AllCartsMenu() {
         onClick={openMenu}
       >
         <i className="fa-solid fa-cart-shopping"></i>
-        {!businessId && (
+        {!min && (
           <>
             <span>{carts?.length || 0} carts</span>
             <i className="fa-solid fa-angle-down"></i>
