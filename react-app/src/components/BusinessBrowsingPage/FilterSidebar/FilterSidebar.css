@@ -4,6 +4,7 @@
   position: sticky;
   top: 0px;
   padding: 40px 0px;
+  font-weight: 600;
 }
 
 .filter-sidebar input,

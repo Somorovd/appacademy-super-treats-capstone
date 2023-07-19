@@ -5,10 +5,20 @@
   gap: 10px;
 }
 
+.cart-item-card img:not([src]),
+.cart-item-card img[src=""] {
+  visibility: hidden;
+}
+
 .cart-item-card__name {
   align-self: flex-start;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.cart-item-card__price,
+.cart-item-card__name {
+  font-weight: 600;
 }
 
 .quantity-select,

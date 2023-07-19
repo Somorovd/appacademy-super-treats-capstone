@@ -15,6 +15,8 @@
 .cart-sidebar h2 {
   width: 100%;
   overflow-wrap: break-word;
+  font-weight: 900;
+  font-size: 1.5rem;
 }
 
 .cart-sidebar h2:hover {
@@ -29,11 +31,17 @@
 .cart-sidebar__summary {
   padding: 10px 0px;
   border-bottom: 1px solid lightgray;
+  font-weight: 200;
+}
+
+.cart-sidebar__summary strong {
+  font-weight: 600;
 }
 
 .cart-sidebar__subtotal {
   padding: 10px 0px;
   border-top: 1px solid lightgray;
+  font-weight: 900;
 }
 
 .cart-item-list {
@@ -64,6 +72,7 @@
 .cart-sidebar__dropdown li {
   display: grid;
   grid-template-columns: 64px 1fr;
+  font-weight: 600;
 }
 
 .cart-sidebar__dropdown li:hover {
@@ -80,6 +89,10 @@
 
 .delete-cart {
   color: red;
+}
+
+.cart-sidebar__cart-dropdown-button {
+  font-weight: 600;
 }
 
 .cart-sidebar__cart-dropdown-button:hover {

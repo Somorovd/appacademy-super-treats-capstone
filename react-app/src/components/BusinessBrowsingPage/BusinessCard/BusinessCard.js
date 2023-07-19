@@ -27,8 +27,12 @@ export default function BusinessCard({ business, isBrowsing }) {
           <span className="business-card__delivery-fee">
             ${business.deliveryFee} Delivery Fee
           </span>{" "}
-          &bull;
-          <span className="business-card__delivery-time">15-20 min</span>
+          {isBrowsing && (
+            <>
+              &bull;
+              <span className="business-card__delivery-time">15-20 min</span>
+            </>
+          )}
         </p>
       </div>
     </div>

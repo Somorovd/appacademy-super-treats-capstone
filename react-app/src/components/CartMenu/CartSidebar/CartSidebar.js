@@ -140,7 +140,9 @@ export default function CartSidebar({ businessId }) {
         </ul>
       </div>
       <div className="cart-sidebar__summary flex flex-b1">
-        <span>{cart.count} items</span>
+        <span>
+          <strong>{cart.count} items</strong>
+        </span>
         <span>
           Subtotal: <strong>${cart.price}</strong>
         </span>

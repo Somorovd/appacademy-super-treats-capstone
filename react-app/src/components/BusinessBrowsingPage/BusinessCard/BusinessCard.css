@@ -67,4 +67,14 @@
 .business-card__delivery {
   font-size: 0.85rem;
   grid-area: delivery;
+  display: flex;
+  gap: 5px;
+}
+
+.business-card__delivery * {
+  font-weight: 400;
+}
+
+.business-card__delivery-time {
+  color: gray;
 }
