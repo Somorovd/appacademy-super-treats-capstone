@@ -48,9 +48,11 @@ export default function CartSidebar({ businessId }) {
   useEffect(() => {
     document.addEventListener("click", closeActions);
     document.addEventListener("click", closeMenu);
+    document.body.classList.add("hide-scroll");
     return () => {
       document.removeEventListener("click", closeActions);
       document.removeEventListener("click", closeMenu);
+      document.body.classList.remove("hide-scroll");
     };
   }, []);
 
