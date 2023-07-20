@@ -1,21 +1,11 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 
-import { thunkAddToCart } from "../../../store/carts";
+import AddToCart from "./AddToCart";
 import "./ItemCard.css";
 
 export default function ItemCard({ itemId }) {
-  const dispatch = useDispatch();
   const item = useSelector((state) => state.items.allItems[itemId]);
   const user = useSelector((state) => state.session.user);
-
-  const addToCart = () => {
-    const itemObj = {
-      item_id: item.id,
-      quantity: 1,
-      address: sessionStorage.getItem("current-address"),
-    };
-    dispatch(thunkAddToCart(itemObj));
-  };
 
   if (!item) return null;
 
@@ -31,14 +21,7 @@ export default function ItemCard({ itemId }) {
         alt=""
       />
       <p className="item-card__name">{item.name}</p>
-      {user && (
-        <button
-          className="add-to-cart bt-black bt-pd flex flex-11"
-          onClick={addToCart}
-        >
-          <i className="fa-solid fa-plus"></i>
-        </button>
-      )}
+      {user && <AddToCart item={item} />}
       <p className="item-card__price">${item.price}</p>
     </div>
   );

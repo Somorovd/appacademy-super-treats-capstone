@@ -25,8 +25,6 @@ export const thunkGetOneBusiness = (businessId) => async (dispatch) => {
   const res = await fetch(`/api/businesses/${businessId}`);
   const resBody = await res.json();
 
-  console.log(resBody);
-
   if (res.ok) dispatch(actionGetOneBusiness(resBody.business));
   return resBody;
 };

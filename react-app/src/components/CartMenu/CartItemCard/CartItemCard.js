@@ -4,17 +4,16 @@ import { thunkDeleteCartItem, thunkEditCartItem } from "../../../store/carts";
 import "./CartItemCard.css";
 import { useEffect } from "react";
 
-export default function CartItemCard({ businessId, cartItemId }) {
+export default function CartItemCard({ businessId, itemId }) {
   const dispatch = useDispatch();
 
   const cartItem = useSelector(
-    (state) => state.carts[businessId].cartItems[cartItemId]
+    (state) => state.carts[businessId].cartItems[itemId]
   );
 
   const handleDelete = () => {
     const cartItemObj = {
-      id: cartItem.id,
-      cartId: cartItem.cartId,
+      ...cartItem,
       businessId,
     };
     dispatch(thunkDeleteCartItem(cartItemObj));

@@ -24,9 +24,9 @@ const actionEditCartItem = ({ cartItem, cart }) => ({
   payload: { cartItem, cart },
 });
 
-const actionDeleteCartItem = (cartItemId, cart) => ({
+const actionDeleteCartItem = (itemId, cart) => ({
   type: DELETE_CART_ITEM,
-  payload: { cartItemId, cart },
+  payload: { itemId, cart },
 });
 
 export const thunkGetAllCarts = () => async (dispatch) => {
@@ -89,7 +89,7 @@ export const thunkDeleteCartItem = (cartItem) => async (dispatch) => {
 
   if (res.ok) {
     if (resBody.message) dispatch(actionDeleteCart(cartItem.businessId));
-    else dispatch(actionDeleteCartItem(cartItem.id, resBody.cart));
+    else dispatch(actionDeleteCartItem(cartItem.item.id, resBody.cart));
   }
   return resBody;
 };
@@ -115,19 +115,19 @@ export default function reducer(state = initialState, action) {
       const newCart = { ...newState[cartItem.item.businessId], ...cart };
       newCart.cartItems = {
         ...newCart.cartItems,
-        [cartItem.id]: { ...cartItem },
+        [cartItem.item.id]: { ...cartItem },
       };
       newState[cartItem.item.businessId] = newCart;
       return newState;
     }
     case DELETE_CART_ITEM: {
-      const { cartItemId, cart } = action.payload;
+      const { itemId, cart } = action.payload;
       const newState = { ...state };
       newState[cart.businessId] = {
         ...newState[cart.businessId],
         ...cart,
       };
-      delete newState[cart.businessId].cartItems[cartItemId];
+      delete newState[cart.businessId].cartItems[itemId];
       return newState;
     }
     default:
