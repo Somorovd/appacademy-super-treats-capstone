@@ -1,5 +1,6 @@
 from flask import Blueprint, jsonify
-from app.models import Business
+from flask_login import current_user
+from app.models import Business, Cart
 
 business_routes = Blueprint("businesses", __name__)
 
@@ -16,6 +17,16 @@ def all_businesses():
 @business_routes.route("/<int:business_id>")
 def one_business(business_id):
     business = Business.query.get(business_id)
+    cart = Cart.query.filter(
+        Cart.business_id == business_id, Cart.user_id == current_user.id
+    ).one_or_none()
+
+    if cart:
+        for item in business.items:
+            for cart_item in cart.cart_items:
+                if cart_item.item_id == item.id:
+                    item.cart_item_id = cart_item.id
+                    break
 
     if not business:
         return {"errors": "business not found"}, 404
