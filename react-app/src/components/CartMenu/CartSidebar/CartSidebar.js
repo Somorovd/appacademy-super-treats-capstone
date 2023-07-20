@@ -151,7 +151,7 @@ export default function CartSidebar({ businessId }) {
         {cartItems.map((i) => (
           <CartItemCard
             businessId={businessId}
-            cartItemId={i.id}
+            itemId={i.item.id}
             key={i.id}
           />
         ))}
