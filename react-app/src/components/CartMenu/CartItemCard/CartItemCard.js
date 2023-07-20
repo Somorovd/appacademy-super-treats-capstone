@@ -13,8 +13,7 @@ export default function CartItemCard({ businessId, itemId }) {
 
   const handleDelete = () => {
     const cartItemObj = {
-      id: cartItem.id,
-      cartId: cartItem.cartId,
+      ...cartItem,
       businessId,
     };
     dispatch(thunkDeleteCartItem(cartItemObj));
