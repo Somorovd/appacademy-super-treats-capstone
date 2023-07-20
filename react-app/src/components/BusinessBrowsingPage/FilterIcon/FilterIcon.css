@@ -11,9 +11,12 @@
 .filter-icon img {
   width: 55px;
   aspect-ratio: 1;
-  background-color: lightgray;
-  border: 1px solid lightgray;
+  padding: 3px;
   border-radius: 50%;
+}
+
+.filter-icon img:hover {
+  background-color: #DDDDDD;
 }
 
 .filter-icon p {

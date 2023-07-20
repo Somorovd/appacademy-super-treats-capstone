@@ -9,23 +9,26 @@ import FilterSidebar from "./FilterSidebar";
 import CartMenu from "../CartMenu";
 import "./BusinessBrowsingPage.css";
 
-const filterCategories = [
-  "Grocery",
-  "Convenience",
-  "American",
-  "Alcohol",
-  "Pharmacy",
-  "Baby",
-  "Pet Supplies",
-  "Flowers",
-  "Retail",
-  "Pizza",
-  "Coffee and Tea",
-  "Bakery",
-  "Healthy",
-  "Ice Cream + Frozen Yogurt",
-  "Desserts",
-];
+const filterCategories = {
+  Grocery: "filter-icons/grocery.png",
+  Convenience: "filter-icons/convenience.png",
+  Pharmacy: "filter-icons/pharmacy.png",
+  Alcohol: "filter-icons/alcohol.png",
+  BBQ: "filter-icons/bbq.png",
+  Breakfast: "filter-icons/breakfast.png",
+  "Fast Food": "filter-icons/fast-food.png",
+  "Pet Supplies": "filter-icons/pet-supplies.png",
+  Flowers: "filter-icons/flowers.png",
+  Asian: "filter-icons/asian.png",
+  Indian: "filter-icons/indian.png",
+  Seafood: "filter-icons/seafood.png",
+  Pizza: "filter-icons/pizza.png",
+  Sushi: "filter-icons/sushi.png",
+  "Coffee and Tea": "filter-icons/coffee-tea.png",
+  Healthy: "filter-icons/healthy.png",
+  "Ice Cream + Frozen Yogurt": "filter-icons/ice-cream-frozen-yogurt.png",
+  Desserts: "filter-icons/desserts.png",
+};
 
 export default function BusinessBrowsingPage() {
   const dispatch = useDispatch();
@@ -45,11 +48,11 @@ export default function BusinessBrowsingPage() {
         <PageHeader auth={true} />
         <div className="pg-pd">
           <div className="filter-bar flex">
-            {filterCategories.map((cat, i) => (
+            {Object.keys(filterCategories).map((cat, i) => (
               <FilterIcon
                 text={cat}
                 key={i}
-                src=""
+                src={filterCategories[cat]}
               />
             ))}
           </div>

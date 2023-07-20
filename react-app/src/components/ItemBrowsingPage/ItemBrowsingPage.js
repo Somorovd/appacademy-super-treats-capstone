@@ -25,8 +25,25 @@ export default function ItemBrowsingPage() {
   return (
     <div className="business-browsing">
       <CartMenu />
-      <header className="business-browsing__header">
+      <header className="business-browsing__header flex-c">
         <PageHeader auth={true} />
+        <img
+          className="business-banner fw"
+          src={business.image}
+          alt=""
+        />
+        <div className="business-details pg-pd flex-c">
+          <h2 className="business-details__name">{business.name}</h2>
+          <p className="flex">
+            <span>
+              <i className="fa-solid fa-star"></i> {business.rating}
+            </span>
+            &bull;
+            <span>{business.cuisine || business.type}</span>
+            &bull;
+            <span>{business.priceRange}</span>
+          </p>
+        </div>
       </header>
       <div className="business-browsing__body flex pg-pd">
         <CategorySidebar />
