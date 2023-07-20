@@ -20,7 +20,6 @@ export default function AddToCart({ item }) {
   }, []);
 
   const addToCart = (e) => {
-    e.stopPropagation();
     const itemObj = {
       item_id: item.id,
       quantity: 1,
@@ -40,14 +39,14 @@ export default function AddToCart({ item }) {
     setExpand(false);
   };
 
-  const closeMenu = () => {
+  const closeMenu = (e) => {
+    if (menuRef.current.contains(e.target)) return;
     setExpand(false);
   };
 
   const openMenu = (e) => {
-    e.stopPropagation();
     if (!expand) setExpand(true);
-    else closeMenu();
+    else closeMenu(e);
   };
 
   return (

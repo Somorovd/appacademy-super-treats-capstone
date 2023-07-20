@@ -63,6 +63,7 @@
   min-width: var(--size);
   height: var(--size);
   transition: 1s width;
+  cursor: pointer;
 }
 
 .add-to-cart__count {
