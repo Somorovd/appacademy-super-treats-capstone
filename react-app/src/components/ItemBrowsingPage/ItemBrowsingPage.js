@@ -16,7 +16,6 @@ export default function ItemBrowsingPage() {
   const itemIds = business.items;
 
   useEffect(() => {
-    console.log("use effect");
     dispatch(thunkGetOneBusiness(businessId));
   }, [dispatch, businessId]);
 

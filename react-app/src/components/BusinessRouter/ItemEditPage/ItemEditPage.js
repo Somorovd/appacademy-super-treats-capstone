@@ -99,7 +99,6 @@ export default function ItemEditPage() {
 
     if (!res.errors && !isEditting)
       history.push(`/business/${businessId}/items`);
-    else console.log(res.errors);
   };
 
   const onDelete = async () => {
