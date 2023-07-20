@@ -27,7 +27,11 @@
   border: none;
   border-radius: 3rem;
   background-color: #EEE;
-  width: 50px;
+  width: 60px;
+}
+
+.quantity-select option {
+  z-index: 2;
 }
 
 .quantity-select:hover {
