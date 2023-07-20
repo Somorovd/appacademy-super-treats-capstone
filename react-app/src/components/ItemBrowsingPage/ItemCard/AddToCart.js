@@ -10,8 +10,10 @@ export default function AddToCart({ item }) {
   const { businessId } = useParams();
   const [expand, setExpand] = useState(false);
 
-  const cartItem = useSelector(
-    (state) => state.carts[businessId]?.cartItems[item.id]
+  const cartItem = useSelector((state) =>
+    Object.values(state.carts[businessId]?.cartItems || {}).find(
+      (cartItem) => cartItem.item?.id === item.id
+    )
   );
 
   useEffect(() => {

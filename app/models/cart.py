@@ -47,7 +47,7 @@ class Cart(db.Model):
             "userId": self.user_id,
             "address": self.address,
             "business": self.business.cart_to_dict() if self.business else None,
-            "cartItems": {i.item.id: i.to_dict() for i in self.cart_items},
+            "cartItems": {i.id: i.to_dict() for i in self.cart_items},
             "count": self.item_count,
             "price": self.total_price,
         }
