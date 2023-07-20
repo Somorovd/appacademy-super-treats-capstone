@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 
-import { thunkAddToCart } from "../../../store/carts";
+import { thunkAddToCart, thunkDeleteCartItem } from "../../../store/carts";
 
 export default function AddToCart({ item }) {
   const dispatch = useDispatch();
@@ -27,6 +27,17 @@ export default function AddToCart({ item }) {
       address: sessionStorage.getItem("current-address"),
     };
     dispatch(thunkAddToCart(itemObj));
+    setExpand(true);
+  };
+
+  const removeFromCart = (e) => {
+    e.stopPropagation();
+    const cartItemObj = {
+      ...cartItem,
+      businessId,
+    };
+    dispatch(thunkDeleteCartItem(cartItemObj));
+    setExpand(false);
   };
 
   const closeMenu = () => {
@@ -49,7 +60,7 @@ export default function AddToCart({ item }) {
         {expand && (
           <button
             className="bt-black flex flex-11"
-            // onClick={addToCart}
+            onClick={removeFromCart}
           >
             <i className="fa-solid fa-trash"></i>
           </button>
