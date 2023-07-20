@@ -11,6 +11,7 @@
 .filter-icon img {
   width: 55px;
   aspect-ratio: 1;
+  padding: 3px;
   border-radius: 50%;
 }
 
