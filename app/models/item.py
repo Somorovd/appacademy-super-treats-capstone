@@ -28,6 +28,16 @@ class Item(db.Model):
     business = db.relationship("Business", back_populates="items")
     category = db.relationship("Category", back_populates="items")
 
+    _cart_item_id = None
+
+    @property
+    def cart_item_id(self):
+        return self._cart_item_id
+
+    @cart_item_id.setter
+    def cart_item_id(self, id):
+        self._cart_item_id = id
+
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
@@ -35,6 +45,7 @@ class Item(db.Model):
             "price": self.price,
             "image": self.image,
             "about": self.about,
+            "cartItemId": self.cart_item_id,
         }
 
         if timestamps:
