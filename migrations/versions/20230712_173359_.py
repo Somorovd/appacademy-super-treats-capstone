@@ -209,7 +209,7 @@ def upgrade():
         "cart_items",
         sa.Column("id", sa.Integer(), nullable=False),
         sa.Column("_quantity", sa.Integer(), nullable=False),
-        sa.Column("item_id", sa.Integer(), nullable=False),
+        sa.Column("item_id", sa.Integer(), nullable=True),
         sa.Column("cart_id", sa.Integer(), nullable=False),
         sa.Column(
             "created_at",
