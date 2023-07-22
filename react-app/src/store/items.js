@@ -4,6 +4,7 @@ const UPDATE_ITEM = "items/UPDATE_ITEM";
 const DELETE_ITEM = "items/DELETE_ITEM";
 const GET_ONE_USERBUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 const GET_ONE_BUSINESS = "businesses/GET_ONE_BUSINESS";
+const ADD_TO_CART = "carts/ADD_TO_CART";
 
 const actionGetOneItem = (item) => ({
   type: GET_ONE_ITEM,
@@ -114,6 +115,12 @@ export default function reducer(state = initialState, action) {
     }
     case GET_ONE_USERBUSINESS: {
       newState.allItems = { ...action.payload.items };
+      return newState;
+    }
+    case ADD_TO_CART: {
+      console.log(action.payload);
+      const { itemId, cartItemId } = action.payload;
+      newState.allItems[itemId].cartItemId = cartItemId;
       return newState;
     }
     default:
