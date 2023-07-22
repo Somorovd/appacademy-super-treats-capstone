@@ -17,6 +17,13 @@ def all_businesses():
 @business_routes.route("/<int:business_id>")
 def one_business(business_id):
     business = Business.query.get(business_id)
+
+    if not business:
+        return {"errors": "business not found"}, 404
+
+    if not current_user.is_authenticated:
+        return {"business": business.to_dict(get_items=True)}
+
     cart = Cart.query.filter(
         Cart.business_id == business_id, Cart.user_id == current_user.id
     ).one_or_none()
@@ -27,8 +34,5 @@ def one_business(business_id):
                 if cart_item.item_id == item.id:
                     item.cart_item_id = cart_item.id
                     break
-
-    if not business:
-        return {"errors": "business not found"}, 404
 
     return {"business": business.to_dict(get_items=True)}
