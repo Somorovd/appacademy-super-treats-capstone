@@ -29,7 +29,7 @@ def seed_businesses():
             price_range=b["price_range"],
             rating=b["rating"],
             type=types["Restaurant"],
-            user_id=randint(0, 15),
+            user_id=randint(1, 15),
         )
         db.session.add(business)
 
