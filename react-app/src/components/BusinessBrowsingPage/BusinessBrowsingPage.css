@@ -1,3 +1,7 @@
+.business-browsing {
+  gap: 40px;
+}
+
 .filter-bar {
   padding: 20px 0px;
   border-bottom: 1px solid lightgrey;

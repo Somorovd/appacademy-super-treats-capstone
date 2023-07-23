@@ -73,6 +73,7 @@ def upgrade():
             "cuisine",
             sa.Enum(
                 "Alcohol",
+                "Breakfast",
                 "Bakery",
                 "BBQ",
                 "Burgers",
@@ -82,6 +83,7 @@ def upgrade():
                 "Ice Cream & Frozen Yogurt",
                 "Pizza",
                 "Sushi",
+                "Mexican",
                 name="cuisines",
             ),
             nullable=True,
