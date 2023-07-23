@@ -1,10 +1,8 @@
 from app.models import db, User, Business, environment, SCHEMA
 from app.models.business import types, price_ranges, cuisines
 from sqlalchemy.sql import text
-from faker import Faker
+from .business_list import businesses, cuisine_images
 from random import choice, randint, random
-
-fake = Faker()
 
 
 def seed_businesses():
@@ -21,19 +19,17 @@ def seed_businesses():
     )
     db.session.add(demo_business)
 
-    for _ in range(40):
-        type = choice(list(types))
-        cuisine = choice(list(cuisines)) if type.name == "Restaurant" else None
+    for i, b in enumerate(businesses):
         business = Business(
-            address=fake.address(),
-            cuisine=cuisine,
-            delivery_fee=random() * 6.0,
-            image="",
-            name=fake.company(),
-            price_range=choice(list(price_ranges)),
-            rating=random() * 3 + 2,
-            type=type,
-            user_id=randint(1, 21),
+            address=b["address"],
+            cuisine=b["cuisine"],
+            delivery_fee=b["delivery_fee"],
+            image=cuisine_images[b["cuisine"]][i % len(cuisine_images[b["cuisine"]])],
+            name=b["name"],
+            price_range=b["price_range"],
+            rating=b["rating"],
+            type=types["Restaurant"],
+            user_id=randint(0, 15),
         )
         db.session.add(business)
 

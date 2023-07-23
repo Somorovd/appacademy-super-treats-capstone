@@ -18,7 +18,7 @@ export default function BusinessCard({ business, isBrowsing }) {
       <div className="business-card__info">
         <p className="business-card__name">{business.name}</p>
         <p className="business-card__rating">
-          {(Math.random() * 2.5 + 2.5).toFixed(1)}
+          {Number(business.rating).toFixed(1)}
         </p>
         {!isBrowsing && (
           <p className="business-card__address">{business.address}</p>

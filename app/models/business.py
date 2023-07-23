@@ -25,6 +25,7 @@ cuisines = Enum(
     "Cuisines",
     [
         "Alcohol",
+        "Breakfast",
         "Bakery",
         "BBQ",
         "Burgers",
@@ -34,6 +35,7 @@ cuisines = Enum(
         "Ice Cream & Frozen Yogurt",
         "Pizza",
         "Sushi",
+        "Mexican",
     ],
 )
 

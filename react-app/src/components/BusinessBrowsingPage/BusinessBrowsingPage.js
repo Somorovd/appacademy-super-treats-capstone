@@ -42,7 +42,7 @@ export default function BusinessBrowsingPage() {
   }, [dispatch]);
 
   return (
-    <div className="business-browsing">
+    <div className="business-browsing flex-c">
       <CartMenu />
       <header className="business-browsing__header">
         <PageHeader auth={true} />
@@ -56,13 +56,13 @@ export default function BusinessBrowsingPage() {
               />
             ))}
           </div>
-          <div className="deals-bar flex">
+          {/* <div className="deals-bar flex">
             <div className="deal-card">What a great deal!</div>
             <div className="deal-card">This one is better!</div>
             <div className="deal-card">
               You'll kick yourself if you miss this!
             </div>
-          </div>
+          </div> */}
         </div>
       </header>
       <div className="business-browsing__body flex pg-pd">
