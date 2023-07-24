@@ -22,7 +22,7 @@
 }
 
 .item-card--image:has(+.item-card--no-image) {
-  margin-right: 0.5px;
+  margin-right: 100%;
 }
 
 .item-card--no-image {
