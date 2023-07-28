@@ -74,7 +74,7 @@ and handled the rendering. The code below shows a simplified version of the rele
 
 ```javascript
 
-/* /react-app/src/components/auth/SignupFormPage */
+/* /react-app/src/components/auth/SignupFormPage/SignupFormPage.js */
 
 import SignupFormEmail from "./SignupFormEmail";
 
@@ -109,7 +109,7 @@ export default function SignupFormPage() {
 
 
 ```javascript
-/* /react-app/src/components/auth/SignupFormEmail */
+/* /react-app/src/components/auth/SignupFormPage/SignupFormEmail.js */
 
 export default function SignupFormEmail({ formData }) {
   const { email, setEmail } = formData.email;
