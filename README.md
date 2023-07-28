@@ -8,11 +8,11 @@ create a new source of income. The live site is available @ https://super-treats
 
 For more details on features and application architecture see our wiki:
 
-- [Features List]()
-- [User Stories]()
-- [Database and Endpoints]()
-- [Redux Store Shape]()
-- [React Components]()
+- [Features List](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/Feature-List)
+- [User Stories](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/User-Stories)
+- [Database and Endpoints](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/Database-and-Endpoints)
+- [Redux Store Shape](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/Redux-Store-Shape)
+- [React Components](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/React-Components)
 
 ## Tech and Languages
 
