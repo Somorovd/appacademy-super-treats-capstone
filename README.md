@@ -51,6 +51,14 @@ In your browser, navigate to http://localhost:3000/
 
 ## Screenshots
 
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/c9de766c-4b0d-40fe-affd-8a5d9a8f7241)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/fe0369f6-befb-46bb-83f3-47b6fcbc1ed7)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/7c790b16-c260-4d19-a37d-c286cf40de22)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/8ee9fc22-a358-492e-8bfd-831731ca50f8)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/0e8d2952-6c84-4723-9f36-d08a0450e059)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/7710382c-1b38-4b46-bda0-6f24ca79cf6d)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/9e0477c2-6360-402f-9eef-972b79688751)
+
 ## Future Features
 
 1. Search and filter for businesses and items
