@@ -31,20 +31,20 @@ For more details on features and application architecture see our wiki:
 In the root directory:
 
 ```bash
-  pipenv install -r requirements.txt
-  pipenv shell
-  cp .env.example .env
-  flask db upgrade
-  flask seed all
+  pipenv install -r requirements.txt &&
+  pipenv shell &&
+  cp .env.example .env &&
+  flask db upgrade &&
+  flask seed all &&
   flask run
 ```
 
 In a second terminal:
 
 ```bash
- cd react-app
- npm install
- npm start
+  cd react-app &&
+  npm install &&
+  npm start
 ```
 
 In your browser, navigate to http://localhost:3000/
