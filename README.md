@@ -6,6 +6,14 @@ is an eCommerce site for food. Hungry users can browse food options and place
 orders, while business focused users can register their restaurants and menus to
 create a new source of income. The live site is available @ https://super-treats.onrender.com
 
+For more details on features and application architecture see our wiki:
+
+- [Features List]()
+- [User Stories]()
+- [Database and Endpoints]()
+- [Redux Store Shape]()
+- [React Components]()
+
 ## Tech and Languages
 
 - React
@@ -17,14 +25,6 @@ create a new source of income. The live site is available @ https://super-treats
 - Postgres
 - CSS
 - HTML
-
-For more details on features and application architecture see our wiki:
-
-- [Features List]()
-- [User Stories]()
-- [Database and Endpoints]()
-- [Redux Store Shape]()
-- [React Components]()
 
 ## How to Build
 
