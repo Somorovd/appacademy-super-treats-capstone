@@ -52,7 +52,7 @@ In your browser, navigate to http://localhost:3000/
 ## Screenshots
 
 ![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/c9de766c-4b0d-40fe-affd-8a5d9a8f7241)
-![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/fe0369f6-befb-46bb-83f3-47b6fcbc1ed7)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/fde866b5-32bf-47d0-9745-b1c90b1b3473)
 ![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/7c790b16-c260-4d19-a37d-c286cf40de22)
 ![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/8ee9fc22-a358-492e-8bfd-831731ca50f8)
 ![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/0e8d2952-6c84-4723-9f36-d08a0450e059)
@@ -65,3 +65,73 @@ In your browser, navigate to http://localhost:3000/
 2. Allow business owners to create multiple menus and split items by category
 3. Connect a map API to show locations and estimate delivery times
 4. Create a system that allows users to customize their orders i.e. portion size and toppings
+
+## Code I Found Interesting
+
+This was my first time implementing a multistage form and I though my solution was pretty neat. Each stage of the form was 
+turned into a separate component, such as SignupFormEmail, that handled any related logic. The main form component, SignupFormPage, kept the state
+and handled the rendering. The code below shows a simplified version of the relevant code.
+
+```javascript
+
+/* /react-app/src/components/auth/SignupFormPage */
+
+import SignupFormEmail from "./SignupFormEmail";
+
+export default function SignupFormPage() {
+  const [email, setEmail] = useState(""); 
+	const [step, setStep] = useState(0);
+
+	const formSteps = [    
+  	SignupFormEmail,
+  ];
+  
+  const nextStep = () => {
+    if (step < formSteps.length - 1) 
+      setStep((step) => step + 1);
+    else handleSubmit();
+  };
+
+  const CurrentStep = formSteps[step];
+
+  const formData = {
+    email: {email, setEmail},
+    steps: { nextStep }
+  }
+
+  return (
+    <form>
+      <CurrentStep formData={formData}/>
+    </form>
+  )
+}
+```
+
+
+```javascript
+/* /react-app/src/components/auth/SignupFormEmail */
+
+export default function SignupFormEmail({ formData }) {
+  const { email, setEmail } = formData.email;
+  const { nextStep } = formData.steps;
+
+  const submitEmail = async (e) => {
+    e.preventDefault();
+    const res = await dispatch(validateEmail(email)); // check for uniqueness on the backend
+    if (!res.errors) nextStep();
+    // else handle errors
+  }
+
+  return (
+    <section>
+      <input
+        value={email}
+        onChange={setEmail}
+      />
+      <button onClick={submitEmail}>
+        Submit Email
+      </button> 
+    </section>
+  )
+}
+```
