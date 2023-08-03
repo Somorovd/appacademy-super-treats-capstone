@@ -160,6 +160,14 @@ export default function CartSidebar({ businessId }) {
         <p>Subtotal</p>
         <p>${cart.price}</p>
       </div>
+      <div className="cart-sidebar__submit">
+        <button
+          className="bt-black bt-pd fw"
+          onClick={handleClearCart}
+        >
+          Submit Order
+        </button>
+      </div>
     </div>
   );
 }

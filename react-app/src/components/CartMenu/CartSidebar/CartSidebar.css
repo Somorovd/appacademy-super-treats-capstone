@@ -44,6 +44,10 @@
   font-weight: 900;
 }
 
+.cart-sidebar__submit {
+  margin-top: auto;
+}
+
 .cart-item-list {
   gap: 20px;
 }
