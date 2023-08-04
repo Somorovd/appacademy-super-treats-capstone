@@ -19,6 +19,17 @@ export default function ItemBrowsingPage() {
     dispatch(thunkGetOneBusiness(businessId));
   }, [dispatch, businessId]);
 
+  useEffect(() => {
+    const firstNonPicture = document.querySelector(
+      ".item-card--image+.item-card--no-image"
+    );
+    const spacer = document.createElement("div");
+    spacer.classList.add("flex-spacer");
+    if (firstNonPicture) {
+      firstNonPicture.parentNode.insertBefore(spacer, firstNonPicture);
+    }
+  });
+
   if (business?.id !== Number(businessId)) return null;
 
   return (

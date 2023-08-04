@@ -87,7 +87,11 @@ export default function CartSidebar({ businessId }) {
             onClick={openMenu}
           >
             Carts ({Object.values(allCarts).length}){" "}
-            <i className="fa-solid fa-chevron-down"></i>
+            {menuHidden ? (
+              <i className="fa-solid fa-chevron-down"></i>
+            ) : (
+              <i className="fa-solid fa-chevron-up"></i>
+            )}
           </div>
           {!menuHidden && (
             <AllCartsDropdown

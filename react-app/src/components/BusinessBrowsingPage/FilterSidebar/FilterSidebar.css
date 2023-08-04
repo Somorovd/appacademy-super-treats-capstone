@@ -1,5 +1,5 @@
 .filter-sidebar {
-  width: 500px;
+  width: 450px;
   height: 600px;
   position: sticky;
   top: 0px;
@@ -47,6 +47,7 @@
   aspect-ratio: 1;
   border-radius: 50%;
   font-size: 0.8rem;
+  margin-right: 100px;
 }
 
 .price-count:empty {
