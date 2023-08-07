@@ -8,6 +8,9 @@ const formatDate = (date) => {
 export default function ItemTableRow({ itemId }) {
   const { businessId } = useParams();
   const item = useSelector((state) => state.items.allItems[itemId]);
+  const category = useSelector(
+    (state) => state.userBusinesses.singleBusiness.categories[item.categoryId]
+  );
 
   if (!item) return null;
 
@@ -23,6 +26,9 @@ export default function ItemTableRow({ itemId }) {
         ) : (
           "n/a"
         )}
+      </td>
+      <td className="flex flex-01">
+        <p className="item-table__category">{category?.name || ""}</p>
       </td>
       <td className="flex flex-01">
         <Link

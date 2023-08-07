@@ -3,13 +3,21 @@
   margin: auto;
 }
 
+.business-item-table thead,
+.business-item-table tbody {
+  display: grid;
+  grid-template-columns: 100px 150px 1fr 100px 150px;
+  gap: 0px 20px;
+}
+
 .business-item-table tr {
   border-bottom: 1px solid lightgrey;
   border-top: 1px solid lightgrey;
-  display: grid;
-  grid-template-columns: 100px 1fr 100px 150px;
   padding: 3px 0px;
   margin-bottom: 3px;
+  grid-column: 1 / -1;
+  display: grid;
+  grid-template-columns: subgrid;
 }
 
 .business-item-table td,
@@ -22,13 +30,17 @@
   text-decoration: none;
 }
 
+.item-table__category {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .item-table__image {
   aspect-ratio: 1;
   height: 100%;
 }
 
 .item-table__price {
-  width: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;

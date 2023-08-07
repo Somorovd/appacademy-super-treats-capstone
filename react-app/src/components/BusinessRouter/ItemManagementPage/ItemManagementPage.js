@@ -27,6 +27,7 @@ export default function ItemManagementPage() {
         <thead>
           <tr>
             <th className="flex flex-11">Photo</th>
+            <th className="flex flex-01">Category</th>
             <th className="flex flex-01">Name</th>
             <th className="flex flex-11">Price</th>
             <th className="flex flex-11">Last Updated</th>

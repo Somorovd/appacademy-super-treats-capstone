@@ -184,11 +184,7 @@ export default function ItemEditPage() {
               </option>
             ))}
           </select>
-          {categoryId === 0 ? (
-            <span className="auth-error">
-              This item will not be displayed unless it has a category
-            </span>
-          ) : (
+          {categoryId !== 0 && (
             <button
               id="delete-category"
               className="flex flex-11"
@@ -198,6 +194,11 @@ export default function ItemEditPage() {
             </button>
           )}
         </div>
+        {categoryId === 0 && (
+          <p className="auth-error">
+            This item will not be displayed unless it has a category
+          </p>
+        )}
 
         <div className="create-item__picture">
           <img
