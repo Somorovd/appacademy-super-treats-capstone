@@ -39,3 +39,24 @@ def create_category():
     db.session.add(category)
     db.session.commit()
     return {"category": category.to_dict()}
+
+
+@category_routes.route("/<int:category_id>/delete", methods=["DELETE"])
+@login_required
+def delete_category(category_id):
+    category = Category.query.get(category_id)
+    if not category:
+        return {"errors": "Category not found"}, 404
+
+    business = (
+        Business.query.join(Category)
+        .filter(Category.business_id == Business.id)
+        .one_or_none()
+    )
+    if not business or not business.user_id == current_user.id:
+        return {"errors": "Not authorized"}, 401
+
+    db.session.delete(category)
+    db.session.commit()
+
+    return {"message": "successfully deleted"}
