@@ -1,148 +1,67 @@
-# Flask React Project
+# Super Treats
 
-This is the starter for the Flask React project.
+Super Treats is a solo project build as the capstone project at App Academy, the
+culmination of 6 months of focused study on fullstack developement. Super Treats
+is an eCommerce site for food. Hungry users can browse food options and place
+orders, while business focused users can register their restaurants and menus to
+create a new source of income. The live site is available @ https://super-treats.onrender.com
 
-## Getting started
-1. Clone this repository (only this branch)
+For more details on features and application architecture see our wiki:
 
-2. Install dependencies
+- [Features List](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/Feature-List)
+- [User Stories](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/User-Stories)
+- [Database and Endpoints](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/Database-and-Endpoints)
+- [Redux Store Shape](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/Redux-Store-Shape)
+- [React Components](https://github.com/Somorovd/appacademy-super-treats-capstone/wiki/React-Components)
 
-      ```bash
-      pipenv install -r requirements.txt
-      ```
+## Tech and Languages
 
-3. Create a **.env** file based on the example with proper settings for your
-   development environment
+- React
+- Redux
+- Flask
+- SQLAlchemy
+- Javascript
+- Python
+- Postgres
+- CSS
+- HTML
 
-4. Make sure the SQLite3 database connection URL is in the **.env** file
+## How to Build
 
-5. This starter organizes all tables inside the `flask_schema` schema, defined
-   by the `SCHEMA` environment variable.  Replace the value for
-   `SCHEMA` with a unique name, **making sure you use the snake_case
-   convention**.
+In the root directory:
 
-6. Get into your pipenv, migrate your database, seed your database, and run your Flask app
-
-   ```bash
-   pipenv shell
-   ```
-
-   ```bash
-   flask db upgrade
-   ```
-
-   ```bash
-   flask seed all
-   ```
-
-   ```bash
-   flask run
-   ```
-
-7. To run the React App in development, checkout the [README](./react-app/README.md) inside the `react-app` directory.
-
-
-## Deployment through Render.com
-
-First, refer to your Render.com deployment articles for more detailed
-instructions about getting started with [Render.com], creating a production
-database, and deployment debugging tips.
-
-From the [Dashboard], click on the "New +" button in the navigation bar, and
-click on "Web Service" to create the application that will be deployed.
-
-Look for the name of the application you want to deploy, and click the "Connect"
-button to the right of the name.
-
-Now, fill out the form to configure the build and start commands, as well as add
-the environment variables to properly deploy the application.
-
-### Part A: Configure the Start and Build Commands
-
-Start by giving your application a name.
-
-Leave the root directory field blank. By default, Render will run commands from
-the root directory.
-
-Make sure the Environment field is set set to "Python 3", the Region is set to
-the location closest to you, and the Branch is set to "main".
-
-Next, add your Build command. This is a script that should include everything
-that needs to happen _before_ starting the server.
-
-For your Flask project, enter the following command into the Build field, all in
-one line:
-
-```shell
-# build command - enter all in one line
-npm install --prefix react-app &&
-npm run build --prefix react-app &&
-pip install -r requirements.txt &&
-pip install psycopg2 &&
-flask db upgrade &&
-flask seed all
+```bash
+  pipenv install -r requirements.txt &&
+  pipenv shell &&
+  cp .env.example .env &&
+  flask db upgrade &&
+  flask seed all &&
+  flask run
 ```
 
-This script will install dependencies for the frontend, and run the build
-command in the __package.json__ file for the frontend, which builds the React
-application. Then, it will install the dependencies needed for the Python
-backend, and run the migration and seed files.
+In a second terminal:
 
-Now, add your start command in the Start field:
-
-```shell
-# start script
-gunicorn app:app
+```bash
+  cd react-app &&
+  npm install &&
+  npm start
 ```
 
-_If you are using websockets, use the following start command instead for increased performance:_
+In your browser, navigate to http://localhost:3000/
 
-`gunicorn --worker-class eventlet -w 1 app:app`
+## Screenshots
 
-### Part B: Add the Environment Variables
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/c9de766c-4b0d-40fe-affd-8a5d9a8f7241)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/fe0369f6-befb-46bb-83f3-47b6fcbc1ed7)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/7c790b16-c260-4d19-a37d-c286cf40de22)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/8ee9fc22-a358-492e-8bfd-831731ca50f8)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/0e8d2952-6c84-4723-9f36-d08a0450e059)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/7710382c-1b38-4b46-bda0-6f24ca79cf6d)
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/9e0477c2-6360-402f-9eef-972b79688751)
 
-Click on the "Advanced" button at the bottom of the form to configure the
-environment variables your application needs to access to run properly. In the
-development environment, you have been securing these variables in the __.env__
-file, which has been removed from source control. In this step, you will need to
-input the keys and values for the environment variables you need for production
-into the Render GUI.
+## Future Features
 
-Click on "Add Environment Variable" to start adding all of the variables you
-need for the production environment.
-
-Add the following keys and values in the Render GUI form:
-
-- SECRET_KEY (click "Generate" to generate a secure secret for production)
-- FLASK_ENV production
-- FLASK_APP app
-- SCHEMA (your unique schema name, in snake_case)
-- REACT_APP_BASE_URL (use render.com url, located at top of page, similar to
-  https://this-application-name.onrender.com)
-
-In a new tab, navigate to your dashboard and click on your Postgres database
-instance.
-
-Add the following keys and values:
-
-- DATABASE_URL (copy value from Internal Database URL field)
-
-_Note: Add any other keys and values that may be present in your local __.env__
-file. As you work to further develop your project, you may need to add more
-environment variables to your local __.env__ file. Make sure you add these
-environment variables to the Render GUI as well for the next deployment._
-
-Next, choose "Yes" for the Auto-Deploy field. This will re-deploy your
-application every time you push to main.
-
-Now, you are finally ready to deploy! Click "Create Web Service" to deploy your
-project. The deployment process will likely take about 10-15 minutes if
-everything works as expected. You can monitor the logs to see your build and
-start commands being executed, and see any errors in the build process.
-
-When deployment is complete, open your deployed site and check to see if you
-successfully deployed your Flask application to Render! You can find the URL for
-your site just below the name of the Web Service at the top of the page.
-
-[Render.com]: https://render.com/
-[Dashboard]: https://dashboard.render.com/
+1. Search and filter for businesses and items
+2. Allow business owners to create multiple menus and split items by category
+3. Connect a map API to show locations and estimate delivery times
+4. Create a system that allows users to customize their orders i.e. portion size and toppings

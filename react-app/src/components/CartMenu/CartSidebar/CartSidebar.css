@@ -26,6 +26,7 @@
 
 .cart-sidebar__dropdown {
   min-width: 50px;
+  overflow: hidden;
 }
 
 .cart-sidebar__summary {
