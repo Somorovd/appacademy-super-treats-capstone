@@ -63,7 +63,7 @@ export default function ItemBrowsingPage() {
         </div>
       </header>
       <div className="business-browsing__body flex pg-pd">
-        <CategorySidebar />
+        <CategorySidebar business={business} />
         <div className="item-grid fw">
           {itemIds.map((i) => (
             <ItemCard

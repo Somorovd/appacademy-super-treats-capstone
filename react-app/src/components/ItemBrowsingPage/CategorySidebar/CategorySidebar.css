@@ -1,3 +1,21 @@
 .category-sidebar {
+  border: 1px solid black;
   width: 500px;
+  font-size: 1.3rem;
+  position: sticky;
+  top: 20px;
+  align-self: flex-start;
+}
+
+.category-sidebar a,
+.category-sidebar a:visited {
+  color: black;
+}
+
+.category-sidebar a:active {
+  text-decoration: 2px underline;
+}
+
+.category-sidebar__link {
+  cursor: pointer;
 }
