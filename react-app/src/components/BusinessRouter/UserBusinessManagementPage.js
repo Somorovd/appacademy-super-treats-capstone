@@ -28,10 +28,10 @@ export default function UserBusinessManagementPage() {
     <div className="business-page">
       <BusinessMenu />
       <Switch>
-        <Route path="/business/:businessId/items/new">
+        <Route path="/business/:businessId/menu/items/new">
           <ItemEditPage />
         </Route>
-        <Route path="/business/:businessId/items/:itemId">
+        <Route path="/business/:businessId/menu/items/:itemId">
           <ItemEditPage />
         </Route>
         <Route path="/business/:businessId/menu/items">

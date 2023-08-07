@@ -16,7 +16,7 @@ export default function ItemManagementPage() {
         <h2>Menu Items</h2>
         <div className="flex">
           <Link
-            to={`/business/${businessId}/items/new`}
+            to={`/business/${businessId}/menu/items/new`}
             className="bt-black bt-pd"
           >
             <i className="fa-solid fa-plus"></i> Add Item
