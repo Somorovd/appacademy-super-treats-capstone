@@ -1,6 +1,7 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user
 from app.forms.create_category_form import CreateCategoryForm
+from app.forms.edit_category_form import EditCategoryForm
 from ..utils.helpers import validation_errors_to_dict
 
 from app.models import db, Category, Business, Item
@@ -15,7 +16,6 @@ def create_category():
     form["csrf_token"].data = request.cookies.get("csrf_token")
 
     if not form.validate_on_submit():
-        print("ERRORS", form.form_errors)
         return {"errors": validation_errors_to_dict(form.errors)}, 400
 
     business = Business.query.get(form.data["business_id"])
@@ -41,6 +41,29 @@ def create_category():
     return {"category": category.to_dict()}
 
 
+@category_routes.route("/<int:category_id>/edit", methods=["PUT"])
+@login_required
+def edit_category(category_id):
+    form = EditCategoryForm()
+    form["csrf_token"].data = request.cookies.get("csrf_token")
+
+    if not form.validate_on_submit():
+        return {"errors": validation_errors_to_dict(form.errors)}, 400
+
+    category = Category.query.get(category_id)
+    if not category:
+        return {"errors": "Category not found"}, 404
+
+    business = category.business
+    if not business or not business.user_id == current_user.id:
+        return {"errors": "Not authorized"}, 401
+
+    category.name = form.data["name"]
+    db.session.commit()
+
+    return {"category": category.to_dict()}
+
+
 @category_routes.route("/<int:category_id>/delete", methods=["DELETE"])
 @login_required
 def delete_category(category_id):
@@ -48,11 +71,7 @@ def delete_category(category_id):
     if not category:
         return {"errors": "Category not found"}, 404
 
-    business = (
-        Business.query.join(Category)
-        .filter(Category.business_id == Business.id)
-        .one_or_none()
-    )
+    business = category.business
     if not business or not business.user_id == current_user.id:
         return {"errors": "Not authorized"}, 401
 
