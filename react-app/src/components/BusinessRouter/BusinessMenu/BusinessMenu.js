@@ -30,7 +30,7 @@ export default function BusinessMenu() {
             Overview
           </NavLink>
           <NavLink
-            to={`/business/${businessId}/items`}
+            to={`/business/${businessId}/menu/items`}
             className="menu-link"
           >
             <i className="fa-solid fa-utensils"></i>

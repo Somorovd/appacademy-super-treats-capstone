@@ -49,6 +49,7 @@ export default function ItemEditPage() {
   const [image, setImage] = useState("");
   const [imageInput, setImageInput] = useState("");
   const [price, setPrice] = useState(0);
+  const [category, setCategory] = useState(null);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function ItemEditPage() {
     setImage(item?.image || "");
     setImageInput(item?.image || "");
     setPrice(item?.price || "");
+    setCategory(item?.categoryId);
   }, [item, isEditting]);
 
   const checkSubmit = (e) => {
@@ -98,12 +100,12 @@ export default function ItemEditPage() {
     setErrors(res.errors || {});
 
     if (!res.errors && !isEditting)
-      history.push(`/business/${businessId}/items`);
+      history.push(`/business/${businessId}/menu/items`);
   };
 
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteItem(item.id));
-    if (!res.errors) history.push(`/business/${businessId}/items`);
+    if (!res.errors) history.push(`/business/${businessId}/menu/items`);
   };
 
   const handleDelete = (e) => {
@@ -131,7 +133,7 @@ export default function ItemEditPage() {
         }}
       >
         <header className="business-header fw">
-          <Link to={`/business/${businessId}/items`}>
+          <Link to={`/business/${businessId}/menu/items`}>
             <i className="fa-solid fa-arrow-left ft-15"></i>
           </Link>
           <div className="item-actions flex">

@@ -5,6 +5,7 @@ import BusinessMenu from "./BusinessMenu";
 import BusinessInfoPage from "./BusinessInfoPage";
 import ItemEditPage from "./ItemEditPage";
 import ItemManagementPage from "./ItemManagementPage";
+import CategoryManagementPage from "./CategoryManagementPage";
 import { thunkGetOneBusiness } from "../../store/userBusinesses";
 
 export default function UserBusinessManagementPage() {
@@ -33,8 +34,11 @@ export default function UserBusinessManagementPage() {
         <Route path="/business/:businessId/items/:itemId">
           <ItemEditPage />
         </Route>
-        <Route path="/business/:businessId/items">
+        <Route path="/business/:businessId/menu/items">
           <ItemManagementPage />
+        </Route>
+        <Route path="/business/:businessId/menu/categories">
+          <CategoryManagementPage />
         </Route>
         <Route path="/business/:businessId">
           <BusinessInfoPage />
