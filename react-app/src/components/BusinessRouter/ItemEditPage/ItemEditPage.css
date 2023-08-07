@@ -28,6 +28,16 @@
   padding: 10px;
 }
 
+.create-item__category>button {
+  font-size: 1rem;
+  border-radius: 3rem;
+  padding: 10px;
+}
+
+#delete-category {
+  aspect-ratio: 1;
+}
+
 .create-item__picture img {
   width: 200px;
   aspect-ratio: 1;

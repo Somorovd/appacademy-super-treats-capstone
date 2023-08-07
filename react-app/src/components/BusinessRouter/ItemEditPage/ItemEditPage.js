@@ -184,6 +184,19 @@ export default function ItemEditPage() {
               </option>
             ))}
           </select>
+          {categoryId === 0 ? (
+            <span className="auth-error">
+              This item will not be displayed unless it has a category
+            </span>
+          ) : (
+            <button
+              id="delete-category"
+              className="flex flex-11"
+              onClick={() => setCategoryId(0)}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+          )}
         </div>
 
         <div className="create-item__picture">
