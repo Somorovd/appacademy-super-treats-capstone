@@ -131,13 +131,13 @@ export default function ItemEditPage() {
   return (
     <div className="">
       <form
-        className="create-item-form flex-c flex-01"
+        className="create-item-form flex-c"
         onSubmit={checkSubmit}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.preventDefault();
         }}
       >
-        <header className="business-header fw">
+        <header className="business-header">
           <Link to={`/business/${businessId}/menu/items`}>
             <i className="fa-solid fa-arrow-left ft-15"></i>
           </Link>
@@ -161,10 +161,11 @@ export default function ItemEditPage() {
           <p className="auth-error">{errors.name}</p>
         </div>
 
-        <div className="create-item__category">
-          <label htmlFor="create-item__category">Category</label>
+        <div className="create-item__category flex flex-01 g10">
+          <span>Category</span>
           <select
             id="create-item__category"
+            className="bt-black"
             value={categoryId}
             onChange={(e) => setCategoryId(e.target.value)}
           >

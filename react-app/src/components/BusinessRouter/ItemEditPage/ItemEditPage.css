@@ -1,5 +1,6 @@
 .create-item-form {
   gap: 10px;
+  width: 550px;
 }
 
 .create-item-form input,
@@ -19,6 +20,12 @@
   border: 2px solid white 1px solid black;
   outline: none;
   padding: 0.8rem;
+}
+
+.create-item__category>select {
+  font-size: 1rem;
+  border-radius: 3rem;
+  padding: 10px;
 }
 
 .create-item__picture img {

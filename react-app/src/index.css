@@ -129,6 +129,8 @@ button {
 .bt-black {
   background-color: black;
   color: white !important;
+  border: none;
+  outline: none;
 }
 
 .bt-black:hover {
