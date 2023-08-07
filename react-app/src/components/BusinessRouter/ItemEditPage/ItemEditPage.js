@@ -42,6 +42,10 @@ export default function ItemEditPage() {
 
   const isEditting = itemId;
   const item = useSelector((state) => state.items.singleItem);
+  const categoriesObj = useSelector(
+    (state) => state.userBusinesses.singleBusiness.categories
+  );
+  const categories = Object.values(categoriesObj);
 
   const [id, setId] = useState(0);
   const [name, setName] = useState("");
@@ -49,7 +53,7 @@ export default function ItemEditPage() {
   const [image, setImage] = useState("");
   const [imageInput, setImageInput] = useState("");
   const [price, setPrice] = useState(0);
-  const [category, setCategory] = useState(null);
+  const [categoryId, setCategoryId] = useState(0);
   const [errors, setErrors] = useState({});
 
   useEffect(() => {
@@ -66,7 +70,7 @@ export default function ItemEditPage() {
     setImage(item?.image || "");
     setImageInput(item?.image || "");
     setPrice(item?.price || "");
-    setCategory(item?.categoryId);
+    setCategoryId(item?.categoryId || 0);
   }, [item, isEditting]);
 
   const checkSubmit = (e) => {
@@ -91,6 +95,7 @@ export default function ItemEditPage() {
       image,
       price,
       business_id: Number(businessId),
+      category_id: Number(categoryId),
     };
 
     const res = await dispatch(
@@ -154,6 +159,30 @@ export default function ItemEditPage() {
             required
           />
           <p className="auth-error">{errors.name}</p>
+        </div>
+
+        <div className="create-item__category">
+          <label htmlFor="create-item__category">Category</label>
+          <select
+            id="create-item__category"
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+          >
+            <option
+              value={0}
+              hidden
+            >
+              None
+            </option>
+            {categories.map((c) => (
+              <option
+                value={c.id}
+                key={c.id}
+              >
+                {c.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="create-item__picture">
