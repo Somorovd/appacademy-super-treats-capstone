@@ -78,7 +78,7 @@ def edit_item(item_id):
             item.category_id = category_id
 
         db.session.commit()
-        return {"item": item.to_dict()}
+        return {"item": item.to_dict(timestamps=True)}
     return {"errors": validation_errors_to_dict(form.errors)}, 400
 
 
