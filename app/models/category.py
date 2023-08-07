@@ -30,7 +30,7 @@ class Category(db.Model):
         dct = {
             "id": self.id,
             "name": self.name,
-            "items": [i.to_dict() for i in self.items],
+            "itemIds": [i.id for i in self.items],
             "count": self.count,
         }
 

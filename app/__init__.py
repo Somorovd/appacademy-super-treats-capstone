@@ -11,6 +11,7 @@ from .api.business_routes import business_routes
 from .api.user_business_routes import user_business_routes
 from .api.item_routes import item_routes
 from .api.cart_routes import cart_routes
+from .api.category_routes import category_routes
 from .seeds import seed_commands
 from .config import Config
 
@@ -36,6 +37,7 @@ app.register_blueprint(business_routes, url_prefix="/api/businesses")
 app.register_blueprint(user_business_routes, url_prefix="/api/user_businesses")
 app.register_blueprint(item_routes, url_prefix="/api/items")
 app.register_blueprint(cart_routes, url_prefix="/api/carts")
+app.register_blueprint(category_routes, url_prefix="/api/categories")
 db.init_app(app)
 Migrate(app, db)
 
