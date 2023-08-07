@@ -17,14 +17,12 @@ export default function ItemTableRow({ itemId }) {
   return (
     <tr key={item.id}>
       <td className="flex flex-11">
-        {item.image ? (
+        {item.image && (
           <img
             className="item-table__image"
             src={item.image}
             alt=""
           />
-        ) : (
-          "n/a"
         )}
       </td>
       <td className="flex flex-01">
