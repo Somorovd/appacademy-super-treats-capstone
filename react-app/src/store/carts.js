@@ -3,6 +3,7 @@ const ADD_TO_CART = "carts/ADD_TO_CART";
 const DELETE_CART = "carts/DELETE_CART";
 const DELETE_CART_ITEM = "carts/DELETE_CART_ITEM";
 const EDIT_CART_ITEM = "carts/EDIT_CART_ITEM";
+const GET_CART_ITEMS = "carts/GET_CART_ITEMS";
 
 const actionGetAllCarts = (carts) => ({
   type: GET_ALL_CARTS,
@@ -29,11 +30,19 @@ const actionDeleteCartItem = (cartItemId, cart) => ({
   payload: { cartItemId, cart },
 });
 
+const actionGetCartItems = (items) => ({
+  type: GET_CART_ITEMS,
+  payload: items,
+});
+
 export const thunkGetAllCarts = () => async (dispatch) => {
   const res = await fetch("/api/carts/current");
   const resBody = await res.json();
 
-  if (res.ok) dispatch(actionGetAllCarts(resBody.carts));
+  if (res.ok) {
+    dispatch(actionGetAllCarts(resBody.carts));
+    dispatch(actionGetCartItems(resBody.items));
+  }
   return resBody;
 };
 
@@ -58,7 +67,7 @@ export const thunkDeleteCart = (cart) => async (dispatch) => {
   });
   const resBody = await res.json();
 
-  if (res.ok) dispatch(actionDeleteCart(cart.business.id));
+  if (res.ok) dispatch(actionDeleteCart(cart.businessId));
   return resBody;
 };
 
@@ -104,7 +113,7 @@ export default function reducer(state = initialState, action) {
     }
     case ADD_TO_CART: {
       const { cart } = action.payload;
-      return { ...state, [cart.business.id]: { ...cart } };
+      return { ...state, [cart.businessId]: { ...cart } };
     }
     case DELETE_CART: {
       const newState = { ...state };
@@ -114,12 +123,12 @@ export default function reducer(state = initialState, action) {
     case EDIT_CART_ITEM: {
       const { cartItem, cart } = action.payload;
       const newState = { ...state };
-      const newCart = { ...newState[cartItem.item.businessId], ...cart };
+      const newCart = { ...newState[cart.businessId], ...cart };
       newCart.cartItems = {
         ...newCart.cartItems,
         [cartItem.id]: { ...cartItem },
       };
-      newState[cartItem.item.businessId] = newCart;
+      newState[cart.businessId] = newCart;
       return newState;
     }
     case DELETE_CART_ITEM: {

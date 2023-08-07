@@ -1,3 +1,4 @@
+import { useSelector } from "react-redux";
 import { useModal } from "../../../context/Modal";
 
 import CartSidebar from "../CartSidebar";
@@ -5,10 +6,13 @@ import "./CartCard.css";
 
 export default function CartCard({ cart }) {
   const { setModalContent, setModalClass } = useModal();
+  const business = useSelector(
+    (state) => state.businesses.allBusinesses[cart.businessId]
+  );
 
   const handleClick = () => {
     setModalClass("flex flex-20 fh");
-    setModalContent(<CartSidebar businessId={cart.business.id} />);
+    setModalContent(<CartSidebar businessId={business.id} />);
   };
 
   return (
@@ -18,11 +22,11 @@ export default function CartCard({ cart }) {
     >
       <img
         className="cart-card__image"
-        src={cart.business.image}
+        src={business.image}
         alt=""
       />
       <div className="cart-card__info flex-c">
-        <h3 className="cart-card__name">{cart.business.name}</h3>
+        <h3 className="cart-card__name">{business.name}</h3>
         <p>Subtotal: ${cart.price}</p>
         <p>Deliver to {cart.address.split(/[,\n]/)[0]}</p>
       </div>

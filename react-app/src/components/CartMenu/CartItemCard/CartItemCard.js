@@ -10,6 +10,7 @@ export default function CartItemCard({ businessId, cartItemId }) {
   const cartItem = useSelector(
     (state) => state.carts[businessId].cartItems[cartItemId]
   );
+  const item = useSelector((state) => state.items.allItems[cartItem?.itemId]);
 
   const handleDelete = () => {
     const cartItemObj = {
@@ -21,7 +22,7 @@ export default function CartItemCard({ businessId, cartItemId }) {
 
   useEffect(() => {
     return () => {
-      if (!cartItem.item) handleDelete();
+      if (!cartItem.itemId) handleDelete();
     };
   }, []);
 
@@ -40,12 +41,12 @@ export default function CartItemCard({ businessId, cartItemId }) {
 
   return (
     <div className="cart-item-card flex-c">
-      {cartItem.item ? (
+      {item ? (
         <>
           <div className="flex flex-b1 g10">
-            <p className="cart-item-card__name">{cartItem.item.name}</p>
+            <p className="cart-item-card__name">{item.name}</p>
             <img
-              src={cartItem.item.image}
+              src={item.image}
               alt=""
             />
           </div>

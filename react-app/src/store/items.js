@@ -5,6 +5,7 @@ const DELETE_ITEM = "items/DELETE_ITEM";
 const GET_ONE_USERBUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 const GET_ONE_BUSINESS = "businesses/GET_ONE_BUSINESS";
 const ADD_TO_CART = "carts/ADD_TO_CART";
+const GET_CART_ITEMS = "carts/GET_CART_ITEMS";
 
 const actionGetOneItem = (item) => ({
   type: GET_ONE_ITEM,
@@ -110,7 +111,7 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     case GET_ONE_BUSINESS: {
-      newState.allItems = { ...action.payload.items };
+      newState.allItems = { ...newState.allItems, ...action.payload.items };
       return newState;
     }
     case GET_ONE_USERBUSINESS: {
@@ -118,11 +119,13 @@ export default function reducer(state = initialState, action) {
       return newState;
     }
     case ADD_TO_CART: {
-      console.log(action.payload);
       const { itemId, cartItemId } = action.payload;
       newState.allItems[itemId].cartItemId = cartItemId;
       return newState;
     }
+    case GET_CART_ITEMS:
+      newState.allItems = { ...newState.allItems, ...action.payload };
+      return newState;
     default:
       return state;
   }

@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { thunkGetOneBusiness } from "../../store/businesses";
+import {
+  thunkGetOneBusiness,
+  thunkGetAllBusinesses,
+} from "../../store/businesses";
 import PageHeader from "../PageHeader";
 import CartMenu from "../CartMenu";
 import ItemCard from "./ItemCard";
@@ -13,10 +16,14 @@ export default function ItemBrowsingPage() {
   const dispatch = useDispatch();
   const { businessId } = useParams();
   const business = useSelector((state) => state.businesses.singleBusiness);
+  const haveAllBusinesses = useSelector(
+    (state) => state.businesses.allBusinesses[businessId]
+  );
   const itemIds = business.items;
 
   useEffect(() => {
     dispatch(thunkGetOneBusiness(businessId));
+    if (!haveAllBusinesses) dispatch(thunkGetAllBusinesses(businessId));
   }, [dispatch, businessId]);
 
   useEffect(() => {

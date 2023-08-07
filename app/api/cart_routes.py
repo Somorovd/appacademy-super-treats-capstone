@@ -14,7 +14,11 @@ cart_routes = Blueprint("carts", __name__)
 @login_required
 def user_carts():
     carts = Cart.query.filter(Cart.user_id == current_user.id).all()
-    return {"carts": {cart.business_id: cart.to_dict() for cart in carts}}
+    items = [cart_item.item for cart in carts for cart_item in cart.cart_items]
+    return {
+        "carts": {cart.business_id: cart.to_dict() for cart in carts},
+        "items": {item.id: item.to_dict() for item in items},
+    }
 
 
 @cart_routes.route("/<int:cart_id>")
