@@ -2,7 +2,7 @@ from flask import Blueprint, request
 from flask_login import login_required, current_user
 from ..utils.helpers import validation_errors_to_dict
 
-from app.models import db, Item, Business
+from app.models import db, Item, Business, Category
 from app.forms.create_item_form import CreateItemForm
 
 item_routes = Blueprint("items", __name__)
@@ -28,6 +28,12 @@ def new_item():
     if not business or not business.user_id == current_user.id:
         return {"errors": "Not authorized"}
 
+    category_id = form.data.get("category_id")
+
+    if category_id:
+        if not Category.query.get(category_id):
+            return {"errors": {"category": "invalid category"}}
+
     if form.validate_on_submit():
         item = Item(
             name=form.data["name"],
@@ -35,6 +41,7 @@ def new_item():
             image=form.data["image"],
             price=form.data["price"],
             business_id=form.data["business_id"],
+            category_id=form.data.get("category_id"),
         )
 
         db.session.add(item)
@@ -57,10 +64,18 @@ def edit_item(item_id):
         if not item.business.user_id == current_user.id:
             return {"errors": "Not Authorized"}, 401
 
+        category_id = form.data.get("category_id")
+
+        if category_id:
+            if not Category.query.get(category_id):
+                return {"errors": {"category": "invalid category"}}
+
         item.name = form.data["name"]
         item.about = form.data["about"]
         item.image = form.data["image"]
         item.price = form.data["price"]
+        if category_id:
+            item.category_id = category_id
 
         db.session.commit()
         return {"item": item.to_dict()}

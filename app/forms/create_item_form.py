@@ -23,3 +23,4 @@ class CreateItemForm(FlaskForm):
     about = StringField("about", validators=[Length(0, 255)])
     price = FloatField("price", validators=[NumberRange(0, 1000)])
     business_id = IntegerField("business_id", validators=[DataRequired()])
+    category_id = IntegerField("category_id")
