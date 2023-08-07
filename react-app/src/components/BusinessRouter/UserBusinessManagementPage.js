@@ -1,4 +1,10 @@
-import { Route, Switch, useParams, useHistory } from "react-router-dom";
+import {
+  Route,
+  Switch,
+  useParams,
+  useHistory,
+  Redirect,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
 import BusinessMenu from "./BusinessMenu";
@@ -39,6 +45,9 @@ export default function UserBusinessManagementPage() {
         </Route>
         <Route path="/business/:businessId/menu/categories">
           <CategoryManagementPage />
+        </Route>
+        <Route path="/business/:businessId/menu">
+          <Redirect to={`/business/${businessId}/menu/items`} />
         </Route>
         <Route path="/business/:businessId">
           <BusinessInfoPage />
