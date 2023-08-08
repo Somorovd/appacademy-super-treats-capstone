@@ -4,6 +4,7 @@ import { useParams, Link } from "react-router-dom";
 import MenuPageNavBar from "../MenuPageNavBar";
 import ItemTableRow from "./ItemTableRow";
 import "./ItemManagementPage.css";
+import "../TableStyling.css";
 
 export default function ItemManagementPage() {
   const { businessId } = useParams();
@@ -31,7 +32,7 @@ export default function ItemManagementPage() {
             </div>
           </div>
         </header>
-        <table className="business-item-table">
+        <table className="business-table item-table">
           <thead>
             <tr>
               <th className="flex flex-11">Photo</th>

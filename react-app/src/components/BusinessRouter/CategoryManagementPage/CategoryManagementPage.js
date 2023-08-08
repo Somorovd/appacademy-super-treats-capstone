@@ -1,8 +1,10 @@
 import { useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import MenuPageNavBar from "../MenuPageNavBar";
+import CategoryTableRow from "./CategoryTableRow";
 import "./CategoryManagementPage.css";
+import "../TableStyling.css";
 
 export default function CategoryManagementPage() {
   const { businessId } = useParams();
@@ -22,19 +24,33 @@ export default function CategoryManagementPage() {
         >
           <h2>Menu Categories</h2>
           <div className="flex">
-            <Link
+            {/* <Link
               to={`/business/${businessId}/menu/items/new`}
               className="bt-black bt-pd"
             >
               <i className="fa-solid fa-plus"></i> Add Category
-            </Link>
+            </Link> */}
           </div>
         </div>
       </header>
       <div>
-        {categories.map((c) => (
-          <p>{c.name}</p>
-        ))}
+        <table className="business-table category-table">
+          <thead>
+            <tr>
+              <th className="flex flex-11"></th>
+              <th className="flex flex-11">Items</th>
+              <th className="flex flex-01">Category</th>
+            </tr>
+          </thead>
+          <tbody>
+            {categories.map((c) => (
+              <CategoryTableRow
+                categoryId={c.id}
+                key={c.id}
+              />
+            ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

@@ -1,3 +1,8 @@
 #category-management-header {
   padding: 20px 0px;
 }
+
+.category-table thead,
+.category-table tbody {
+  grid-template-columns: 50px 100px 1fr;
+}
