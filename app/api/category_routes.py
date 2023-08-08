@@ -35,7 +35,11 @@ def create_category():
     if category:
         return {"errors": {"name": "Name must be unique"}}, 400
 
-    category = Category(name=form.data["name"], business_id=form.data["business_id"])
+    category = Category(
+        name=form.data["name"],
+        business_id=form.data["business_id"],
+        order=len(business.categories),
+    )
     db.session.add(category)
     db.session.commit()
     return {"category": category.to_dict()}

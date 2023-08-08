@@ -23,7 +23,3 @@
 .business-table th {
   height: 50px;
 }
-
-.row-drag-icon {
-  cursor: grab;
-}

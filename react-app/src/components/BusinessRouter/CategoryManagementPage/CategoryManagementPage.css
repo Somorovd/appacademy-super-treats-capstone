@@ -4,7 +4,7 @@
 
 .category-table thead,
 .category-table tbody {
-  grid-template-columns: 50px 100px 1fr 100px;
+  grid-template-columns: 100px 1fr 100px 100px;
 }
 
 .category-action {

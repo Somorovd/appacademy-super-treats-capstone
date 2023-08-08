@@ -1,3 +1,4 @@
+import { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
@@ -7,11 +8,15 @@ import CategoryTableRow from "./CategoryTableRow";
 import CreateCategoryModal from "./CreateCategoryModal";
 import "./CategoryManagementPage.css";
 import "../TableStyling.css";
+import { useEffect } from "react";
 
 export default function CategoryManagementPage() {
   const { businessId } = useParams();
   const { setModalContent, setModalClass } = useModal();
+  const categoryTable = useRef();
+  const [orderChanged, setOrderChanged] = useState(false);
 
+  const business = useSelector((state) => state.userBusinesses.singleBusiness);
   const categoriesObj = useSelector(
     (state) => state.userBusinesses.singleBusiness.categories
   );
@@ -20,6 +25,14 @@ export default function CategoryManagementPage() {
   const handleAddCategory = () => {
     setModalContent(<CreateCategoryModal businessId={businessId} />);
     setModalClass("flex flex-11");
+  };
+
+  const handleUpdateOrder = () => {
+    const rows = categoryTable.current.querySelectorAll("tr");
+    const order = {};
+    for (let row of rows) {
+      order[row.dataset.id] = row.dataset.order;
+    }
   };
 
   return (
@@ -31,7 +44,15 @@ export default function CategoryManagementPage() {
           className="flex flex-b1"
         >
           <h2>Menu Categories</h2>
-          <div className="flex">
+          <div className="flex g10">
+            {orderChanged && (
+              <button
+                className="bt-black bt-pd"
+                onClick={handleUpdateOrder}
+              >
+                Save Category Order
+              </button>
+            )}
             <button
               className="bt-black bt-pd"
               onClick={handleAddCategory}
@@ -45,17 +66,18 @@ export default function CategoryManagementPage() {
         <table className="business-table category-table">
           <thead>
             <tr>
-              <th className="flex flex-11"></th>
               <th className="flex flex-11">Items</th>
               <th className="flex flex-01">Category</th>
               <th className="flex flex-11"></th>
             </tr>
           </thead>
-          <tbody>
+          <tbody ref={categoryTable}>
             {categories.map((c) => (
               <CategoryTableRow
-                categoryId={c.id}
                 key={c.id}
+                categoryId={c.id}
+                maxRow={business.categories.length - 1}
+                setOrderChanged={setOrderChanged}
               />
             ))}
           </tbody>
