@@ -24,7 +24,11 @@ export default function CreateCategoryModal({ category, businessId }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const categoryObj = { name, business_id: businessId };
+    const categoryObj = {
+      id: category.id,
+      name,
+      business_id: businessId,
+    };
     const res = dispatch(
       category
         ? thunkEditCategory(categoryObj)

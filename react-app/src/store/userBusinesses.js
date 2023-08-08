@@ -117,7 +117,19 @@ export const thunkCreateCategory = (category) => async (dispatch) => {
   return resBody;
 };
 
-export const thunkEditCategory = (category) => async (dispatch) => {};
+export const thunkEditCategory = (category) => async (dispatch) => {
+  const res = await fetch(`/api/categories/${category.id}/edit`, {
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(category),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionEditCategory(resBody.category));
+  return resBody;
+};
 
 export const thunkDeleteCategory = (categoryId) => async (dispatch) => {
   const res = await fetch(`/api/categories/${categoryId}/delete`, {
@@ -179,13 +191,20 @@ export default function reducer(state = initialState, action) {
       newState.singleBusiness.categories = categories;
       return newState;
     }
-    case EDIT_CATEGORY:
-      return;
-    case DELETE_CATEGORY:
+    case EDIT_CATEGORY: {
+      const categories = {
+        ...newState.singleBusiness.categories,
+        [action.payload.id]: action.payload,
+      };
+      newState.singleBusiness.categories = categories;
+      return newState;
+    }
+    case DELETE_CATEGORY: {
       const categories = { ...newState.singleBusiness.categories };
       delete categories[action.payload];
       newState.singleBusiness.categories = categories;
       return newState;
+    }
     default:
       return state;
   }

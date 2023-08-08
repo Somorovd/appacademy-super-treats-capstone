@@ -1,5 +1,5 @@
-import { useSelector } from "react-redux";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 
 import CreateCategoryModal from "./CreateCategoryModal";
@@ -7,8 +7,9 @@ import { thunkDeleteCategory } from "../../../store/userBusinesses";
 import { ConfirmDeleteModal } from "../../utils/ConfirmModal/ConfirmDeleteModal";
 
 export default function CategoryTableRow({ categoryId }) {
-  const dispatch = useDispatch();
+  const { businessId } = useParams();
   const { setModalContent, setModalClass, closeModal } = useModal();
+  const dispatch = useDispatch();
   const category = useSelector(
     (state) => state.userBusinesses.singleBusiness.categories[categoryId]
   );
@@ -16,7 +17,12 @@ export default function CategoryTableRow({ categoryId }) {
   const handleEdit = (e) => {
     e.preventDefault();
     setModalClass("flex flex-11");
-    setModalContent(<CreateCategoryModal category={category} />);
+    setModalContent(
+      <CreateCategoryModal
+        category={category}
+        businessId={businessId}
+      />
+    );
   };
 
   const onDelete = () => {
