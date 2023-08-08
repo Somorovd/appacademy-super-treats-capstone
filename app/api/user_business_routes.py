@@ -26,7 +26,7 @@ def one_business(business_id):
     if not business.user_id == current_user.id:
         return {"errors": "Not Authorized"}, 401
 
-    return {"business": business.to_dict(get_items=True)}
+    return {"business": business.to_dict(get_items=True, is_owner=True)}
 
 
 @user_business_routes.route("/new", methods=["POST"])

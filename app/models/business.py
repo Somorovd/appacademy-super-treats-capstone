@@ -73,7 +73,7 @@ class Business(db.Model):
         "Category", back_populates="business", cascade="all, delete-orphan"
     )
 
-    def to_dict(self, timestamps=False, get_items=False):
+    def to_dict(self, timestamps=False, get_items=False, is_owner=False):
         dct = {
             "address": self.address,
             "cuisine": self.cuisine.name if self.cuisine else None,
@@ -95,7 +95,9 @@ class Business(db.Model):
             dct.update(
                 {
                     "categories": {
-                        category.id: category.to_dict() for category in self.categories
+                        category.id: category.to_dict()
+                        for category in self.categories
+                        if category.count > (0 if not is_owner else -1)
                     },
                     "items": {str(i.id): i.to_dict(timestamps=True) for i in self.items}
                     if self.items
