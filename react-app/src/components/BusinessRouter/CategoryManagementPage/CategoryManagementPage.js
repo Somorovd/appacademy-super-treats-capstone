@@ -1,18 +1,19 @@
 import { useRef, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
 
 import MenuPageNavBar from "../MenuPageNavBar";
 import CategoryTableRow from "./CategoryTableRow";
 import CreateCategoryModal from "./CreateCategoryModal";
+import { thunkReorderCategories } from "../../../store/userBusinesses";
 import "./CategoryManagementPage.css";
 import "../TableStyling.css";
-import { useEffect } from "react";
 
 export default function CategoryManagementPage() {
   const { businessId } = useParams();
   const { setModalContent, setModalClass } = useModal();
+  const dispatch = useDispatch();
   const categoryTable = useRef();
   const [orderChanged, setOrderChanged] = useState(false);
 
@@ -21,6 +22,7 @@ export default function CategoryManagementPage() {
     (state) => state.userBusinesses.singleBusiness.categories
   );
   const categories = Object.values(categoriesObj);
+  categories.sort((a, b) => a.order - b.order);
 
   const handleAddCategory = () => {
     setModalContent(<CreateCategoryModal businessId={businessId} />);
@@ -29,10 +31,12 @@ export default function CategoryManagementPage() {
 
   const handleUpdateOrder = () => {
     const rows = categoryTable.current.querySelectorAll("tr");
-    const order = {};
+    const order = { business_id: Number(businessId), categories: {} };
     for (let row of rows) {
-      order[row.dataset.id] = row.dataset.order;
+      order.categories[row.dataset.id] = row.dataset.order;
     }
+    dispatch(thunkReorderCategories(order));
+    setOrderChanged(false);
   };
 
   return (

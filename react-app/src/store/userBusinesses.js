@@ -5,6 +5,7 @@ const EDIT_BUSINESS = "businesses/EDIT_BUSINESS";
 const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
 const CREATE_CATEGORY = "userBusinesses/CREATE_CATEGORY";
 const EDIT_CATEGORY = "userBusinesses/EDIT_CATEGORY";
+const REORDER_CATEGORIES = "userBusinesses/REORDER_CATEGORIES";
 const DELETE_CATEGORY = "userBusinesses/DELETE_CATEGORY";
 
 const actionGetAllBusinesses = (businesses) => ({
@@ -39,6 +40,11 @@ const actionCreateCategory = (category) => ({
 const actionEditCategory = (category) => ({
   type: EDIT_CATEGORY,
   payload: category,
+});
+
+const actionReorderCategories = (order) => ({
+  type: REORDER_CATEGORIES,
+  payload: order,
 });
 
 const actionDeleteCategory = (categoryId) => ({
@@ -131,6 +137,20 @@ export const thunkEditCategory = (category) => async (dispatch) => {
   return resBody;
 };
 
+export const thunkReorderCategories = (order) => async (dispatch) => {
+  const res = await fetch(`/api/categories/reorder`, {
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(order),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionReorderCategories(order.categories));
+  return resBody;
+};
+
 export const thunkDeleteCategory = (categoryId) => async (dispatch) => {
   const res = await fetch(`/api/categories/${categoryId}/delete`, {
     method: "delete",
@@ -196,6 +216,16 @@ export default function reducer(state = initialState, action) {
         ...newState.singleBusiness.categories,
         [action.payload.id]: action.payload,
       };
+      newState.singleBusiness.categories = categories;
+      return newState;
+    }
+    case REORDER_CATEGORIES: {
+      const categories = {
+        ...newState.singleBusiness.categories,
+      };
+      for (let [id, order] of Object.entries(action.payload)) {
+        categories[id] = { ...categories[id], order };
+      }
       newState.singleBusiness.categories = categories;
       return newState;
     }

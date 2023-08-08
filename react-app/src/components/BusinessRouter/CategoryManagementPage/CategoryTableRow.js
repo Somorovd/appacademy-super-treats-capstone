@@ -48,12 +48,6 @@ export default function CategoryTableRow({
   };
 
   const handleMove = (dir) => {
-    if (
-      (dir === -1 && category.order === 0) ||
-      (dir === 1 && category.order === maxRow)
-    )
-      return;
-
     let firstSibling, secondSibling;
     if (dir === -1) {
       firstSibling = row.current.previousElementSibling;
@@ -62,6 +56,8 @@ export default function CategoryTableRow({
       firstSibling = row.current;
       secondSibling = row.current.nextElementSibling;
     }
+
+    if (!firstSibling || !secondSibling) return;
 
     firstSibling.parentNode.insertBefore(secondSibling, firstSibling);
 

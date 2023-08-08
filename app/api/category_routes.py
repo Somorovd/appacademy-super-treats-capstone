@@ -68,6 +68,26 @@ def edit_category(category_id):
     return {"category": category.to_dict()}
 
 
+@category_routes.route("/reorder", methods=["PUT"])
+@login_required
+def reorder_categories():
+    data = request.json
+    categories = data.get("categories")
+
+    business = Business.query.get(data.get("business_id"))
+    if not business or not business.user_id == current_user.id:
+        return {"errors": "Not authorized"}, 401
+
+    for c in business.categories:
+        order = categories.get(str(c.id))
+        if order:
+            c.order = int(order)
+
+    db.session.commit()
+
+    return {"categories": {c.id: c.to_dict() for c in business.categories}}
+
+
 @category_routes.route("/<int:category_id>/delete", methods=["DELETE"])
 @login_required
 def delete_category(category_id):
