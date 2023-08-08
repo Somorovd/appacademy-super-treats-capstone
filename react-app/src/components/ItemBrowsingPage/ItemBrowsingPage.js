@@ -19,7 +19,6 @@ export default function ItemBrowsingPage() {
   const haveAllBusinesses = useSelector(
     (state) => state.businesses.allBusinesses[businessId]
   );
-  const itemIds = business.items;
 
   useEffect(() => {
     dispatch(thunkGetOneBusiness(businessId));
@@ -30,6 +29,7 @@ export default function ItemBrowsingPage() {
     const firstNonPicElement = document.querySelectorAll(
       ".item-card--image+.item-card--no-image"
     );
+
     for (let ele of firstNonPicElement) {
       const spacer = document.createElement("div");
       spacer.classList.add("flex-spacer");
@@ -38,6 +38,10 @@ export default function ItemBrowsingPage() {
   });
 
   if (business?.id !== Number(businessId)) return null;
+
+  const categories = Object.values(business.categories).sort(
+    (a, b) => a.order - b.order
+  );
 
   return (
     <div className="business-browsing">
@@ -63,9 +67,9 @@ export default function ItemBrowsingPage() {
         </div>
       </header>
       <div className="business-browsing__body flex pg-pd">
-        <CategorySidebar business={business} />
+        <CategorySidebar categories={categories} />
         <div className="fw">
-          {Object.values(business.categories).map((c) => (
+          {categories.map((c) => (
             <section
               id={`category-${c.id}`}
               className="category-section"

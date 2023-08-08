@@ -1,8 +1,6 @@
 import "./CategorySidebar.css";
 
-export default function CategorySidebar({ business }) {
-  const categories = Object.values(business.categories);
-
+export default function CategorySidebar({ categories }) {
   const getScrollFunction = (id) => {
     return () => {
       document.getElementById(id).scrollIntoView();
