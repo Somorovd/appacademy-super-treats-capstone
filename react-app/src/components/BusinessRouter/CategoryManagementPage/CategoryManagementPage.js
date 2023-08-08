@@ -48,6 +48,7 @@ export default function CategoryManagementPage() {
               <th className="flex flex-11"></th>
               <th className="flex flex-11">Items</th>
               <th className="flex flex-01">Category</th>
+              <th className="flex flex-11"></th>
             </tr>
           </thead>
           <tbody>

@@ -4,5 +4,9 @@
 
 .category-table thead,
 .category-table tbody {
-  grid-template-columns: 50px 100px 1fr;
+  grid-template-columns: 50px 100px 1fr 100px;
+}
+
+.category-action {
+  cursor: pointer;
 }

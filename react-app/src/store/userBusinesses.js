@@ -5,6 +5,7 @@ const EDIT_BUSINESS = "businesses/EDIT_BUSINESS";
 const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
 const CREATE_CATEGORY = "userBusinesses/CREATE_CATEGORY";
 const EDIT_CATEGORY = "userBusinesses/EDIT_CATEGORY";
+const DELETE_CATEGORY = "userBusinesses/DELETE_CATEGORY";
 
 const actionGetAllBusinesses = (businesses) => ({
   type: GET_ALL_BUSINESSES,
@@ -34,9 +35,15 @@ const actionCreateCategory = (category) => ({
   type: CREATE_CATEGORY,
   payload: category,
 });
+
 const actionEditCategory = (category) => ({
   type: EDIT_CATEGORY,
   payload: category,
+});
+
+const actionDeleteCategory = (categoryId) => ({
+  type: DELETE_CATEGORY,
+  payload: categoryId,
 });
 
 export const thunkGetAllBusinesses = () => async (dispatch) => {
@@ -112,6 +119,16 @@ export const thunkCreateCategory = (category) => async (dispatch) => {
 
 export const thunkEditCategory = (category) => async (dispatch) => {};
 
+export const thunkDeleteCategory = (categoryId) => async (dispatch) => {
+  const res = await fetch(`/api/categories/${categoryId}/delete`, {
+    method: "delete",
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionDeleteCategory(categoryId));
+  return resBody;
+};
+
 const initialState = { allBusinesses: {}, singleBusiness: {} };
 
 export default function reducer(state = initialState, action) {
@@ -162,6 +179,13 @@ export default function reducer(state = initialState, action) {
       newState.singleBusiness.categories = categories;
       return newState;
     }
+    case EDIT_CATEGORY:
+      return;
+    case DELETE_CATEGORY:
+      const categories = { ...newState.singleBusiness.categories };
+      delete categories[action.payload];
+      newState.singleBusiness.categories = categories;
+      return newState;
     default:
       return state;
   }
