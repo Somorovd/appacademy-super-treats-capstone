@@ -3,6 +3,8 @@ const GET_ONE_BUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
 const EDIT_BUSINESS = "businesses/EDIT_BUSINESS";
 const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
+const CREATE_CATEGORY = "userBusinesses/CREATE_CATEGORY";
+const EDIT_CATEGORY = "userBusinesses/EDIT_CATEGORY";
 
 const actionGetAllBusinesses = (businesses) => ({
   type: GET_ALL_BUSINESSES,
@@ -26,6 +28,15 @@ const actionEditBusiness = (business) => ({
 const actionDeleteBusiness = (businessId) => ({
   type: DELETE_BUSINESS,
   payload: businessId,
+});
+
+const actionCreateCategory = (category) => ({
+  type: CREATE_CATEGORY,
+  payload: category,
+});
+const actionEditCategory = (category) => ({
+  type: EDIT_CATEGORY,
+  payload: category,
 });
 
 export const thunkGetAllBusinesses = () => async (dispatch) => {
@@ -85,6 +96,22 @@ export const thunkDeleteBusiness = (businessId) => async (dispatch) => {
   return resBody;
 };
 
+export const thunkCreateCategory = (category) => async (dispatch) => {
+  const res = await fetch(`/api/categories/new`, {
+    method: "post",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(category),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionCreateCategory(resBody.category));
+  return resBody;
+};
+
+export const thunkEditCategory = (category) => async (dispatch) => {};
+
 const initialState = { allBusinesses: {}, singleBusiness: {} };
 
 export default function reducer(state = initialState, action) {
@@ -125,6 +152,14 @@ export default function reducer(state = initialState, action) {
       delete allBusinesses[action.payload.id];
       newState.allBusinesses = allBusinesses;
       newState.singleBusiness = {};
+      return newState;
+    }
+    case CREATE_CATEGORY: {
+      const categories = {
+        ...newState.singleBusiness.categories,
+        [action.payload.id]: action.payload,
+      };
+      newState.singleBusiness.categories = categories;
       return newState;
     }
     default:

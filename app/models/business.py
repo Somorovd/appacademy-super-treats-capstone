@@ -95,9 +95,7 @@ class Business(db.Model):
             dct.update(
                 {
                     "categories": {
-                        category.id: category.to_dict()
-                        for category in self.categories
-                        if category.count > 0
+                        category.id: category.to_dict() for category in self.categories
                     },
                     "items": {str(i.id): i.to_dict(timestamps=True) for i in self.items}
                     if self.items

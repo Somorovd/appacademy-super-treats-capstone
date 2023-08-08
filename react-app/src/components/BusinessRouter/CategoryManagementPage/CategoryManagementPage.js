@@ -1,18 +1,26 @@
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
+import { useModal } from "../../../context/Modal";
 
 import MenuPageNavBar from "../MenuPageNavBar";
 import CategoryTableRow from "./CategoryTableRow";
+import CreateCategoryModal from "./CreateCategoryModal";
 import "./CategoryManagementPage.css";
 import "../TableStyling.css";
 
 export default function CategoryManagementPage() {
   const { businessId } = useParams();
+  const { setModalContent, setModalClass } = useModal();
 
   const categoriesObj = useSelector(
     (state) => state.userBusinesses.singleBusiness.categories
   );
   const categories = Object.values(categoriesObj);
+
+  const handleAddCategory = () => {
+    setModalContent(<CreateCategoryModal businessId={businessId} />);
+    setModalClass("flex flex-11");
+  };
 
   return (
     <div className="category-management-page">
@@ -24,12 +32,12 @@ export default function CategoryManagementPage() {
         >
           <h2>Menu Categories</h2>
           <div className="flex">
-            {/* <Link
-              to={`/business/${businessId}/menu/items/new`}
+            <button
               className="bt-black bt-pd"
+              onClick={handleAddCategory}
             >
               <i className="fa-solid fa-plus"></i> Add Category
-            </Link> */}
+            </button>
           </div>
         </div>
       </header>
