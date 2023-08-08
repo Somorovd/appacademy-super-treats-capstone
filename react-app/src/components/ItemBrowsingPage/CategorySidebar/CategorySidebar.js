@@ -6,7 +6,6 @@ export default function CategorySidebar({ business }) {
   const getScrollFunction = (id) => {
     return () => {
       document.getElementById(id).scrollIntoView();
-      window.scrollBy(0, 200);
     };
   };
 

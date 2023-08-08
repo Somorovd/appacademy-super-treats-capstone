@@ -27,13 +27,13 @@ export default function ItemBrowsingPage() {
   }, [dispatch, businessId]);
 
   useEffect(() => {
-    const firstNonPicture = document.querySelector(
+    const firstNonPicElement = document.querySelectorAll(
       ".item-card--image+.item-card--no-image"
     );
-    const spacer = document.createElement("div");
-    spacer.classList.add("flex-spacer");
-    if (firstNonPicture) {
-      firstNonPicture.parentNode.insertBefore(spacer, firstNonPicture);
+    for (let ele of firstNonPicElement) {
+      const spacer = document.createElement("div");
+      spacer.classList.add("flex-spacer");
+      ele.parentNode.insertBefore(spacer, ele);
     }
   });
 
@@ -64,12 +64,22 @@ export default function ItemBrowsingPage() {
       </header>
       <div className="business-browsing__body flex pg-pd">
         <CategorySidebar business={business} />
-        <div className="item-grid fw">
-          {itemIds.map((i) => (
-            <ItemCard
-              itemId={i}
-              key={i}
-            />
+        <div className="fw">
+          {Object.values(business.categories).map((c) => (
+            <section
+              id={`category-${c.id}`}
+              className="category-section"
+            >
+              <h2 className="category-section__heading">{c.name}</h2>
+              <div className="item-grid">
+                {c.itemIds.map((i) => (
+                  <ItemCard
+                    itemId={i}
+                    key={i}
+                  />
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       </div>

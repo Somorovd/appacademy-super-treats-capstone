@@ -19,6 +19,13 @@
   font-weight: 600;
 }
 
+.category-section {}
+
+.category-section__heading {
+  font-weight: 900;
+  padding: 10px 0px;
+}
+
 .item-grid {
   display: flex;
   flex-wrap: wrap;

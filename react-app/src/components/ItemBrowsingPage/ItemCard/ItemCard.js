@@ -23,6 +23,7 @@ export default function ItemCard({ itemId }) {
       <p className="item-card__name">{item.name}</p>
       {user && <AddToCart item={item} />}
       <p className="item-card__price">${item.price}</p>
+      {!item.image && <p className="item-card__about">{item.about}</p>}
     </div>
   );
 }
