@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField
 from wtforms.validators import DataRequired, Length, ValidationError
 from ..models.business import types, cuisines
+from app.utils.aws import ALLOWED_EXTENSIONS
 
 
 def cuisine_required(form, field):
@@ -29,3 +31,4 @@ class CreateBusinessForm(FlaskForm):
     name = StringField("name", validators=[DataRequired(), Length(1, 100)])
     type = StringField("type", validators=[DataRequired(), valid_type])
     cuisine = StringField("cuisine", validators=[cuisine_required, valid_cuisine])
+    image = FileField("image", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from flask_wtf.file import FileField, FileAllowed, FileRequired
+from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, FloatField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError
 from ..models.business import types, cuisines, price_ranges

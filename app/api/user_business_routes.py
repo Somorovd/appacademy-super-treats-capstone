@@ -45,6 +45,17 @@ def new_business():
             user_id=current_user.id,
         )
 
+        image = form.data.get("image")
+        if image:
+            image.filename = get_unique_filename(image.filename)
+            upload = upload_file_to_s3(image)
+
+            if "url" not in upload:
+                return {"errors": upload}
+
+            url = upload["url"]
+            business.image = url
+
         db.session.add(business)
         db.session.commit()
         return {"business": business.to_dict()}

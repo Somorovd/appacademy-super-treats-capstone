@@ -266,7 +266,7 @@ export default function CreateBusinessForm({ business, onSubmit }) {
         className="bt-black"
         disabled={isSaving}
       >
-        Submit
+        {isSaving ? <i className="fa-regular fa-circle"></i> : "Submit"}
       </button>
     </form>
   );
