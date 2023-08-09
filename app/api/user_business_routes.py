@@ -41,7 +41,7 @@ def new_business():
             address=form.data["address"],
             name=form.data["name"],
             type=form.data["type"],
-            cuisine=form.data["cuisine"],
+            cuisine=form.data["cuisine"] or None,
             user_id=current_user.id,
         )
 
@@ -77,7 +77,7 @@ def edit_business(business_id):
             business.image = url
 
         business.address = form.data["address"]
-        business.cuisine = form.data["cuisine"]
+        business.cuisine = form.data["cuisine"] or None
         business.name = form.data["name"]
         business.type = form.data["type"]
         business.price_range = form.data["price_range"]

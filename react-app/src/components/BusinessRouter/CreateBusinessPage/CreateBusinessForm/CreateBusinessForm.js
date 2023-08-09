@@ -45,7 +45,7 @@ export default function CreateBusinessForm({ business, onSubmit }) {
 
     const businessObj = {
       address,
-      cuisine: cuisine || null,
+      cuisine,
       name: businessName,
       type,
       id: business?.id,
