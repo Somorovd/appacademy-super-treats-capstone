@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
@@ -15,28 +15,38 @@ export default function CategoryManagementPage() {
   const { setModalContent, setModalClass } = useModal();
   const dispatch = useDispatch();
   const categoryTable = useRef();
-  const [orderChanged, setOrderChanged] = useState(false);
 
   const business = useSelector((state) => state.userBusinesses.singleBusiness);
   const categoriesObj = useSelector(
     (state) => state.userBusinesses.singleBusiness.categories
   );
-  const categories = Object.values(categoriesObj);
-  categories.sort((a, b) => a.order - b.order);
+  const originalCategories = Object.values(categoriesObj).sort(
+    (a, b) => a.order - b.order
+  );
+
+  const [orderChanged, setOrderChanged] = useState(false);
+  const [categories, setCategories] = useState([...originalCategories]);
 
   const handleAddCategory = () => {
-    setModalContent(<CreateCategoryModal businessId={businessId} />);
+    setModalContent(
+      <CreateCategoryModal
+        businessId={businessId}
+        setCategories={setCategories}
+      />
+    );
     setModalClass("flex flex-11");
   };
 
-  const handleUpdateOrder = () => {
-    const rows = categoryTable.current.querySelectorAll("tr");
+  const handleUpdateOrder = async () => {
     const order = { business_id: Number(businessId), categories: {} };
-    for (let row of rows) {
-      order.categories[row.dataset.id] = row.dataset.order;
-    }
-    dispatch(thunkReorderCategories(order));
-    setOrderChanged(false);
+    categories.forEach((c, i) => (order.categories[c.id] = i));
+
+    const res = await dispatch(thunkReorderCategories(order));
+    if (!res.errors) setOrderChanged(false);
+  };
+
+  const handleResetOrder = () => {
+    setCategories([...originalCategories]);
   };
 
   return (
@@ -50,12 +60,20 @@ export default function CategoryManagementPage() {
           <h2>Menu Categories</h2>
           <div className="flex g10">
             {orderChanged && (
-              <button
-                className="bt-black bt-pd"
-                onClick={handleUpdateOrder}
-              >
-                Save Category Order
-              </button>
+              <>
+                <button
+                  className="bt-black bt-pd"
+                  onClick={handleResetOrder}
+                >
+                  Reset Order
+                </button>
+                <button
+                  className="bt-black bt-pd"
+                  onClick={handleUpdateOrder}
+                >
+                  Save Order
+                </button>
+              </>
             )}
             <button
               className="bt-black bt-pd"
@@ -80,8 +98,8 @@ export default function CategoryManagementPage() {
               <CategoryTableRow
                 key={c.id}
                 categoryId={c.id}
-                maxRow={business.categories.length - 1}
                 setOrderChanged={setOrderChanged}
+                setCategories={setCategories}
               />
             ))}
           </tbody>

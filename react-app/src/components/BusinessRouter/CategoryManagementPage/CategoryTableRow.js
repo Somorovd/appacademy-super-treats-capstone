@@ -9,8 +9,8 @@ import { ConfirmDeleteModal } from "../../utils/ConfirmModal/ConfirmDeleteModal"
 
 export default function CategoryTableRow({
   categoryId,
-  maxRow,
   setOrderChanged,
+  setCategories,
 }) {
   const { businessId } = useParams();
   const { setModalContent, setModalClass, closeModal } = useModal();
@@ -33,6 +33,11 @@ export default function CategoryTableRow({
 
   const onDelete = () => {
     dispatch(thunkDeleteCategory(categoryId));
+    setCategories((categories) => {
+      const newCategories = [...categories];
+      newCategories.splice(categories.indexOf(category), 1);
+      return newCategories;
+    });
     closeModal();
   };
 
@@ -48,26 +53,29 @@ export default function CategoryTableRow({
   };
 
   const handleMove = (dir) => {
-    let firstSibling, secondSibling;
-    if (dir === -1) {
-      firstSibling = row.current.previousElementSibling;
-      secondSibling = row.current;
-    } else {
-      firstSibling = row.current;
-      secondSibling = row.current.nextElementSibling;
-    }
+    setCategories((categories) => {
+      const newCategories = [...categories];
 
-    if (!firstSibling || !secondSibling) return;
+      for (var i = 0; i < categories.length; i++) {
+        if (categories[i].id === categoryId) break;
+      }
 
-    firstSibling.parentNode.insertBefore(secondSibling, firstSibling);
+      if (i === 0 && dir === -1) return categories;
+      else if (i === categories.length - 1 && dir === 1) return categories;
 
-    [firstSibling.dataset.order, secondSibling.dataset.order] = [
-      secondSibling.dataset.order,
-      firstSibling.dataset.order,
-    ];
+      const j = i + dir;
 
-    setOrderChanged(true);
+      [newCategories[i], newCategories[j]] = [
+        newCategories[j],
+        newCategories[i],
+      ];
+
+      setOrderChanged(true);
+      return newCategories;
+    });
   };
+
+  if (!category) return null;
 
   return (
     <tr

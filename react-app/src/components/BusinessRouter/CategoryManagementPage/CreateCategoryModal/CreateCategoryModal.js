@@ -8,7 +8,11 @@ import {
 } from "../../../../store/userBusinesses";
 import "./CreateCategoryModal.css";
 
-export default function CreateCategoryModal({ category, businessId }) {
+export default function CreateCategoryModal({
+  category,
+  businessId,
+  setCategories,
+}) {
   const { closeModal } = useModal();
   const dispatch = useDispatch();
   const [name, setName] = useState(category?.name || "");
@@ -22,20 +26,24 @@ export default function CreateCategoryModal({ category, businessId }) {
     setErrors(errors);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const categoryObj = {
-      id: category.id,
+      id: category?.id,
       name,
       business_id: businessId,
     };
-    const res = dispatch(
+    const res = await dispatch(
       category
         ? thunkEditCategory(categoryObj)
         : thunkCreateCategory(categoryObj)
     );
     if (res.errors) setErrors(res.errors);
-    else closeModal();
+    else {
+      if (!category)
+        setCategories((categories) => [...categories, res.category]);
+      closeModal();
+    }
   };
 
   return (

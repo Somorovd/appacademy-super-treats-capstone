@@ -78,10 +78,11 @@ def reorder_categories():
     if not business or not business.user_id == current_user.id:
         return {"errors": "Not authorized"}, 401
 
-    for c in business.categories:
-        order = categories.get(str(c.id))
-        if order:
-            c.order = int(order)
+    try:
+        for c in business.categories:
+            c.order = categories[str(c.id)]
+    except:
+        return {"errors": "invalid order for categories"}, 400
 
     db.session.commit()
 
@@ -98,6 +99,10 @@ def delete_category(category_id):
     business = category.business
     if not business or not business.user_id == current_user.id:
         return {"errors": "Not authorized"}, 401
+
+    for c in business.categories:
+        if c.order > category.order:
+            c.order -= 1
 
     db.session.delete(category)
     db.session.commit()
