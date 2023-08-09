@@ -33,7 +33,6 @@ export default function CreateBusinessForm({ business, onSubmit }) {
   const [type, setType] = useState(business?.type || "");
   const [cuisine, setCuisine] = useState(business?.cuisine || "");
   const [image, setImage] = useState(business?.image || "");
-  const [imageText, setImageText] = useState(business?.image || "");
   const [priceRange, setPriceRange] = useState(business?.priceRange || "");
   const [deliveryFee, setDeliveryFee] = useState(business?.deliveryFee || "");
   const [errors, setErrors] = useState({});
@@ -41,6 +40,8 @@ export default function CreateBusinessForm({ business, onSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateForm()) return;
+
+    const formData = new FormData();
 
     const businessObj = {
       address,
@@ -53,10 +54,10 @@ export default function CreateBusinessForm({ business, onSubmit }) {
       delivery_fee: deliveryFee,
     };
 
+    for (let [k, v] of Object.entries(businessObj)) formData.append(k, v);
+
     const res = await dispatch(
-      business
-        ? thunkEditBusiness(businessObj)
-        : thunkCreateBusiness(businessObj)
+      business ? thunkEditBusiness(formData) : thunkCreateBusiness(formData)
     );
     if (res.errors) setErrors(res.errors);
     else onSubmit ? onSubmit() : history.push(`/business/${res.business.id}`);
@@ -80,9 +81,6 @@ export default function CreateBusinessForm({ business, onSubmit }) {
     }
 
     if (type.trim() === "") errors.type = "Select a business type";
-
-    if (!image.trim().match(/(^|\.png|\.jpg|\.jpeg)$/))
-      errors.image = "Image type not supported";
 
     setErrors(errors);
     return Object.keys(errors).length === 0;
@@ -109,9 +107,9 @@ export default function CreateBusinessForm({ business, onSubmit }) {
           <label htmlFor="image">Banner Image</label>
           <input
             id="image"
-            value={imageText}
-            onChange={(e) => setImageText(e.target.value)}
-            onBlur={(e) => setImage(e.target.value)}
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
+            onChange={(e) => setImage(e.target.files[0])}
           />
           <p className="auth-error">{errors.image}</p>
         </div>

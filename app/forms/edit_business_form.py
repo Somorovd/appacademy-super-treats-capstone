@@ -1,7 +1,9 @@
 from flask_wtf import FlaskForm
+from flask_wtf.file import FileField, FileAllowed, FileRequired
 from wtforms import StringField, FloatField
 from wtforms.validators import DataRequired, Length, NumberRange, ValidationError
 from ..models.business import types, cuisines, price_ranges
+from app.utils.aws import ALLOWED_EXTENSIONS
 
 
 def cuisine_required(form, field):
@@ -49,6 +51,6 @@ class EditBusinessForm(FlaskForm):
     name = StringField("address", validators=[DataRequired(), Length(1, 100)])
     type = StringField("type", validators=[DataRequired(), valid_type])
     cuisine = StringField("cuisine", validators=[cuisine_required, valid_cuisine])
-    image = StringField("image", validators=[supported_image, Length(0, 255)])
+    image = FileField("image", validators=[FileAllowed(list(ALLOWED_EXTENSIONS))])
     price_range = StringField("price_range", validators=[DataRequired(), valid_range])
     delivery_fee = FloatField("delivery_fee", validators=[NumberRange(min=0, max=10)])

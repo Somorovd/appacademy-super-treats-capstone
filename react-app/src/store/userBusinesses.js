@@ -74,10 +74,7 @@ export const thunkGetOneBusiness = (businessId) => async (dispatch) => {
 export const thunkCreateBusiness = (business) => async (dispatch) => {
   const res = await fetch("/api/user_businesses/new", {
     method: "post",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(business),
+    body: business,
   });
   const resBody = await res.json();
 
@@ -86,12 +83,9 @@ export const thunkCreateBusiness = (business) => async (dispatch) => {
 };
 
 export const thunkEditBusiness = (business) => async (dispatch) => {
-  const res = await fetch(`/api/user_businesses/${business.id}/edit`, {
+  const res = await fetch(`/api/user_businesses/${business.get("id")}/edit`, {
     method: "put",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(business),
+    body: business,
   });
   const resBody = await res.json();
 

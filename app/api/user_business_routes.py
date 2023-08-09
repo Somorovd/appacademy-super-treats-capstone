@@ -5,6 +5,7 @@ from ..utils.helpers import validation_errors_to_dict
 from app.models import db, Business
 from app.forms.create_business_form import CreateBusinessForm
 from app.forms.edit_business_form import EditBusinessForm
+from app.utils.aws import upload_file_to_s3, get_unique_filename
 
 user_business_routes = Blueprint("user_businesses", __name__)
 
@@ -64,11 +65,21 @@ def edit_business(business_id):
         if not business.user_id == current_user.id:
             return {"errors": "Not Authorized"}, 401
 
+        image = form.data.get("image")
+        if image:
+            image.filename = get_unique_filename(image.filename)
+            upload = upload_file_to_s3(image)
+
+            if "url" not in upload:
+                return {"errors": upload}
+
+            url = upload["url"]
+            business.image = url
+
         business.address = form.data["address"]
         business.cuisine = form.data["cuisine"]
         business.name = form.data["name"]
         business.type = form.data["type"]
-        business.image = form.data["image"] or ""
         business.price_range = form.data["price_range"]
         business.delivery_fee = form.data["delivery_fee"]
 
