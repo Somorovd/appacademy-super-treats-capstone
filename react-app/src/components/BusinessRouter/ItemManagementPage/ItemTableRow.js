@@ -26,7 +26,11 @@ export default function ItemTableRow({ itemId }) {
         )}
       </td>
       <td className="flex flex-01">
-        <p className="item-table__category">{category?.name || ""}</p>
+        {category ? (
+          <p className="item-table__category">{category.name}</p>
+        ) : (
+          <p className="auth-error">item will be hidden</p>
+        )}
       </td>
       <td className="flex flex-01">
         <Link
