@@ -18,7 +18,6 @@
 .business-card__image {
   object-fit: cover;
   max-width: 100%;
-  background-color: blanchedalmond;
   border-radius: 10px;
 }
 

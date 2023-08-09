@@ -1,6 +1,6 @@
 import { useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 import {
   thunkCreateBusiness,
@@ -27,6 +27,7 @@ const defaultImage =
 export default function CreateBusinessForm({ business, onSubmit }) {
   const dispatch = useDispatch();
   const history = useHistory();
+  const imageRef = useRef();
   const [address, setAddress] = useState(business?.address || "");
   const [businessName, setBusinessName] = useState(business?.name || "");
   const [brandName, setBrandName] = useState("");
@@ -36,9 +37,23 @@ export default function CreateBusinessForm({ business, onSubmit }) {
   const [priceRange, setPriceRange] = useState(business?.priceRange || "");
   const [deliveryFee, setDeliveryFee] = useState(business?.deliveryFee || "");
   const [errors, setErrors] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
+
+  const handleChangeImage = (e) => {
+    const image = e.target.files[0];
+    setImage(image);
+    if (FileReader) {
+      let fr = new FileReader();
+      fr.onload = () => {
+        imageRef.current.src = fr.result;
+      };
+      fr.readAsDataURL(image);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSaving(true);
     if (!validateForm()) return;
 
     const formData = new FormData();
@@ -61,6 +76,7 @@ export default function CreateBusinessForm({ business, onSubmit }) {
     );
     if (res.errors) setErrors(res.errors);
     else onSubmit ? onSubmit() : history.push(`/business/${res.business.id}`);
+    setIsSaving(false);
   };
 
   const validateForm = () => {
@@ -93,27 +109,29 @@ export default function CreateBusinessForm({ business, onSubmit }) {
     >
       <h2> {business ? "Update your business profile" : "Get Started"}</h2>
 
-      {business && (
-        <div className="business-image-input flex-c">
-          <img
-            src={image}
-            alt=""
-            onError={(e) => {
-              e.target.src = defaultImage;
-              e.target.style = "object-fit: contain";
-            }}
-            onLoad={(e) => (e.target.style = "object-fit: cover")}
-          />
-          <label htmlFor="image">Banner Image</label>
-          <input
-            id="image"
-            type="file"
-            accept="image/png, image/jpeg, image/jpg"
-            onChange={(e) => setImage(e.target.files[0])}
-          />
-          <p className="auth-error">{errors.image}</p>
-        </div>
-      )}
+      <div className="business-image-input flex-c">
+        <img
+          src={image}
+          alt=""
+          ref={imageRef}
+          onError={(e) => {
+            e.target.src = defaultImage;
+            e.target.style = "object-fit: contain";
+          }}
+          onLoad={(e) => {
+            if (e.target.src !== defaultImage)
+              e.target.style = "object-fit: cover";
+          }}
+        />
+        <label htmlFor="image">Banner Image</label>
+        <input
+          id="image"
+          type="file"
+          accept="image/png, image/jpeg, image/jpg"
+          onChange={handleChangeImage}
+        />
+        <p className="auth-error">{errors.image}</p>
+      </div>
 
       <div>
         <label htmlFor="business-address">Store Address</label>
@@ -244,7 +262,12 @@ export default function CreateBusinessForm({ business, onSubmit }) {
           </div>
         </>
       )}
-      <button className="bt-black">Submit</button>
+      <button
+        className="bt-black"
+        disabled={isSaving}
+      >
+        Submit
+      </button>
     </form>
   );
 }
