@@ -4,6 +4,7 @@ from ..utils.helpers import validation_errors_to_dict
 
 from app.models import db, Item, Business, Category
 from app.forms.create_item_form import CreateItemForm
+from app.utils.aws import upload_file_to_s3, get_unique_filename
 
 item_routes = Blueprint("items", __name__)
 
@@ -38,11 +39,21 @@ def new_item():
         item = Item(
             name=form.data["name"],
             about=form.data["about"],
-            image=form.data["image"],
             price=form.data["price"],
             business_id=form.data["business_id"],
             category_id=form.data.get("category_id"),
         )
+
+        image = form.data.get("image")
+        if image:
+            image.filename = get_unique_filename(image.filename)
+            upload = upload_file_to_s3(image)
+
+            if "url" not in upload:
+                return {"errors": upload}
+
+            url = upload["url"]
+            item.image = url
 
         db.session.add(item)
         db.session.commit()
@@ -72,10 +83,24 @@ def edit_item(item_id):
 
         item.name = form.data["name"]
         item.about = form.data["about"]
-        item.image = form.data["image"]
         item.price = form.data["price"]
         if category_id:
             item.category_id = category_id
+
+        image = form.data.get("image")
+        print("_______________________________")
+        print(image)
+        print("_______________________________")
+        if image:
+            print("here")
+            image.filename = get_unique_filename(image.filename)
+            upload = upload_file_to_s3(image)
+
+            if "url" not in upload:
+                return {"errors": upload}
+
+            url = upload["url"]
+            item.image = url
 
         db.session.commit()
         return {"item": item.to_dict(timestamps=True)}

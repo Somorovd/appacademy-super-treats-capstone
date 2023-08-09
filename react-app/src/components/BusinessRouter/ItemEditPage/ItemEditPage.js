@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
@@ -37,6 +37,7 @@ const ConfirmPriceModal = ({ name, onConfirm }) => {
 export default function ItemEditPage() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const imageRef = useRef();
   const { businessId, itemId } = useParams();
   const { setModalContent } = useModal();
 
@@ -53,7 +54,6 @@ export default function ItemEditPage() {
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [image, setImage] = useState("");
-  const [imageInput, setImageInput] = useState("");
   const [price, setPrice] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
   const [errors, setErrors] = useState({});
@@ -71,7 +71,6 @@ export default function ItemEditPage() {
     setName(item?.name || "");
     setAbout(item?.about || "");
     setImage(item?.image || "");
-    setImageInput(item?.image || "");
     setPrice(item?.price || "");
     setCategoryId(item?.categoryId || 0);
   }, [item, isEditting]);
@@ -88,9 +87,23 @@ export default function ItemEditPage() {
     } else handleSubmit();
   };
 
+  const handleChangeImage = (e) => {
+    const image = e.target.files[0];
+    setImage(image);
+    if (FileReader) {
+      let fr = new FileReader();
+      fr.onload = () => {
+        imageRef.current.src = fr.result;
+      };
+      fr.readAsDataURL(image);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e?.preventDefault();
     setIsSaving(true);
+
+    const formData = new FormData();
 
     const itemObj = {
       id: item?.id,
@@ -102,8 +115,10 @@ export default function ItemEditPage() {
       category_id: Number(categoryId),
     };
 
+    for (let [k, v] of Object.entries(itemObj)) formData.append(k, v);
+
     const res = await dispatch(
-      isEditting ? thunkUpdateItem(itemObj) : thunkCreateItem(itemObj)
+      isEditting ? thunkUpdateItem(formData) : thunkCreateItem(formData)
     );
 
     setErrors(res.errors || {});
@@ -214,20 +229,24 @@ export default function ItemEditPage() {
           <img
             src={image}
             alt=""
+            ref={imageRef}
             onError={(e) => {
               e.target.src = defaultImage;
-              e.target.style = "object-fit: fill";
+              e.target.style = "object-fit: contain";
             }}
-            onLoad={(e) => (e.target.style = "object-fit: cover")}
+            onLoad={(e) => {
+              if (e.target.src !== defaultImage)
+                e.target.style = "object-fit: cover";
+            }}
           />
           <label htmlFor="image">
             Item Picture (<em>optional</em> )
           </label>
           <input
             id="image"
-            value={imageInput}
-            onChange={(e) => setImageInput(e.target.value)}
-            onBlur={(e) => setImage(e.target.value)}
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
+            onChange={handleChangeImage}
           />
           <p className="auth-error">{errors.image}</p>
         </div>

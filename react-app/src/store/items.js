@@ -39,10 +39,7 @@ export const thunkGetOneItem = (itemId) => async (dispatch) => {
 export const thunkCreateItem = (item) => async (dispatch) => {
   const res = await fetch("/api/items/new", {
     method: "post",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(item),
+    body: item,
   });
   const resBody = await res.json();
 
@@ -52,12 +49,9 @@ export const thunkCreateItem = (item) => async (dispatch) => {
 };
 
 export const thunkUpdateItem = (item) => async (dispatch) => {
-  const res = await fetch(`/api/items/${item.id}/edit`, {
+  const res = await fetch(`/api/items/${item.get("id")}/edit`, {
     method: "put",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(item),
+    body: item,
   });
   const resBody = await res.json();
 

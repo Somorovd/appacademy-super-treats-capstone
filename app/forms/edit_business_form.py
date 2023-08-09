@@ -32,20 +32,6 @@ def valid_range(form, field):
         raise ValidationError("Invalid price range")
 
 
-def supported_image(form, field):
-    image = field.data
-    if not image:
-        return
-
-    image_name = image.split("/")[-1]
-    split = image_name.split(".")
-    valid_extensions = ["jpg", "jpeg", "png"]
-    if (not len(split) == 2) or (split[1] not in valid_extensions):
-        raise ValidationError(
-            "Image url must be of type " + ", ".join(valid_extensions)
-        )
-
-
 class EditBusinessForm(FlaskForm):
     address = StringField("address", validators=[DataRequired(), Length(1, 255)])
     name = StringField("address", validators=[DataRequired(), Length(1, 100)])
