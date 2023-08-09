@@ -53,7 +53,7 @@ items = {
     },
     "Pizza": {
         "Hawaiian Chicken Pizza": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=781&q=80/.jpg",
-        "Classis Pepperoni Pizza": "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fFBpenphfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60/.jpg",
+        "Classic Pepperoni Pizza": "https://images.unsplash.com/photo-1601924582970-9238bcb495d9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTd8fFBpenphfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60/.jpg",
         "Vegetable Cheese Pizza": "https://images.unsplash.com/photo-1625401514458-6c8a5e7d55da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=764&q=80/.jpg",
         "Cheese and Herbs Pizza": "https://images.unsplash.com/photo-1639744211778-7c4dba24760f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NDB8fGNoZWVzZSUyMFBpenphfGVufDB8fDB8fHww&auto=format&fit=crop&w=500&q=60/.jpg",
     },
