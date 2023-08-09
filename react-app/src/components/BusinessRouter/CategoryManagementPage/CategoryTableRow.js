@@ -86,13 +86,13 @@ export default function CategoryTableRow({
     >
       <td className="flex flex-11">{category.count}</td>
       <td className="flex flex-01">{category.name}</td>
-      <td className="flex flex-11 g10">
+      <td className="flex flex-11 g20">
         <i
-          className="fa-solid fa-caret-up category-action"
+          className="fa-solid fa-caret-up category-action category-action--move"
           onClick={() => handleMove(-1)}
         ></i>
         <i
-          className="fa-solid fa-caret-down category-action"
+          className="fa-solid fa-caret-down category-action category-action--move"
           onClick={() => handleMove(1)}
         ></i>
       </td>
