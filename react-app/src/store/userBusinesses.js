@@ -208,7 +208,7 @@ export default function reducer(state = initialState, action) {
         ...newState.singleBusiness.categories,
         [action.payload.id]: action.payload,
       };
-      newState.singleBusiness.categories = categories;
+      newState.singleBusiness = { ...newState.singleBusiness, categories };
       return newState;
     }
     case EDIT_CATEGORY: {
@@ -216,7 +216,7 @@ export default function reducer(state = initialState, action) {
         ...newState.singleBusiness.categories,
         [action.payload.id]: action.payload,
       };
-      newState.singleBusiness.categories = categories;
+      newState.singleBusiness = { ...newState.singleBusiness, categories };
       return newState;
     }
     case REORDER_CATEGORIES: {
@@ -226,13 +226,13 @@ export default function reducer(state = initialState, action) {
       for (let [id, order] of Object.entries(action.payload)) {
         categories[id] = { ...categories[id], order };
       }
-      newState.singleBusiness.categories = categories;
+      newState.singleBusiness = { ...newState.singleBusiness, categories };
       return newState;
     }
     case DELETE_CATEGORY: {
       const categories = { ...newState.singleBusiness.categories };
       delete categories[action.payload];
-      newState.singleBusiness.categories = categories;
+      newState.singleBusiness = { ...newState.singleBusiness, categories };
       return newState;
     }
     default:
