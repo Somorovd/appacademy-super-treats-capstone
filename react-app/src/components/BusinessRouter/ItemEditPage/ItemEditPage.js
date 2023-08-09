@@ -45,7 +45,9 @@ export default function ItemEditPage() {
   const categoriesObj = useSelector(
     (state) => state.userBusinesses.singleBusiness.categories
   );
-  const categories = Object.values(categoriesObj);
+  const categories = Object.values(categoriesObj).sort(
+    (a, b) => a.order - b.order
+  );
 
   const [id, setId] = useState(0);
   const [name, setName] = useState("");
@@ -55,6 +57,7 @@ export default function ItemEditPage() {
   const [price, setPrice] = useState(0);
   const [categoryId, setCategoryId] = useState(0);
   const [errors, setErrors] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (!isEditting) return;
@@ -87,6 +90,7 @@ export default function ItemEditPage() {
 
   const handleSubmit = async (e) => {
     e?.preventDefault();
+    setIsSaving(true);
 
     const itemObj = {
       id: item?.id,
@@ -106,6 +110,7 @@ export default function ItemEditPage() {
 
     if (!res.errors && !isEditting)
       history.push(`/business/${businessId}/menu/items`);
+    setIsSaving(false);
   };
 
   const onDelete = async () => {
@@ -148,7 +153,12 @@ export default function ItemEditPage() {
             >
               Delete
             </button>
-            <button className="bt-black bt-pd">Save</button>
+            <button
+              className="item-actions__save bt-black bt-pd"
+              disabled={isSaving}
+            >
+              {isSaving ? <i class="fa-regular fa-circle"></i> : "Save"}
+            </button>
           </div>
         </header>
         <div className="create-item__name">
