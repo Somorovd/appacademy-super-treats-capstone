@@ -30,6 +30,7 @@ sqlalchemy = "==1.4.46"
 werkzeug = "==2.2.2"
 wtforms = {version = "==3.0.1", extras = ["email"]}
 zipp = "==3.16.0"
+boto3 = "*"
 
 [dev-packages]
 
