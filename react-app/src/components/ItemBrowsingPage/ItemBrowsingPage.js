@@ -2,7 +2,10 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
-import { thunkGetOneBusiness } from "../../store/businesses";
+import {
+  thunkGetOneBusiness,
+  thunkGetAllBusinesses,
+} from "../../store/businesses";
 import PageHeader from "../PageHeader";
 import CartMenu from "../CartMenu";
 import ItemCard from "./ItemCard";
@@ -13,24 +16,32 @@ export default function ItemBrowsingPage() {
   const dispatch = useDispatch();
   const { businessId } = useParams();
   const business = useSelector((state) => state.businesses.singleBusiness);
-  const itemIds = business.items;
+  const haveAllBusinesses = useSelector(
+    (state) => state.businesses.allBusinesses[businessId]
+  );
 
   useEffect(() => {
     dispatch(thunkGetOneBusiness(businessId));
+    if (!haveAllBusinesses) dispatch(thunkGetAllBusinesses(businessId));
   }, [dispatch, businessId]);
 
   useEffect(() => {
-    const firstNonPicture = document.querySelector(
+    const firstNonPicElement = document.querySelectorAll(
       ".item-card--image+.item-card--no-image"
     );
-    const spacer = document.createElement("div");
-    spacer.classList.add("flex-spacer");
-    if (firstNonPicture) {
-      firstNonPicture.parentNode.insertBefore(spacer, firstNonPicture);
+
+    for (let ele of firstNonPicElement) {
+      const spacer = document.createElement("div");
+      spacer.classList.add("flex-spacer");
+      ele.parentNode.insertBefore(spacer, ele);
     }
   });
 
   if (business?.id !== Number(businessId)) return null;
+
+  const categories = Object.values(business.categories).sort(
+    (a, b) => a.order - b.order
+  );
 
   return (
     <div className="business-browsing">
@@ -56,13 +67,23 @@ export default function ItemBrowsingPage() {
         </div>
       </header>
       <div className="business-browsing__body flex pg-pd">
-        <CategorySidebar />
-        <div className="item-grid fw">
-          {itemIds.map((i) => (
-            <ItemCard
-              itemId={i}
-              key={i}
-            />
+        <CategorySidebar categories={categories} />
+        <div className="fw">
+          {categories.map((c) => (
+            <section
+              id={`category-${c.id}`}
+              className="category-section"
+            >
+              <h2 className="category-section__heading">{c.name}</h2>
+              <div className="item-grid">
+                {c.itemIds.map((i) => (
+                  <ItemCard
+                    itemId={i}
+                    key={i}
+                  />
+                ))}
+              </div>
+            </section>
           ))}
         </div>
       </div>

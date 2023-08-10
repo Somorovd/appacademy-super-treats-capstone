@@ -9,7 +9,8 @@ class Category(db.Model):
         __table_args__ = {"schema": SCHEMA}
 
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(50), nullable=False)
+    order = db.Column(db.Integer, nullable=False)
+    name = db.Column(db.String(25), nullable=False)
     business_id = db.Column(
         db.Integer, db.ForeignKey(add_prefix_for_prod("businesses.id")), nullable=False
     )
@@ -29,8 +30,9 @@ class Category(db.Model):
     def to_dict(self, timestamps=False):
         dct = {
             "id": self.id,
+            "order": self.order,
             "name": self.name,
-            "items": [i.to_dict() for i in self.items],
+            "itemIds": [i.id for i in self.items],
             "count": self.count,
         }
 

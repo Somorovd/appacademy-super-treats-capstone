@@ -93,6 +93,11 @@ textarea {
   align-items: center;
 }
 
+.flex-21 {
+  justify-content: right;
+  align-items: center;
+}
+
 .flex-20 {
   justify-content: flex-end;
   align-items: flex-start;
@@ -120,6 +125,10 @@ textarea {
   gap: 10px;
 }
 
+.g20 {
+  gap: 20px;
+}
+
 button {
   cursor: pointer;
   border: none;
@@ -129,6 +138,8 @@ button {
 .bt-black {
   background-color: black;
   color: white !important;
+  border: none;
+  outline: none;
 }
 
 .bt-black:hover {

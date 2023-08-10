@@ -8,26 +8,34 @@ const formatDate = (date) => {
 export default function ItemTableRow({ itemId }) {
   const { businessId } = useParams();
   const item = useSelector((state) => state.items.allItems[itemId]);
+  const category = useSelector(
+    (state) => state.userBusinesses.singleBusiness.categories[item.categoryId]
+  );
 
   if (!item) return null;
 
   return (
     <tr key={item.id}>
       <td className="flex flex-11">
-        {item.image ? (
+        {item.image && (
           <img
             className="item-table__image"
             src={item.image}
             alt=""
           />
+        )}
+      </td>
+      <td className="flex flex-01">
+        {category ? (
+          <p className="item-table__category">{category.name}</p>
         ) : (
-          "n/a"
+          <p className="auth-error">item will be hidden</p>
         )}
       </td>
       <td className="flex flex-01">
         <Link
           className="item-table__link"
-          to={`/business/${businessId}/items/${item.id}`}
+          to={`/business/${businessId}/menu/items/${item.id}`}
         >
           {item.name}
         </Link>

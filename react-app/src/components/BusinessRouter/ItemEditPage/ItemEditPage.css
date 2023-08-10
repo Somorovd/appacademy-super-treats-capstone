@@ -1,5 +1,6 @@
 .create-item-form {
   gap: 10px;
+  width: 550px;
 }
 
 .create-item-form input,
@@ -21,6 +22,22 @@
   padding: 0.8rem;
 }
 
+.create-item__category>select {
+  font-size: 1rem;
+  border-radius: 3rem;
+  padding: 10px;
+}
+
+.create-item__category>button {
+  font-size: 1rem;
+  border-radius: 3rem;
+  padding: 10px;
+}
+
+#delete-category {
+  aspect-ratio: 1;
+}
+
 .create-item__picture img {
   width: 200px;
   aspect-ratio: 1;
@@ -35,14 +52,18 @@
   gap: 10px;
 }
 
-/* Hiding number input arrows -- Chrome, Safari, Edge, Opera */
+.item-actions__save {
+  width: 80px;
+}
+
+/* Hiding price input arrows -- Chrome, Safari, Edge, Opera */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-/* Hiding number input arrows -- Firefox */
+/* Hiding price input arrows -- Firefox */
 input[type=number] {
   -moz-appearance: textfield;
 }

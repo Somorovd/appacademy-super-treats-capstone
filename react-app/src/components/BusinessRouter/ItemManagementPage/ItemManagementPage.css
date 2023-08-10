@@ -1,25 +1,20 @@
-.business-item-table {
-  width: 100%;
-  margin: auto;
+#item-management-header {
+  padding: 20px 0px;
 }
 
-.business-item-table tr {
-  border-bottom: 1px solid lightgrey;
-  border-top: 1px solid lightgrey;
-  display: grid;
-  grid-template-columns: 100px 1fr 100px 150px;
-  padding: 3px 0px;
-  margin-bottom: 3px;
-}
-
-.business-item-table td,
-.business-item-table th {
-  height: 50px;
+.item-table thead,
+.item-table tbody {
+  grid-template-columns: 100px 150px 1fr 100px 150px;
 }
 
 .item-table__link {
   color: rgb(74, 128, 74);
   text-decoration: none;
+}
+
+.item-table__category {
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item-table__image {
@@ -28,7 +23,6 @@
 }
 
 .item-table__price {
-  width: 80px;
   display: flex;
   justify-content: space-between;
   align-items: center;

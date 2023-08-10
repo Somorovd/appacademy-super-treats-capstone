@@ -1,6 +1,9 @@
 import { useHistory } from "react-router-dom";
 import "./BusinessCard.css";
 
+const defaultImage =
+  "https://cdn.discordapp.com/attachments/723759214123679836/1129101930510172180/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
+
 export default function BusinessCard({ business, isBrowsing }) {
   const history = useHistory();
   return (
@@ -11,8 +14,16 @@ export default function BusinessCard({ business, isBrowsing }) {
       <header>
         <img
           className="business-card__image fw fh"
-          src={business.image}
+          src={business.image || "missing"}
           alt=""
+          onError={(e) => {
+            e.target.src = defaultImage;
+            e.target.style = "object-fit: contain";
+          }}
+          onLoad={(e) => {
+            if (e.target.src !== defaultImage)
+              e.target.style = "object-fit: cover";
+          }}
         />
       </header>
       <div className="business-card__info">

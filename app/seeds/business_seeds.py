@@ -1,14 +1,15 @@
-from app.models import db, User, Business, environment, SCHEMA
+from app.models import db, Business, environment, SCHEMA
 from app.models.business import types, price_ranges, cuisines
 from sqlalchemy.sql import text
-from .business_list import businesses, cuisine_images
-from random import choice, randint, random
+from .business_list import businesses
+from .cuisines_list import cuisines
+from random import randint
 
 
 def seed_businesses():
     demo_business = Business(
         address="180 Geary St Fl 6\nSan Francisco, CA 94108",
-        cuisine=cuisines["Burgers"],
+        cuisine="Burgers",
         delivery_fee="0.99",
         image="https://cdn.discordapp.com/attachments/723759214123679836/1128358776186093588/qHddZMInp.png",
         name="App Academy",
@@ -20,11 +21,12 @@ def seed_businesses():
     db.session.add(demo_business)
 
     for i, b in enumerate(businesses):
+        images = cuisines[b["cuisine"]]["images"]
         business = Business(
             address=b["address"],
             cuisine=b["cuisine"],
             delivery_fee=b["delivery_fee"],
-            image=cuisine_images[b["cuisine"]][i % len(cuisine_images[b["cuisine"]])],
+            image=images[i % len(images)],
             name=b["name"],
             price_range=b["price_range"],
             rating=b["rating"],
@@ -32,7 +34,6 @@ def seed_businesses():
             user_id=randint(1, 15),
         )
         db.session.add(business)
-
     db.session.commit()
 
 

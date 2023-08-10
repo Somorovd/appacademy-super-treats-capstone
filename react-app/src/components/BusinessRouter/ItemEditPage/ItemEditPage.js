@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, Link } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
@@ -37,19 +37,27 @@ const ConfirmPriceModal = ({ name, onConfirm }) => {
 export default function ItemEditPage() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const imageRef = useRef();
   const { businessId, itemId } = useParams();
   const { setModalContent } = useModal();
 
   const isEditting = itemId;
   const item = useSelector((state) => state.items.singleItem);
+  const categoriesObj = useSelector(
+    (state) => state.userBusinesses.singleBusiness.categories
+  );
+  const categories = Object.values(categoriesObj).sort(
+    (a, b) => a.order - b.order
+  );
 
   const [id, setId] = useState(0);
   const [name, setName] = useState("");
   const [about, setAbout] = useState("");
   const [image, setImage] = useState("");
-  const [imageInput, setImageInput] = useState("");
   const [price, setPrice] = useState(0);
+  const [categoryId, setCategoryId] = useState(0);
   const [errors, setErrors] = useState({});
+  const [isSaving, setIsSaving] = useState(false);
 
   useEffect(() => {
     if (!isEditting) return;
@@ -63,8 +71,8 @@ export default function ItemEditPage() {
     setName(item?.name || "");
     setAbout(item?.about || "");
     setImage(item?.image || "");
-    setImageInput(item?.image || "");
     setPrice(item?.price || "");
+    setCategoryId(item?.categoryId || 0);
   }, [item, isEditting]);
 
   const checkSubmit = (e) => {
@@ -79,8 +87,23 @@ export default function ItemEditPage() {
     } else handleSubmit();
   };
 
+  const handleChangeImage = (e) => {
+    const image = e.target.files[0];
+    setImage(image);
+    if (FileReader) {
+      let fr = new FileReader();
+      fr.onload = () => {
+        imageRef.current.src = fr.result;
+      };
+      fr.readAsDataURL(image);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e?.preventDefault();
+    setIsSaving(true);
+
+    const formData = new FormData();
 
     const itemObj = {
       id: item?.id,
@@ -89,21 +112,25 @@ export default function ItemEditPage() {
       image,
       price,
       business_id: Number(businessId),
+      category_id: Number(categoryId),
     };
 
+    for (let [k, v] of Object.entries(itemObj)) formData.append(k, v);
+
     const res = await dispatch(
-      isEditting ? thunkUpdateItem(itemObj) : thunkCreateItem(itemObj)
+      isEditting ? thunkUpdateItem(formData) : thunkCreateItem(formData)
     );
 
     setErrors(res.errors || {});
 
     if (!res.errors && !isEditting)
-      history.push(`/business/${businessId}/items`);
+      history.push(`/business/${businessId}/menu/items`);
+    setIsSaving(false);
   };
 
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteItem(item.id));
-    if (!res.errors) history.push(`/business/${businessId}/items`);
+    if (!res.errors) history.push(`/business/${businessId}/menu/items`);
   };
 
   const handleDelete = (e) => {
@@ -124,14 +151,14 @@ export default function ItemEditPage() {
   return (
     <div className="">
       <form
-        className="create-item-form flex-c flex-01"
+        className="create-item-form flex-c"
         onSubmit={checkSubmit}
         onKeyDown={(e) => {
           if (e.key === "Enter") e.preventDefault();
         }}
       >
-        <header className="business-header fw">
-          <Link to={`/business/${businessId}/items`}>
+        <header className="business-header">
+          <Link to={`/business/${businessId}/menu/items`}>
             <i className="fa-solid fa-arrow-left ft-15"></i>
           </Link>
           <div className="item-actions flex">
@@ -141,7 +168,12 @@ export default function ItemEditPage() {
             >
               Delete
             </button>
-            <button className="bt-black bt-pd">Save</button>
+            <button
+              className="item-actions__save bt-black bt-pd"
+              disabled={isSaving}
+            >
+              {isSaving ? <i class="fa-regular fa-circle"></i> : "Save"}
+            </button>
           </div>
         </header>
         <div className="create-item__name">
@@ -154,24 +186,67 @@ export default function ItemEditPage() {
           <p className="auth-error">{errors.name}</p>
         </div>
 
+        <div className="create-item__category flex flex-01 g10">
+          <span>Category</span>
+          <select
+            id="create-item__category"
+            className="bt-black"
+            value={categoryId}
+            onChange={(e) => setCategoryId(e.target.value)}
+          >
+            <option
+              value={0}
+              hidden
+            >
+              None
+            </option>
+            {categories.map((c) => (
+              <option
+                value={c.id}
+                key={c.id}
+              >
+                {c.name}
+              </option>
+            ))}
+          </select>
+          {categoryId !== 0 && (
+            <button
+              id="delete-category"
+              className="flex flex-11"
+              onClick={() => setCategoryId(0)}
+            >
+              <i className="fa-solid fa-xmark"></i>
+            </button>
+          )}
+        </div>
+        {categoryId === 0 && (
+          <p className="auth-error">
+            This item will not be displayed unless it has a category
+          </p>
+        )}
+
         <div className="create-item__picture">
           <img
             src={image}
             alt=""
+            ref={imageRef}
             onError={(e) => {
               e.target.src = defaultImage;
-              e.target.style = "object-fit: fill";
+              e.target.style = "object-fit: contain";
             }}
-            onLoad={(e) => (e.target.style = "object-fit: cover")}
+            onLoad={(e) => {
+              if (e.target.src !== defaultImage)
+                e.target.style = "object-fit: cover";
+            }}
           />
           <label htmlFor="image">
             Item Picture (<em>optional</em> )
           </label>
           <input
             id="image"
-            value={imageInput}
-            onChange={(e) => setImageInput(e.target.value)}
-            onBlur={(e) => setImage(e.target.value)}
+            type="file"
+            accept="image/png, image/jpeg, image/jpg"
+            onChange={handleChangeImage}
           />
           <p className="auth-error">{errors.image}</p>
         </div>

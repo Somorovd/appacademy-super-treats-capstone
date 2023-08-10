@@ -17,11 +17,14 @@ export default function CartSidebar({ businessId }) {
 
   const cart = useSelector((state) => state.carts[businessId]);
   const allCarts = useSelector((state) => state.carts);
+  const business = useSelector(
+    (state) => state.businesses.allBusinesses[businessId]
+  );
 
   const { closeModal } = useModal();
   const cartItems = Object.values(cart?.cartItems || {}).sort((a, b) => {
-    if (!a.item) return -1;
-    if (!b.item) return 1;
+    if (!a.itemId) return -1;
+    if (!b.itemId) return 1;
     else return a.id - b.id;
   });
 
@@ -57,7 +60,7 @@ export default function CartSidebar({ businessId }) {
   }, []);
 
   const handleAddItems = () => {
-    history.push(`/feed/${cart.business.id}`);
+    history.push(`/feed/${business.id}`);
     closeModal();
   };
 
@@ -104,7 +107,7 @@ export default function CartSidebar({ businessId }) {
 
       <div className="flex flex-b1">
         <div className="flex-c">
-          <h2 onClick={handleAddItems}>{cart.business.name} </h2>
+          <h2 onClick={handleAddItems}>{business.name} </h2>
           <p>Deliver to {cart.address.split(/(\n|,)/)[0]}</p>
         </div>
         <button

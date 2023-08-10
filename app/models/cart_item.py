@@ -43,7 +43,7 @@ class CartItem(db.Model):
         dct = {
             "id": self.id,
             "quantity": self.quantity,
-            "item": self.item.cart_to_dict() if self.item else None,
+            "itemId": self.item_id if self.item else None,
             "price": self.price,
             "cartId": self.cart_id,
         }

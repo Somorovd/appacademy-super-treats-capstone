@@ -18,6 +18,7 @@ export default function CartMenu() {
   const currentCart = cartsObj[businessId];
 
   useEffect(() => {
+    if (!user) return;
     dispatch(thunkGetAllCarts());
   }, [dispatch]);
 

@@ -46,6 +46,7 @@ class Item(db.Model):
             "image": self.image,
             "about": self.about,
             "cartItemId": self.cart_item_id,
+            "categoryId": self.category_id,
         }
 
         if timestamps:

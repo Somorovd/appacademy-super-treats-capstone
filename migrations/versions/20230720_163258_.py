@@ -147,7 +147,8 @@ def upgrade():
     op.create_table(
         "categories",
         sa.Column("id", sa.Integer(), nullable=False),
-        sa.Column("name", sa.String(length=50), nullable=False),
+        sa.Column("order", sa.Integer(), nullable=False),
+        sa.Column("name", sa.String(length=25), nullable=False),
         sa.Column("business_id", sa.Integer(), nullable=False),
         sa.Column(
             "created_at",

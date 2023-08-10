@@ -3,6 +3,10 @@ const GET_ONE_BUSINESS = "userBusinesses/GET_ONE_BUSINESSES";
 const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
 const EDIT_BUSINESS = "businesses/EDIT_BUSINESS";
 const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
+const CREATE_CATEGORY = "userBusinesses/CREATE_CATEGORY";
+const EDIT_CATEGORY = "userBusinesses/EDIT_CATEGORY";
+const REORDER_CATEGORIES = "userBusinesses/REORDER_CATEGORIES";
+const DELETE_CATEGORY = "userBusinesses/DELETE_CATEGORY";
 
 const actionGetAllBusinesses = (businesses) => ({
   type: GET_ALL_BUSINESSES,
@@ -28,6 +32,26 @@ const actionDeleteBusiness = (businessId) => ({
   payload: businessId,
 });
 
+const actionCreateCategory = (category) => ({
+  type: CREATE_CATEGORY,
+  payload: category,
+});
+
+const actionEditCategory = (category) => ({
+  type: EDIT_CATEGORY,
+  payload: category,
+});
+
+const actionReorderCategories = (order) => ({
+  type: REORDER_CATEGORIES,
+  payload: order,
+});
+
+const actionDeleteCategory = (categoryId) => ({
+  type: DELETE_CATEGORY,
+  payload: categoryId,
+});
+
 export const thunkGetAllBusinesses = () => async (dispatch) => {
   const res = await fetch("/api/user_businesses/all");
   const resBody = await res.json();
@@ -50,10 +74,7 @@ export const thunkGetOneBusiness = (businessId) => async (dispatch) => {
 export const thunkCreateBusiness = (business) => async (dispatch) => {
   const res = await fetch("/api/user_businesses/new", {
     method: "post",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(business),
+    body: business,
   });
   const resBody = await res.json();
 
@@ -62,12 +83,9 @@ export const thunkCreateBusiness = (business) => async (dispatch) => {
 };
 
 export const thunkEditBusiness = (business) => async (dispatch) => {
-  const res = await fetch(`/api/user_businesses/${business.id}/edit`, {
+  const res = await fetch(`/api/user_businesses/${business.get("id")}/edit`, {
     method: "put",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(business),
+    body: business,
   });
   const resBody = await res.json();
 
@@ -82,6 +100,58 @@ export const thunkDeleteBusiness = (businessId) => async (dispatch) => {
   const resBody = await res.json();
 
   if (res.ok) dispatch(actionDeleteBusiness(businessId));
+  return resBody;
+};
+
+export const thunkCreateCategory = (category) => async (dispatch) => {
+  const res = await fetch(`/api/categories/new`, {
+    method: "post",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(category),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionCreateCategory(resBody.category));
+  return resBody;
+};
+
+export const thunkEditCategory = (category) => async (dispatch) => {
+  const res = await fetch(`/api/categories/${category.id}/edit`, {
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(category),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionEditCategory(resBody.category));
+  return resBody;
+};
+
+export const thunkReorderCategories = (order) => async (dispatch) => {
+  const res = await fetch(`/api/categories/reorder`, {
+    method: "put",
+    headers: {
+      "content-type": "application/json",
+    },
+    body: JSON.stringify(order),
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionReorderCategories(order.categories));
+  return resBody;
+};
+
+export const thunkDeleteCategory = (categoryId) => async (dispatch) => {
+  const res = await fetch(`/api/categories/${categoryId}/delete`, {
+    method: "delete",
+  });
+  const resBody = await res.json();
+
+  if (res.ok) dispatch(actionDeleteCategory(categoryId));
   return resBody;
 };
 
@@ -125,6 +195,38 @@ export default function reducer(state = initialState, action) {
       delete allBusinesses[action.payload.id];
       newState.allBusinesses = allBusinesses;
       newState.singleBusiness = {};
+      return newState;
+    }
+    case CREATE_CATEGORY: {
+      const categories = {
+        ...newState.singleBusiness.categories,
+        [action.payload.id]: action.payload,
+      };
+      newState.singleBusiness = { ...newState.singleBusiness, categories };
+      return newState;
+    }
+    case EDIT_CATEGORY: {
+      const categories = {
+        ...newState.singleBusiness.categories,
+        [action.payload.id]: action.payload,
+      };
+      newState.singleBusiness = { ...newState.singleBusiness, categories };
+      return newState;
+    }
+    case REORDER_CATEGORIES: {
+      const categories = {
+        ...newState.singleBusiness.categories,
+      };
+      for (let [id, order] of Object.entries(action.payload)) {
+        categories[id] = { ...categories[id], order };
+      }
+      newState.singleBusiness = { ...newState.singleBusiness, categories };
+      return newState;
+    }
+    case DELETE_CATEGORY: {
+      const categories = { ...newState.singleBusiness.categories };
+      delete categories[action.payload];
+      newState.singleBusiness = { ...newState.singleBusiness, categories };
       return newState;
     }
     default:

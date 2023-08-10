@@ -10,7 +10,7 @@ export default function SingleCartMenu() {
 
   const handleClick = () => {
     setModalClass("flex flex-20 fh");
-    setModalContent(<CartSidebar businessId={cart.business.id} />);
+    setModalContent(<CartSidebar businessId={business.id} />);
   };
 
   if (!cart) return null;

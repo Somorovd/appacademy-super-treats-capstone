@@ -1,0 +1,16 @@
+#menu-nav {
+  border-bottom: 1px solid lightgray;
+  padding: 20px;
+}
+
+#menu-nav a,
+#menu-nav a:visited {
+  color: black;
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+#menu-nav a.active {
+  color: green;
+  font-weight: 900;
+}
