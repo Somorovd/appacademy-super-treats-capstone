@@ -1,28 +1,32 @@
 from app.models import db, Item, Business, environment, SCHEMA
 from sqlalchemy.sql import text
-from faker import Faker
-from random import choice, randint, random
-from .items_list import items
+from random import randint, random
+from .cuisines_list import cuisines
 
 
 def seed_items():
-    for b in Business.query.all():
-        for name, image in items[b.cuisine.name].items():
-            item = Item(
-                name=name,
-                image=image,
-                price=float("{0:.2f}".format(random() * 45)),
-                business_id=b.id,
-            )
-            db.session.add(item)
+    for business in Business.query.all():
+        for category in business.categories:
+            for name, image in cuisines[business.cuisine.name]["categories"][
+                category.name
+            ].items():
+                item = Item(
+                    name=name,
+                    image=image,
+                    price=float("{0:.2f}".format(random() * 45)),
+                    business_id=business.id,
+                    category_id=category.id,
+                )
+                db.session.add(item)
 
-        for i in range(10):
-            item = Item(
-                name=f"Item {randint(10, 100):04}",
-                price=float("{0:.2f}".format(random() * 45)),
-                business_id=b.id,
-            )
-            db.session.add(item)
+            for i in range(randint(2, 8)):
+                item = Item(
+                    name=f"Item {randint(10, 1000):04}",
+                    price=float("{0:.2f}".format(random() * 30)),
+                    business_id=business.id,
+                    category_id=category.id,
+                )
+                db.session.add(item)
 
     db.session.commit()
 
