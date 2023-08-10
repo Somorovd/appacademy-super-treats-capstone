@@ -88,9 +88,6 @@ def edit_item(item_id):
             item.category_id = category_id
 
         image = form.data.get("image")
-        print("_______________________________")
-        print(image)
-        print("_______________________________")
         if image:
             print("here")
             image.filename = get_unique_filename(image.filename)
