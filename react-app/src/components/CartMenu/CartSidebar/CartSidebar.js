@@ -2,11 +2,12 @@ import { useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-import CartItemCard from "../CartItemCard";
 
 import { thunkDeleteCart } from "../../../store/carts";
+import CartItemCard from "../CartItemCard";
+import AllCartsDropdown from "../AllCartsDropdown";
+import SubmitOrderModal from "../SubmitOrderModal";
 import "./CartSidebar.css";
-import AllCartsDropdown from "../AllCartsDropdown/AllCartsDropdown";
 
 export default function CartSidebar({ businessId }) {
   const dispatch = useDispatch();
@@ -21,7 +22,7 @@ export default function CartSidebar({ businessId }) {
     (state) => state.businesses.allBusinesses[businessId]
   );
 
-  const { closeModal } = useModal();
+  const { closeModal, setModalContent, setModalClass } = useModal();
   const cartItems = Object.values(cart?.cartItems || {}).sort((a, b) => {
     if (!a.itemId) return -1;
     if (!b.itemId) return 1;
@@ -67,6 +68,12 @@ export default function CartSidebar({ businessId }) {
   const handleClearCart = async () => {
     await dispatch(thunkDeleteCart(cart));
     closeModal();
+  };
+
+  const handleSubmitOrder = async () => {
+    await handleClearCart();
+    setModalClass("flex flex-11");
+    setModalContent(<SubmitOrderModal />);
   };
 
   if (!cart) {
@@ -170,7 +177,7 @@ export default function CartSidebar({ businessId }) {
       <div className="cart-sidebar__submit">
         <button
           className="bt-black bt-pd fw"
-          onClick={handleClearCart}
+          onClick={handleSubmitOrder}
         >
           Submit Order
         </button>
