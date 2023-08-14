@@ -50,13 +50,19 @@ export default function SignupFormPassword({ form }) {
       {passwordStatus.fail.length !== 0 && (
         <>
           {passwordStatus.fail.map((msg, i) => (
-            <p key={i}>
+            <p
+              key={i}
+              className="flex g10"
+            >
               <i className="fa-solid fa-circle-xmark red-icon"></i>
               {msg}
             </p>
           ))}
           {passwordStatus.pass.map((msg, i) => (
-            <p key={i}>
+            <p
+              key={i}
+              className="flex g10"
+            >
               <i className="fa-solid fa-circle-check green-icon"></i>
               {msg}
             </p>
