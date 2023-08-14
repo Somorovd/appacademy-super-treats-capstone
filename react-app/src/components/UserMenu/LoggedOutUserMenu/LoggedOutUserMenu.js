@@ -1,6 +1,7 @@
 import { useModal } from "../../../context/Modal";
 import { useHistory } from "react-router-dom";
 
+import PersonalLinksSection from "../PersonalLinksSection";
 import "./LoggedOutUserMenu.css";
 
 export default function LoggedOutUserMenu() {
@@ -14,18 +15,21 @@ export default function LoggedOutUserMenu() {
 
   return (
     <>
-      <button
-        className="user-menu__login bt-black"
-        onClick={() => modalNavigate("/signup")}
-      >
-        Sign up
-      </button>
-      <button
-        className="user-menu__login"
-        onClick={() => modalNavigate("/login")}
-      >
-        Log in
-      </button>
+      <section className="menu-section">
+        <button
+          className="user-menu__login bt-black"
+          onClick={() => modalNavigate("/signup")}
+        >
+          Sign up
+        </button>
+        <button
+          className="user-menu__login"
+          onClick={() => modalNavigate("/login")}
+        >
+          Log in
+        </button>
+      </section>
+      <PersonalLinksSection />
     </>
   );
 }
