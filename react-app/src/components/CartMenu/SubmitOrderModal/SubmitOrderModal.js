@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import "./SubmitOrderModal.css";
 
 export default function SubmitOrderModal() {
@@ -9,12 +8,12 @@ export default function SubmitOrderModal() {
       <p>
         More order related features will be coming in the future! In the
         meantime, you can check out my{" "}
-        <Link
-          to="https://somorovd.github.io/"
-          target="_blank"
+        <a
+          href="https://somorovd.github.io/"
+          target="blank"
         >
           porfolio here
-        </Link>
+        </a>
         .
       </p>
     </div>
