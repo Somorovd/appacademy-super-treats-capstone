@@ -4,6 +4,7 @@ import { useSelector } from "react-redux";
 import { useModal } from "../../../context/Modal";
 import { logout } from "../../../store/session";
 
+import PersonalLinksSection from "../PersonalLinksSection";
 import "./LoggedInUserMenu.css";
 
 export default function LoggedInUserMenu() {
@@ -85,6 +86,7 @@ export default function LoggedInUserMenu() {
           Add your business
         </Link>
       </section>
+      <PersonalLinksSection />
       <footer>* Coming Soon</footer>
     </>
   );
