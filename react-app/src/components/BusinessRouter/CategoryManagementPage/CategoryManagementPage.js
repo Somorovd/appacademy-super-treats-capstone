@@ -16,7 +16,6 @@ export default function CategoryManagementPage() {
   const dispatch = useDispatch();
   const categoryTable = useRef();
 
-  const business = useSelector((state) => state.userBusinesses.singleBusiness);
   const categoriesObj = useSelector(
     (state) => state.userBusinesses.singleBusiness.categories
   );
@@ -47,6 +46,7 @@ export default function CategoryManagementPage() {
 
   const handleResetOrder = () => {
     setCategories([...originalCategories]);
+    setOrderChanged(false);
   };
 
   return (

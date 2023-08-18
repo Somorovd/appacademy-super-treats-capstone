@@ -43,44 +43,41 @@ export default function LoggedInUserMenu() {
             Manage Profile *
           </Link>
         </div>
-        <div>
-          <Link
-            to=""
-            className="user-menu__link"
-            onClick={comingSoon}
-          >
-            <i className="fa-solid fa-truck-fast"></i>
-            Orders *
-          </Link>
-          <Link
-            to=""
-            className="user-menu__link"
-            onClick={comingSoon}
-          >
-            <i className="fa-solid fa-heart"></i>
-            Favorites *
-          </Link>
-        </div>
-        <div>
-          <button
-            className="user-menu__signout"
-            onClick={handleSignout}
-          >
-            Sign out
-          </button>
-        </div>
+        <Link
+          to=""
+          className="user-menu__link"
+          onClick={comingSoon}
+        >
+          <i className="fa-solid fa-truck-fast"></i>
+          Orders *
+        </Link>
+        <Link
+          to=""
+          className="user-menu__link"
+          onClick={comingSoon}
+        >
+          <i className="fa-solid fa-heart"></i>
+          Favorites *
+        </Link>
+
+        <button
+          className="user-menu__signout"
+          onClick={handleSignout}
+        >
+          Sign out
+        </button>
       </section>
       <section className="menu-section">
         <Link
           to="/business"
-          className="user-menu__link"
+          className="user-menu__link active"
           onClick={closeModal}
         >
           Manage your businesses
         </Link>
         <Link
           to="/business/create"
-          className="user-menu__link"
+          className="user-menu__link active"
           onClick={closeModal}
         >
           Add your business

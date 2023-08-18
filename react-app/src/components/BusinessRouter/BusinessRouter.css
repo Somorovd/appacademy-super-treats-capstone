@@ -2,7 +2,7 @@
   position: relative;
   display: grid;
   grid-template-areas: "menu body";
-  grid-template-columns: 300px 1200px;
+  grid-template-columns: 300px 1fr;
   height: fit-content;
   max-width: 1500px;
   gap: 40px;
@@ -10,6 +10,8 @@
 
 .business-page>div:nth-child(2):not(.no-pd) {
   padding-top: 20px;
+  padding-right: 40px;
+  width: 100%;
 }
 
 .business-header {

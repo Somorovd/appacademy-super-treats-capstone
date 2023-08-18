@@ -2,8 +2,8 @@
   padding: 20px 0px;
 }
 
-.item-table thead,
-.item-table tbody {
+.item-table thead tr,
+.item-table tbody tr {
   grid-template-columns: 100px 150px 1fr 100px 150px;
 }
 

@@ -7,10 +7,10 @@
 #menu-nav a:visited {
   color: black;
   font-size: 1.2rem;
-  font-weight: 400;
+  font-weight: 900;
 }
 
 #menu-nav a.active {
   color: green;
-  font-weight: 900;
+  text-decoration: 2px solid underline;
 }
