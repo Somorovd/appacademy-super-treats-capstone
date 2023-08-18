@@ -10,6 +10,8 @@
 
 .business-page>div:nth-child(2):not(.no-pd) {
   padding-top: 20px;
+  padding-right: 40px;
+  width: 100%;
 }
 
 .business-header {

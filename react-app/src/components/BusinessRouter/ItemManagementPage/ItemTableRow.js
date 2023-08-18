@@ -34,7 +34,7 @@ export default function ItemTableRow({ itemId }) {
       </td>
       <td className="flex flex-01">
         <Link
-          className="item-table__link"
+          className="item-table__link item-table__name"
           to={`/business/${businessId}/menu/items/${item.id}`}
         >
           {item.name}
