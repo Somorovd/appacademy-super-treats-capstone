@@ -2,8 +2,9 @@
   width: 500px;
   font-size: 1.3rem;
   position: sticky;
-  top: 20px;
+  top: 60px;
   align-self: flex-start;
+  margin-top: 40px;
 }
 
 .category-sidebar a,
