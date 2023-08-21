@@ -1,11 +1,35 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+
+import { store } from "../../../../src";
+import { actionChangeOrder } from "../../../store/businesses";
 import "./FilterSidebar.css";
+import { useSelector } from "react-redux";
 
 const orderOptions = [
-  "Picked for you (default)",
-  "Most popular",
-  "Rating",
-  "Delivery time",
+  {
+    text: "Picked for you (default)",
+    name: "default",
+    property: (b) => b.id,
+    desc: false,
+  },
+  {
+    text: "A-Z",
+    name: "a-z",
+    property: (b) => b.name,
+    desc: false,
+  },
+  {
+    text: "Rating",
+    name: "rating",
+    property: (b) => Number(b.rating),
+    desc: true,
+  },
+  {
+    text: "Delivery fee",
+    name: "delivery",
+    property: (b) => Number(b.deliveryFee),
+    desc: false,
+  },
 ];
 
 const priceRangeOptions = {
@@ -16,12 +40,22 @@ const priceRangeOptions = {
 };
 
 export default function FilterSidebar() {
-  const [order, setOrder] = useState(orderOptions[0]);
+  const storeOrder = useSelector((state) => state.businesses.order.active);
+  const [order, setOrder] = useState({});
   const [priceRange, setPriceRange] = useState({ ...priceRangeOptions });
+
+  const handleChangeOrder = (order) => {
+    setOrder(order);
+    store.dispatch(actionChangeOrder(order.name, order.property, order.desc));
+  };
+
+  useEffect(() => {
+    handleChangeOrder(orderOptions.find((o) => o.name === storeOrder));
+  }, []);
 
   return (
     <div className="filter-sidebar">
-      <h2> Filters * </h2>
+      <h2 className="flex flex-01 g10">Filters</h2>
       <section className="filter-sidebar__section">
         <h3>Sort</h3>
         <div className="flex-c">
@@ -31,22 +65,25 @@ export default function FilterSidebar() {
               key={i}
             >
               <input
-                id={o}
+                id={o.name}
                 className="order-radio"
                 type="radio"
                 name="order"
-                value={o}
+                value={o.name}
                 checked={order === o}
-                onChange={() => setOrder(o)}
+                onChange={() => handleChangeOrder(o)}
               />
-              <label htmlFor={o}>{o}</label>{" "}
+              <label htmlFor={o.name}>{o.text}</label>{" "}
             </div>
           ))}
         </div>
       </section>
       <section className="filter-sidebar__section">
         <h3 className="flex flex-b1">
-          Price Range
+          <span className="flex flex-01 g10">
+            Price Range
+            <span className="coming-soon-banner">Coming Soon</span>
+          </span>
           <span className="price-count bt-black flex flex-11">
             {Object.values(priceRange).filter((pr) => pr).length || ""}
           </span>
@@ -76,7 +113,6 @@ export default function FilterSidebar() {
           ))}
         </div>
       </section>
-      <footer>* Coming Soon</footer>
     </div>
   );
 }
