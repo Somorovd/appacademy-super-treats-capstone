@@ -40,6 +40,7 @@ const priceRangeOptions = {
 };
 
 export default function FilterSidebar() {
+  const allBusinesses = useSelector((state) => state.businesses.allBusinesses);
   const storeOrder = useSelector((state) => state.businesses.order.active);
   const [order, setOrder] = useState({});
   const [priceRange, setPriceRange] = useState({ ...priceRangeOptions });
@@ -51,7 +52,7 @@ export default function FilterSidebar() {
 
   useEffect(() => {
     handleChangeOrder(orderOptions.find((o) => o.name === storeOrder));
-  }, []);
+  }, [allBusinesses]);
 
   return (
     <div className="filter-sidebar">
