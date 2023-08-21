@@ -3,9 +3,9 @@ import "./FilterSidebar.css";
 
 const orderOptions = [
   "Picked for you (default)",
-  "Most popular",
+  "A-Z",
   "Rating",
-  "Delivery time",
+  "Delivery fee",
 ];
 
 const priceRangeOptions = {
@@ -21,7 +21,10 @@ export default function FilterSidebar() {
 
   return (
     <div className="filter-sidebar">
-      <h2> Filters * </h2>
+      <h2 className="flex flex-01 g10">
+        {" "}
+        Filters <span className="coming-soon-banner">Comming Soon</span>{" "}
+      </h2>
       <section className="filter-sidebar__section">
         <h3>Sort</h3>
         <div className="flex-c">
@@ -76,7 +79,6 @@ export default function FilterSidebar() {
           ))}
         </div>
       </section>
-      <footer>* Coming Soon</footer>
     </div>
   );
 }

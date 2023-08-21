@@ -159,3 +159,10 @@ button {
 .hide-scroll {
   overflow: hidden;
 }
+
+.coming-soon-banner {
+  font-size: 0.8rem;
+  padding: 4px;
+  background-color: green;
+  color: white;
+}
