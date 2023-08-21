@@ -70,13 +70,14 @@ export default function BusinessBrowsingPage() {
       <div className="business-browsing__body flex pg-pd">
         <FilterSidebar />
         <div className="business-browsing__content fw">
-          {businessOrder.map((b) => (
-            <BusinessCard
-              business={allBusinessesObject[b]}
-              isBrowsing={true}
-              key={b}
-            />
-          ))}
+          {businessOrder &&
+            businessOrder.map((b) => (
+              <BusinessCard
+                business={allBusinessesObject[b]}
+                isBrowsing={true}
+                key={b}
+              />
+            ))}
         </div>
       </div>
     </div>

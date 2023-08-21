@@ -56,7 +56,10 @@ export default function reducer(state = initialState, action) {
       newState.allBusinesses = allBusinesses;
       newState.filters.default = new Set(Object.keys(newState.allBusinesses));
       newState.filters.active = new Set(["default"]);
-      newState.order.default = Object.keys(newState.allBusinesses);
+      newState.order = {
+        default: Object.keys(newState.allBusinesses),
+        active: newState.order.active,
+      };
       return newState;
     }
     case GET_ONE_BUSINESS: {
