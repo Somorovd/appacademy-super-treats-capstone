@@ -35,7 +35,9 @@ export default function BusinessBrowsingPage() {
   const allBusinessesObject = useSelector(
     (state) => state.businesses.allBusinesses
   );
-  const allBusinesses = Object.values(allBusinessesObject);
+  const businessOrder = useSelector(
+    (state) => state.businesses.order[state.businesses.order.active]
+  );
 
   useEffect(() => {
     dispatch(thunkGetAllBusinesses());
@@ -68,11 +70,11 @@ export default function BusinessBrowsingPage() {
       <div className="business-browsing__body flex pg-pd">
         <FilterSidebar />
         <div className="business-browsing__content fw">
-          {allBusinesses.map((b) => (
+          {businessOrder.map((b) => (
             <BusinessCard
-              business={b}
+              business={allBusinessesObject[b]}
               isBrowsing={true}
-              key={b.id}
+              key={b}
             />
           ))}
         </div>

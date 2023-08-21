@@ -2,6 +2,7 @@ const GET_ALL_BUSINESSES = "businesses/GET_ALL_BUSINESSES";
 const GET_ONE_BUSINESS = "businesses/GET_ONE_BUSINESS";
 const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
 const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
+const CHANGE_ORDER = "business/CHANGE_ORDER";
 
 const actionGetAllBusinesses = (businesses) => ({
   type: GET_ALL_BUSINESSES,
@@ -11,6 +12,11 @@ const actionGetAllBusinesses = (businesses) => ({
 const actionGetOneBusiness = (business) => ({
   type: GET_ONE_BUSINESS,
   payload: business,
+});
+
+export const actionChangeOrder = (name, property, desc) => ({
+  type: CHANGE_ORDER,
+  payload: { name, property, desc },
 });
 
 export const thunkGetAllBusinesses = () => async (dispatch) => {
@@ -32,6 +38,14 @@ export const thunkGetOneBusiness = (businessId) => async (dispatch) => {
 const initialState = {
   allBusinesses: {},
   singleBusiness: {},
+  filters: {
+    default: new Set(),
+    active: new Set(),
+  },
+  order: {
+    default: [],
+    active: "default",
+  },
 };
 
 export default function reducer(state = initialState, action) {
@@ -40,6 +54,9 @@ export default function reducer(state = initialState, action) {
     case GET_ALL_BUSINESSES: {
       const allBusinesses = action.payload;
       newState.allBusinesses = allBusinesses;
+      newState.filters.default = new Set(Object.keys(newState.allBusinesses));
+      newState.filters.active = new Set(["default"]);
+      newState.order.default = Object.keys(newState.allBusinesses);
       return newState;
     }
     case GET_ONE_BUSINESS: {
@@ -53,6 +70,18 @@ export default function reducer(state = initialState, action) {
         [action.payload.id]: action.payload,
       };
       newState.allBusinesses = allBusinesses;
+      return newState;
+    }
+    case CHANGE_ORDER: {
+      const { name, property, desc } = action.payload;
+      if (!newState.order[name]) {
+        const businesses = Object.values(newState.allBusinesses);
+        businesses.sort((a, b) => {
+          return (property(a) < property(b) ? -1 : 1) * (desc ? -1 : 1);
+        });
+        newState.order[name] = businesses.map((b) => `${b.id}`);
+      }
+      newState.order.active = name;
       return newState;
     }
     default:
