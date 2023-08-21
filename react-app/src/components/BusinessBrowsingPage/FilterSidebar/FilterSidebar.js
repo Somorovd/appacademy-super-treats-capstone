@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 
 import { store } from "../../../../src";
-import { actionChangeOrder } from "../../../store/businesses";
+import {
+  actionChangeOrder,
+  actionChangeFilter,
+} from "../../../store/businesses";
 import "./FilterSidebar.css";
 import { useSelector } from "react-redux";
 
@@ -37,8 +40,11 @@ const priceRangeOptions = ["$", "$$", "$$$", "$$$$"];
 export default function FilterSidebar() {
   const allBusinesses = useSelector((state) => state.businesses.allBusinesses);
   const storeOrder = useSelector((state) => state.businesses.order.active);
+  const storeFilters = useSelector((state) => state.businesses.filters);
   const [order, setOrder] = useState({});
-  const [priceRange, setPriceRange] = useState(new Set());
+  const [priceRange, setPriceRange] = useState(
+    storeFilters.priceRange?.value || new Set()
+  );
 
   const handleChangeOrder = (order) => {
     setOrder(order);
@@ -50,6 +56,15 @@ export default function FilterSidebar() {
       const newPriceRange = new Set(priceRange);
       if (newPriceRange.has(pr)) newPriceRange.delete(pr);
       else newPriceRange.add(pr);
+
+      const validatePriceRange = (business) => {
+        if (!newPriceRange.size) return true;
+        else return newPriceRange.has(business.priceRange);
+      };
+
+      store.dispatch(
+        actionChangeFilter("priceRange", newPriceRange, validatePriceRange)
+      );
       return newPriceRange;
     });
   };
@@ -85,10 +100,7 @@ export default function FilterSidebar() {
       </section>
       <section className="filter-sidebar__section">
         <h3 className="flex flex-b1">
-          <span className="flex flex-01 g10">
-            Price Range
-            <span className="coming-soon-banner">Coming Soon</span>
-          </span>
+          Price Range
           <span className="price-count bt-black flex flex-11">
             {priceRange.size || ""}
           </span>

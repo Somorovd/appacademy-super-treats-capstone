@@ -3,6 +3,7 @@ const GET_ONE_BUSINESS = "businesses/GET_ONE_BUSINESS";
 const CREATE_BUSINESS = "businesses/CREATE_BUSINESS";
 const DELETE_BUSINESS = "businesses/DELETE_BUSINESS";
 const CHANGE_ORDER = "business/CHANGE_ORDER";
+const CHANGE_FILTER = "business/CHANGE_FILTER";
 
 const actionGetAllBusinesses = (businesses) => ({
   type: GET_ALL_BUSINESSES,
@@ -17,6 +18,11 @@ const actionGetOneBusiness = (business) => ({
 export const actionChangeOrder = (name, property, desc) => ({
   type: CHANGE_ORDER,
   payload: { name, property, desc },
+});
+
+export const actionChangeFilter = (name, value, validate) => ({
+  type: CHANGE_FILTER,
+  payload: { name, value, validate },
 });
 
 export const thunkGetAllBusinesses = () => async (dispatch) => {
@@ -38,10 +44,7 @@ export const thunkGetOneBusiness = (businessId) => async (dispatch) => {
 const initialState = {
   allBusinesses: {},
   singleBusiness: {},
-  filters: {
-    default: new Set(),
-    active: new Set(),
-  },
+  filters: {},
   order: {
     default: [],
     active: "default",
@@ -54,8 +57,6 @@ export default function reducer(state = initialState, action) {
     case GET_ALL_BUSINESSES: {
       const allBusinesses = action.payload;
       newState.allBusinesses = allBusinesses;
-      newState.filters.default = new Set(Object.keys(newState.allBusinesses));
-      newState.filters.active = new Set(["default"]);
       newState.order = {
         default: Object.keys(newState.allBusinesses),
         active: newState.order.active,
@@ -85,6 +86,11 @@ export default function reducer(state = initialState, action) {
         newState.order[name] = businesses.map((b) => `${b.id}`);
       }
       newState.order.active = name;
+      return newState;
+    }
+    case CHANGE_FILTER: {
+      const { name, value, validate } = action.payload;
+      newState.filters = { ...newState.filters, [name]: { value, validate } };
       return newState;
     }
     default:
