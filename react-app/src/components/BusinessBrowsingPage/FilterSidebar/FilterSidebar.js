@@ -32,22 +32,26 @@ const orderOptions = [
   },
 ];
 
-const priceRangeOptions = {
-  $: false,
-  $$: false,
-  $$$: false,
-  $$$$: false,
-};
+const priceRangeOptions = ["$", "$$", "$$$", "$$$$"];
 
 export default function FilterSidebar() {
   const allBusinesses = useSelector((state) => state.businesses.allBusinesses);
   const storeOrder = useSelector((state) => state.businesses.order.active);
   const [order, setOrder] = useState({});
-  const [priceRange, setPriceRange] = useState({ ...priceRangeOptions });
+  const [priceRange, setPriceRange] = useState(new Set());
 
   const handleChangeOrder = (order) => {
     setOrder(order);
     store.dispatch(actionChangeOrder(order.name, order.property, order.desc));
+  };
+
+  const handleChangePriceRange = (pr) => {
+    setPriceRange((priceRange) => {
+      const newPriceRange = new Set(priceRange);
+      if (newPriceRange.has(pr)) newPriceRange.delete(pr);
+      else newPriceRange.add(pr);
+      return newPriceRange;
+    });
   };
 
   useEffect(() => {
@@ -86,29 +90,27 @@ export default function FilterSidebar() {
             <span className="coming-soon-banner">Coming Soon</span>
           </span>
           <span className="price-count bt-black flex flex-11">
-            {Object.values(priceRange).filter((pr) => pr).length || ""}
+            {priceRange.size || ""}
           </span>
         </h3>
         <div className="price-checks flex">
-          {Object.keys(priceRangeOptions).map((p, i) => (
+          {priceRangeOptions.map((pr, i) => (
             <div
               className="flex"
               key={i}
             >
               <input
-                id={p}
+                id={pr}
                 type="checkbox"
-                value={p}
-                onChange={(e) =>
-                  setPriceRange((pr) => ({ ...pr, [p]: !pr[p] }))
-                }
-                checked={priceRange[p]}
+                value={pr}
+                onChange={() => handleChangePriceRange(pr)}
+                checked={priceRange.has(pr)}
               />
               <label
-                htmlFor={p}
+                htmlFor={pr}
                 className="price-checkbox"
               >
-                {p}
+                {pr}
               </label>
             </div>
           ))}
