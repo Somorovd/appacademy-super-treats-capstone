@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { thunkGetAllBusinesses } from "../../store/businesses";
@@ -38,10 +38,21 @@ export default function BusinessBrowsingPage() {
   const businessOrder = useSelector(
     (state) => state.businesses.order[state.businesses.order.active]
   );
+  const businessFilters = useSelector((state) => state.businesses.filters);
+  const [validateBusiness, setValidateBusiness] = useState(() => (b) => true);
 
   useEffect(() => {
     dispatch(thunkGetAllBusinesses());
   }, [dispatch]);
+
+  useEffect(() => {
+    setValidateBusiness(() => (b) => {
+      for (let filter in businessFilters) {
+        if (!businessFilters[filter].validate(b)) return false;
+      }
+      return true;
+    });
+  }, [businessFilters]);
 
   return (
     <div className="business-browsing flex-c">
@@ -71,13 +82,18 @@ export default function BusinessBrowsingPage() {
         <FilterSidebar />
         <div className="business-browsing__content fw">
           {businessOrder &&
-            businessOrder.map((b) => (
-              <BusinessCard
-                business={allBusinessesObject[b]}
-                isBrowsing={true}
-                key={b}
-              />
-            ))}
+            businessFilters &&
+            businessOrder
+              .filter((businessId) =>
+                validateBusiness(allBusinessesObject[businessId])
+              )
+              .map((businessId) => (
+                <BusinessCard
+                  business={allBusinessesObject[businessId]}
+                  isBrowsing={true}
+                  key={businessId}
+                />
+              ))}
         </div>
       </div>
     </div>
