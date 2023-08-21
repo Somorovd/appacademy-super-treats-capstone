@@ -68,6 +68,7 @@ In your browser, navigate to http://localhost:3000/
 
 ## Code I Found Interesting
 
+### Multi-stage Forms
 This was my first time implementing a multistage form and I though my solution was pretty neat. Each stage of the form was 
 turned into a separate component, such as SignupFormEmail, that handled any related logic. The main form component, SignupFormPage, kept the state
 and handled the rendering. The code below shows a simplified version of the relevant code.
@@ -134,4 +135,27 @@ export default function SignupFormEmail({ formData }) {
     </section>
   )
 }
+```
+
+### Separating Image and Non-Image Cards
+When browsing items in a restaurant's menu, item cards are displayed in a flex container up to 4 in a row for cards with images, and up to 2 in a row without. 
+If there are not enough to fill a row, there is still a separation between images and non-images. 
+![image](https://github.com/Somorovd/appacademy-super-treats-capstone/assets/18534469/ce39486f-5210-490f-8053-407266ab7a92)
+
+Each item card is an individual component that does not know about its siblings. The page that they are rendered on only passes in an item id as a prop, so there is no way to split or sort the items. 
+Instead I have a useEffect the utilizes css classes and DOM manipulation to insert a spacer element where required. 
+
+```javascript
+/* /react-app/src/components/ItemBrowsingPage/ItemBrowsingPage.js */
+  useEffect(() => {
+    const firstNonPicElement = document.querySelectorAll(
+      ".item-card--image+.item-card--no-image"
+    );
+
+    for (let ele of firstNonPicElement) {
+      const spacer = document.createElement("div");
+      spacer.classList.add("flex-spacer");
+      ele.parentNode.insertBefore(spacer, ele);
+    }
+  });
 ```
