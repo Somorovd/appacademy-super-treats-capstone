@@ -3,11 +3,9 @@ import { useHistory, Link } from "react-router-dom";
 import { useState } from "react";
 
 import PageHeader from "../PageHeader";
-import { thunkSetLocation } from "../../store/session";
+import { setLocation } from "../../store/session";
 
 import "./LandingPage.css";
-
-const bgImg = "/src/resources/images/landing-page-background.png";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -19,9 +17,9 @@ export default function LandingPage() {
 
   const user = useSelector((state) => state.session.user);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    await dispatch(thunkSetLocation(address, delivery));
+    dispatch(setLocation(address, delivery));
     sessionStorage.setItem("current-address", address);
     history.push("/feed");
   };
