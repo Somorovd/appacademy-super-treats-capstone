@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 
 import {
@@ -13,15 +13,19 @@ import CategorySidebar from "./CategorySidebar";
 import "./ItemBrowsingPage.css";
 
 export default function ItemBrowsingPage() {
-  const dispatch = useDispatch();
   const { businessId } = useParams();
+  const dispatch = useDispatch();
+  const history = useHistory();
   const business = useSelector((state) => state.businesses.singleBusiness);
   const haveAllBusinesses = useSelector(
     (state) => state.businesses.allBusinesses[businessId]
   );
 
   useEffect(() => {
-    dispatch(thunkGetOneBusiness(businessId));
+    (async () => {
+      const res = await dispatch(thunkGetOneBusiness(businessId));
+      if (res.errors) history.push("/feed");
+    })();
     if (!haveAllBusinesses) dispatch(thunkGetAllBusinesses(businessId));
   }, [dispatch, businessId]);
 
