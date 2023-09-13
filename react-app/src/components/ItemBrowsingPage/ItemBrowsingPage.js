@@ -1,16 +1,17 @@
-import { useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import "./ItemBrowsingPage.css";
 
 import {
+  fetchAllBusinesses,
   thunkGetOneBusiness,
-  thunkGetAllBusinesses,
 } from "../../store/businesses";
-import PageHeader from "../PageHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+
 import CartMenu from "../CartMenu";
-import ItemCard from "./ItemCard";
 import CategorySidebar from "./CategorySidebar";
-import "./ItemBrowsingPage.css";
+import ItemCard from "./ItemCard";
+import PageHeader from "../PageHeader";
+import { useEffect } from "react";
 
 export default function ItemBrowsingPage() {
   const { businessId } = useParams();
@@ -26,7 +27,7 @@ export default function ItemBrowsingPage() {
       const res = await dispatch(thunkGetOneBusiness(businessId));
       if (res.errors) history.push("/feed");
     })();
-    if (!haveAllBusinesses) dispatch(thunkGetAllBusinesses(businessId));
+    if (!haveAllBusinesses) dispatch(fetchAllBusinesses());
   }, [dispatch, businessId]);
 
   useEffect(() => {

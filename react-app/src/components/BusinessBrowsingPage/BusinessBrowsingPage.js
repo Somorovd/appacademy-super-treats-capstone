@@ -1,13 +1,20 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import "./BusinessBrowsingPage.css";
 
-import { thunkGetAllBusinesses } from "../../store/businesses";
-import PageHeader from "../PageHeader";
+import {
+  fetchAllBusinesses,
+  selectActiveOrder,
+  selectAllBusinesses,
+  selectBusinessFilters,
+  selectBusinessStatus,
+} from "../../store/businesses";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+
 import BusinessCard from "./BusinessCard";
+import CartMenu from "../CartMenu";
 import FilterIcon from "./FilterIcon/FilterIcon";
 import FilterSidebar from "./FilterSidebar";
-import CartMenu from "../CartMenu";
-import "./BusinessBrowsingPage.css";
+import PageHeader from "../PageHeader";
 
 const filterCategories = {
   Grocery: "filter-icons/grocery.png",
@@ -32,25 +39,24 @@ const filterCategories = {
 
 export default function BusinessBrowsingPage() {
   const dispatch = useDispatch();
-  const allBusinessesObject = useSelector(
-    (state) => state.businesses.allBusinesses
-  );
-  const businessOrder = useSelector(
-    (state) => state.businesses.order[state.businesses.order.active]
-  );
-  const businessFilters = useSelector((state) => state.businesses.filters);
+
+  const businessStatus = useSelector(selectBusinessStatus);
+  const allBusinesses = useSelector(selectAllBusinesses);
+  const businessOrder = useSelector(selectActiveOrder);
+  const businessFilters = useSelector(selectBusinessFilters);
+
   const [validateBusiness, setValidateBusiness] = useState(() => (b) => true);
 
   useEffect(() => {
-    dispatch(thunkGetAllBusinesses());
-  }, [dispatch]);
+    if (businessStatus === "idle") {
+      dispatch(fetchAllBusinesses());
+    }
+  }, [dispatch, businessStatus]);
 
   useEffect(() => {
-    setValidateBusiness(() => (b) => {
-      for (let filter in businessFilters) {
-        if (!businessFilters[filter].validate(b)) return false;
-      }
-      return true;
+    setValidateBusiness(() => {
+      return (b) =>
+        Object.values(businessFilters).every((filter) => filter.validate(b));
     });
   }, [businessFilters]);
 
@@ -69,27 +75,20 @@ export default function BusinessBrowsingPage() {
               />
             ))}
           </div>
-          {/* <div className="deals-bar flex">
-            <div className="deal-card">What a great deal!</div>
-            <div className="deal-card">This one is better!</div>
-            <div className="deal-card">
-              You'll kick yourself if you miss this!
-            </div>
-          </div> */}
         </div>
       </header>
       <div className="business-browsing__body flex pg-pd">
-        <FilterSidebar />
+        {/* <FilterSidebar /> */}
         <div className="business-browsing__content fw">
           {businessOrder &&
             businessFilters &&
             businessOrder
               .filter((businessId) =>
-                validateBusiness(allBusinessesObject[businessId])
+                validateBusiness(allBusinesses[businessId])
               )
               .map((businessId) => (
                 <BusinessCard
-                  business={allBusinessesObject[businessId]}
+                  business={allBusinesses[businessId]}
                   isBrowsing={true}
                   key={businessId}
                 />
