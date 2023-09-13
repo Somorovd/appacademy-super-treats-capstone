@@ -62,13 +62,17 @@ export const thunkGetAllBusinesses = () => async (dispatch) => {
 };
 
 export const thunkGetOneBusiness = (businessId) => async (dispatch) => {
-  const res = await fetch(`/api/user_businesses/${businessId}`);
-  const resBody = await res.json();
+  try {
+    const res = await fetch(`/api/user_businesses/${businessId}`);
+    const resBody = await res.json();
 
-  if (res.ok) {
-    dispatch(actionGetOneBusiness(resBody.business));
+    if (res.ok) {
+      dispatch(actionGetOneBusiness(resBody.business));
+    }
+    return resBody;
+  } catch (e) {
+    return { errors: e };
   }
-  return resBody;
 };
 
 export const thunkCreateBusiness = (business) => async (dispatch) => {
