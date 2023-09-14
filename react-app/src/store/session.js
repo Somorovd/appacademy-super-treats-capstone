@@ -5,7 +5,7 @@ import { resetAll } from "./utils";
 export const authenticate = () => async (dispatch) => {
   const res = await fetch("/api/auth/");
   const resBody = await res.json();
-  if (res.ok && !resBody) {
+  if (res.ok && !resBody.errors) {
     dispatch(setUser(resBody));
   }
 };
