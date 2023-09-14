@@ -37,8 +37,8 @@ export const businessSlice = createSlice({
   initialState,
   reducers: {
     getOneBusiness: (state, action) => {
-      state.singleBusiness = action.payload;
-      state.singleBusiness.items = Object.keys(action.payload);
+      state.singleBusiness = { ...action.payload };
+      state.singleBusiness.items = Object.keys(action.payload.items);
     },
     changeOrder: (state, action) => {
       const { name, property, desc } = action.payload;
@@ -52,7 +52,6 @@ export const businessSlice = createSlice({
       state.order.active = name;
     },
     changeFilter: (state, action) => {
-      console.log(action);
       const { name, value, validate } = action.payload;
       state.filters[name] = { value, validate };
     },
