@@ -1,10 +1,12 @@
+import businesses from "./businesses";
+import carts from "./carts";
+import { configureStore } from "@reduxjs/toolkit";
+import items from "./items";
+import session from "./session";
+import userBusinesses from "./userBusinesses";
+
 // import { createStore, combineReducers, applyMiddleware, compose } from "redux";
 // import thunk from "redux-thunk";
-import session from "./session";
-import businesses from "./businesses";
-// import userBusinesses from "./userBusinesses";
-// import items from "./items";
-import carts from "./carts";
 
 // const CLEAR_ALL = "app/CLEAR_ALL";
 
@@ -44,12 +46,12 @@ import carts from "./carts";
 
 // export default configureStore;
 
-import { configureStore } from "@reduxjs/toolkit";
-
 export default configureStore({
   reducer: {
     session,
     businesses,
+    userBusinesses,
+    items,
     carts,
   },
 });
