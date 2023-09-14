@@ -1,5 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 
+import { resetAll } from "./utils";
+
 export const fetchAllBusinesses = createAsyncThunk(
   "businesses/fetchAllBusinesses",
   async () => {
@@ -70,7 +72,8 @@ export const businessSlice = createSlice({
       .addCase(fetchAllBusinesses.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error;
-      });
+      })
+      .addCase(resetAll, () => initialState);
   },
 });
 

@@ -2,6 +2,7 @@ import { deleteReq, postReq, putReq } from "./utils";
 
 import { createSlice } from "@reduxjs/toolkit";
 import { getCartItems } from "./items";
+import { resetAll } from "./utils";
 
 export const thunkGetAllCarts = () => async (dispatch) => {
   const res = await fetch("/api/carts/current");
@@ -16,7 +17,7 @@ export const thunkGetAllCarts = () => async (dispatch) => {
 export const thunkAddToCart = (item) => async (dispatch) => {
   const res = await postReq("/api/carts/add_item", item);
   const resBody = await res.json();
-  if (res.ok) dispatch(addToCart(resBody.cart, resBody.cartItemId, item.id));
+  if (res.ok) dispatch(addToCart({ ...resBody, itemId: item.id }));
   return resBody;
 };
 
@@ -72,6 +73,9 @@ export const cartSlice = createSlice({
       state[cart.businessId] = { ...state[cart.businessId], ...cart };
       delete state[cart.businessId].cartItems[cartItem.id];
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(resetAll, () => initialState);
   },
 });
 

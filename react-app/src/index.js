@@ -1,17 +1,14 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import { BrowserRouter } from "react-router-dom";
-
-import { ModalProvider, Modal } from "./context/Modal";
-import store from "./store";
-import App from "./App";
-
 import "./index.css";
 
-// Wrap the application with the Modal provider and render the Modal component
-// after the App component so that all the Modal content will be layered as
-// HTML elements on top of the all the other HTML elements:
+import { Modal, ModalProvider } from "./context/Modal";
+
+import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
+import React from "react";
+import ReactDOM from "react-dom";
+import store from "./store";
+
 function Root() {
   return (
     <ModalProvider>

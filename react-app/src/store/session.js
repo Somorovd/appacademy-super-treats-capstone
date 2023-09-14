@@ -1,12 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { postReq } from "./utils";
-// import { clearAll } from ".";
-
-const REMOVE_USER = "session/REMOVE_USER";
-
-const removeUser = () => ({
-  type: REMOVE_USER,
-});
+import { resetAll } from "./utils";
 
 export const authenticate = () => async (dispatch) => {
   const res = await fetch("/api/auth/");
@@ -25,7 +19,7 @@ export const login = (credential, password) => async (dispatch) => {
 
 export const logout = () => async (dispatch) => {
   const res = await fetch("/api/auth/logout");
-  // if (response.ok) dispatch(clearAll());
+  if (res.ok) dispatch(resetAll());
 };
 
 export const signUp = (user) => async (dispatch) => {
@@ -59,6 +53,9 @@ export const sessionSlice = createSlice({
     setLocation: (state, action) => {
       state.address = action.payload;
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(resetAll, () => initialState);
   },
 });
 

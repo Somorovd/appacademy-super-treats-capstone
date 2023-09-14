@@ -1,6 +1,7 @@
 import { deleteReq, postReq, putReq } from "./utils";
 
 import { createSlice } from "@reduxjs/toolkit";
+import { resetAll } from "./utils";
 
 const CREATE_CATEGORY = "userBusinesses/CREATE_CATEGORY";
 const EDIT_CATEGORY = "userBusinesses/EDIT_CATEGORY";
@@ -127,6 +128,9 @@ export const userBusinessSlice = createSlice({
         state.singleBusiness = {};
       }
     },
+  },
+  extraReducers(builder) {
+    builder.addCase(resetAll, () => initialState);
   },
 });
 

@@ -1,3 +1,7 @@
+import { createAction } from "@reduxjs/toolkit";
+
+export const resetAll = createAction("resetAll");
+
 export const postReq = async (url, body) => {
   if (body instanceof FormData) {
     return await fetch(url, {
@@ -18,12 +22,12 @@ export const postReq = async (url, body) => {
 export const putReq = async (url, body) => {
   if (body instanceof FormData) {
     return await fetch(url, {
-      method: "post",
+      method: "put",
       body: body,
     });
   } else {
     return await fetch(url, {
-      method: "post",
+      method: "put",
       headers: {
         "content-type": "application/json",
       },

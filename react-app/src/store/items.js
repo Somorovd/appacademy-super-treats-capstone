@@ -4,6 +4,7 @@ import { addToCart } from "./carts";
 import { createSlice } from "@reduxjs/toolkit";
 import { getOneBusiness } from "./businesses";
 import { getOneBusiness as getOneUserBusiness } from "./userBusinesses";
+import { resetAll } from "./utils";
 
 export const thunkGetOneItem = (itemId) => async (dispatch) => {
   const res = await fetch(`/api/items/${itemId}`);
@@ -75,9 +76,10 @@ export const itemsSlice = createSlice({
         state.allItems = items;
       })
       .addCase(addToCart, (state, action) => {
-        const { itemId, createItemId } = action.payload;
-        state.allItems[itemId].createItemId = createItemId;
-      });
+        const { itemId, cartItemId } = action.payload;
+        state.allItems[itemId].cartItemId = cartItemId;
+      })
+      .addCase(resetAll, () => initialState);
   },
 });
 
