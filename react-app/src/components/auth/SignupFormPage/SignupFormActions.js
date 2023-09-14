@@ -24,7 +24,7 @@ export default function SignupFormActions({ submitAction, form }) {
         className="signup-actions__button"
         onClick={handleBack}
       >
-        <i class="fa-solid fa-arrow-left"></i>
+        <i className="fa-solid fa-arrow-left"></i>
       </button>
     </div>
   );

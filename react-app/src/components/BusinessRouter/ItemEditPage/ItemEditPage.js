@@ -173,7 +173,7 @@ export default function ItemEditPage() {
               className="item-actions__save bt-black bt-pd"
               disabled={isSaving}
             >
-              {isSaving ? <i class="fa-regular fa-circle"></i> : "Save"}
+              {isSaving ? <i className="fa-regular fa-circle"></i> : "Save"}
             </button>
           </div>
         </header>
