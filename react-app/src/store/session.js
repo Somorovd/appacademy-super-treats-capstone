@@ -36,13 +36,13 @@ export const signUp = (user) => async (dispatch) => {
 };
 
 export const validateEmail = (email) => async (_dispatch) => {
-  const res = await fetch("/api/auth/validate_email", { email });
+  const res = await postReq("/api/auth/validate_email", { email });
   const resBody = await res.json();
   return resBody;
 };
 
 export const validatePhone = (phone) => async (_dispatch) => {
-  const res = await fetch("/api/auth/validate_phone", { phone });
+  const res = await postReq("/api/auth/validate_phone", { phone });
   const resBody = await res.json();
   return resBody;
 };
