@@ -1,18 +1,18 @@
-import { useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import "./UserBusinessesHome.css";
 
-import { thunkGetAllBusinesses } from "../../../store/userBusinesses";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import BusinessCard from "../../BusinessBrowsingPage/BusinessCard";
 import BusinessMenu from "../BusinessMenu";
-import "./UserBusinessesHome.css";
+import { selectAllBusinesses } from "../../../store/businesses";
+import { thunkGetAllBusinesses } from "../../../store/userBusinesses";
+import { useEffect } from "react";
 
 export default function UserBusinessesHome() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const allBusinessesObj = useSelector(
-    (state) => state.userBusinesses.allBusinesses
-  );
+  const allBusinessesObj = useSelector(selectAllBusinesses);
   const allBusinesses = Object.values(allBusinessesObj);
 
   useEffect(() => {

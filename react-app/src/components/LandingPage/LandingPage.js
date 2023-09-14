@@ -1,11 +1,11 @@
+import "./LandingPage.css";
+
+import { Link, useHistory } from "react-router-dom";
+import { selectUser, setLocation } from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
-import { useState } from "react";
 
 import PageHeader from "../PageHeader";
-import { setLocation } from "../../store/session";
-
-import "./LandingPage.css";
+import { useState } from "react";
 
 export default function LandingPage() {
   const dispatch = useDispatch();
@@ -15,7 +15,7 @@ export default function LandingPage() {
   );
   const [delivery, setDelivery] = useState("delivery");
 
-  const user = useSelector((state) => state.session.user);
+  const user = useSelector(selectUser);
 
   const handleSubmit = (e) => {
     e.preventDefault();

@@ -1,25 +1,27 @@
 import {
+  Redirect,
   Route,
   Switch,
-  useParams,
   useHistory,
-  Redirect,
+  useParams,
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect } from "react";
-import BusinessMenu from "./BusinessMenu";
+
 import BusinessInfoPage from "./BusinessInfoPage";
+import BusinessMenu from "./BusinessMenu";
+import CategoryManagementPage from "./CategoryManagementPage";
 import ItemEditPage from "./ItemEditPage";
 import ItemManagementPage from "./ItemManagementPage";
-import CategoryManagementPage from "./CategoryManagementPage";
+import { selectSingleBusiness } from "../../store/businesses";
 import { thunkGetOneBusiness } from "../../store/userBusinesses";
+import { useEffect } from "react";
 
 export default function UserBusinessManagementPage() {
   const history = useHistory();
   const dispatch = useDispatch();
   const { businessId } = useParams();
 
-  const business = useSelector((state) => state.userBusinesses.singleBusiness);
+  const business = useSelector(selectSingleBusiness);
 
   useEffect(() => {
     (async () => {

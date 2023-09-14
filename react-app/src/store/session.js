@@ -62,3 +62,5 @@ export const sessionSlice = createSlice({
 export const { setUser, setLocation } = sessionSlice.actions;
 
 export default sessionSlice.reducer;
+
+export const selectUser = (state) => state.session.user;

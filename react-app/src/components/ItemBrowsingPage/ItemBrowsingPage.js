@@ -2,6 +2,8 @@ import "./ItemBrowsingPage.css";
 
 import {
   fetchAllBusinesses,
+  selectBusinessById,
+  selectSingleBusiness,
   thunkGetOneBusiness,
 } from "../../store/businesses";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,10 +19,8 @@ export default function ItemBrowsingPage() {
   const { businessId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-  const business = useSelector((state) => state.businesses.singleBusiness);
-  const haveAllBusinesses = useSelector(
-    (state) => state.businesses.allBusinesses[businessId]
-  );
+  const business = useSelector(selectSingleBusiness);
+  const haveAllBusinesses = useSelector(selectBusinessById(businessId));
 
   useEffect(() => {
     (async () => {

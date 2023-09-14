@@ -1,12 +1,13 @@
-import { useParams, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useModal } from "../../../context/Modal";
+import "./BusinessInfoPage.css";
 
-import { thunkDeleteBusiness } from "../../../store/userBusinesses";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+
 import { ConfirmDeleteModal } from "../../utils/ConfirmModal";
 import CreateBusinessForm from "../CreateBusinessPage/CreateBusinessForm";
-
-import "./BusinessInfoPage.css";
+import { selectSingleBusiness } from "../../../store/businesses";
+import { thunkDeleteBusiness } from "../../../store/userBusinesses";
+import { useModal } from "../../../context/Modal";
 
 export default function BusinessInfoPage() {
   const dispatch = useDispatch();
@@ -14,7 +15,7 @@ export default function BusinessInfoPage() {
   const { businessId } = useParams();
   const { closeModal, setModalContent, setModalClass } = useModal();
 
-  const business = useSelector((state) => state.userBusinesses.singleBusiness);
+  const business = useSelector(selectSingleBusiness);
 
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteBusiness(business.id));

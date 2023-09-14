@@ -99,4 +99,4 @@ export const selectAllCarts = (state) => state.carts.carts;
 export const selectCartForBusiness = (businessId) => (state) =>
   state.carts.carts[businessId];
 export const selectCartItemForBusinessById = (businessId, itemId) => (state) =>
-  state.carts.carts[businessId].cartItems[itemId];
+  state.carts.carts[businessId]?.cartItems[itemId];

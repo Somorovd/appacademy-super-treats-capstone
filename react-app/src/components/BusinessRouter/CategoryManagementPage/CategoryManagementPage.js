@@ -1,14 +1,18 @@
-import { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useModal } from "../../../context/Modal";
-
-import MenuPageNavBar from "../MenuPageNavBar";
-import CategoryTableRow from "./CategoryTableRow";
-import CreateCategoryModal from "./CreateCategoryModal";
-import { thunkReorderCategories } from "../../../store/userBusinesses";
 import "./CategoryManagementPage.css";
 import "../TableStyling.css";
+
+import {
+  selectCategories,
+  thunkReorderCategories,
+} from "../../../store/userBusinesses";
+import { useDispatch, useSelector } from "react-redux";
+import { useRef, useState } from "react";
+
+import CategoryTableRow from "./CategoryTableRow";
+import CreateCategoryModal from "./CreateCategoryModal";
+import MenuPageNavBar from "../MenuPageNavBar";
+import { useModal } from "../../../context/Modal";
+import { useParams } from "react-router-dom";
 
 export default function CategoryManagementPage() {
   const { businessId } = useParams();
@@ -16,9 +20,7 @@ export default function CategoryManagementPage() {
   const dispatch = useDispatch();
   const categoryTable = useRef();
 
-  const categoriesObj = useSelector(
-    (state) => state.userBusinesses.singleBusiness.categories
-  );
+  const categoriesObj = useSelector(selectCategories);
   const originalCategories = Object.values(categoriesObj).sort(
     (a, b) => a.order - b.order
   );

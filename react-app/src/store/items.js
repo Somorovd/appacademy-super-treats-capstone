@@ -87,3 +87,7 @@ export const { getOneItem, createItem, updateItem, deleteItem, getCartItems } =
   itemsSlice.actions;
 
 export default itemsSlice.reducer;
+
+export const selectSingleItem = (state) => state.items.singleItem;
+export const selectAllItems = (state) => state.items.allItems;
+export const selectItemById = (id) => (state) => state.items[id];

@@ -81,6 +81,7 @@ export const { getAllBusinesses, getOneBusiness, changeOrder, changeFilter } =
   businessSlice.actions;
 
 export const selectAllBusinesses = (state) => state.businesses.allBusinesses;
+export const selectSingleBusiness = (state) => state.businesses.singleBusiness;
 export const selectBusinessStatus = (state) => state.businesses.status;
 export const selectBusinessFilters = (state) => state.businesses.filters;
 export const selectActiveOrder = (state) =>

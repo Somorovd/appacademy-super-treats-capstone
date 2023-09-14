@@ -94,7 +94,7 @@ export const thunkReorderCategories = (order) => async (dispatch) => {
 export const thunkDeleteCategory = (categoryId) => async (dispatch) => {
   const res = await deleteReq(`/api/categories/${categoryId}/delete`);
   const resBody = await res.json();
-  if (res.ok) dispatch(actionDeleteCategory(categoryId));
+  if (res.ok) dispatch(actionDeleteCategory({ id: categoryId }));
   return resBody;
 };
 
@@ -128,6 +128,22 @@ export const userBusinessSlice = createSlice({
         state.singleBusiness = {};
       }
     },
+    createCategory: (state, action) => {
+      const category = action.payload;
+      state.singleBusiness.categories[category.id] = category;
+    },
+    editCategory: (state, action) => {
+      const category = action.payload;
+      state.singleBusiness.categories[category.id] = category;
+    },
+    deleteCategory: (state, action) => {
+      delete state.singleBusiness.categories[action.payload.id];
+    },
+    reorderCategories: (state, action) => {
+      Object.entries.forEach(([id, order]) => {
+        state.singleBusiness.categories[id].order = order;
+      });
+    },
   },
   extraReducers(builder) {
     builder.addCase(resetAll, () => initialState);
@@ -144,42 +160,7 @@ export const {
 
 export default userBusinessSlice.reducer;
 
-// export default function reducer(state = initialState, action) {
-//   const newState = { ...state };
-//   switch (action.type) {
-//     case CREATE_CATEGORY: {
-//       const categories = {
-//         ...newState.singleBusiness.categories,
-//         [action.payload.id]: action.payload,
-//       };
-//       newState.singleBusiness = { ...newState.singleBusiness, categories };
-//       return newState;
-//     }
-//     case EDIT_CATEGORY: {
-//       const categories = {
-//         ...newState.singleBusiness.categories,
-//         [action.payload.id]: action.payload,
-//       };
-//       newState.singleBusiness = { ...newState.singleBusiness, categories };
-//       return newState;
-//     }
-//     case REORDER_CATEGORIES: {
-//       const categories = {
-//         ...newState.singleBusiness.categories,
-//       };
-//       for (let [id, order] of Object.entries(action.payload)) {
-//         categories[id] = { ...categories[id], order };
-//       }
-//       newState.singleBusiness = { ...newState.singleBusiness, categories };
-//       return newState;
-//     }
-//     case DELETE_CATEGORY: {
-//       const categories = { ...newState.singleBusiness.categories };
-//       delete categories[action.payload];
-//       newState.singleBusiness = { ...newState.singleBusiness, categories };
-//       return newState;
-//     }
-//     default:
-//       return state;
-//   }
-// }
+export const selectCategories = (state) =>
+  state.userBusinesses.singleBusiness.categories;
+export const selectCategoryById = (id) => (state) =>
+  state.userBusinesses.singleBusiness.categories[id];

@@ -7,6 +7,7 @@ import {
 } from "../../../store/carts";
 import { useDispatch, useSelector } from "react-redux";
 
+import { selectItemById } from "../../../store/items";
 import { useEffect } from "react";
 
 export default function CartItemCard({ businessId, cartItemId }) {
@@ -15,7 +16,7 @@ export default function CartItemCard({ businessId, cartItemId }) {
   const cartItem = useSelector(
     selectCartItemForBusinessById(businessId, cartItemId)
   );
-  const item = useSelector((state) => state.items.allItems[cartItem?.itemId]);
+  const item = useSelector(selectItemById(cartItem?.itemId));
 
   const handleDelete = () => {
     const cartItemObj = {

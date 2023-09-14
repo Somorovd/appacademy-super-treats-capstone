@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 
 import AllCartsMenu from "./AllCartsMenu";
 import SingleCartMenu from "./SingleCartMenu";
+import { selectUser } from "../../store/session";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
@@ -12,7 +13,7 @@ export default function CartMenu() {
   const { businessId } = useParams();
   const dispatch = useDispatch();
 
-  const user = useSelector((state) => state.session.user);
+  const user = useSelector(selectUser);
   const cartsObj = useSelector(selectAllCarts);
   const carts = Object.values(cartsObj);
   const currentCart = cartsObj[businessId];

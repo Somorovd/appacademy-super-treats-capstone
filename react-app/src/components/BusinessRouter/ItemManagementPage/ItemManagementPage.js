@@ -1,15 +1,17 @@
-import { useSelector } from "react-redux";
-import { useParams, Link } from "react-router-dom";
-
-import MenuPageNavBar from "../MenuPageNavBar";
-import ItemTableRow from "./ItemTableRow";
 import "./ItemManagementPage.css";
 import "../TableStyling.css";
+
+import { Link, useParams } from "react-router-dom";
+
+import ItemTableRow from "./ItemTableRow";
+import MenuPageNavBar from "../MenuPageNavBar";
+import { selectAllItems } from "../../../store/items";
+import { useSelector } from "react-redux";
 
 export default function ItemManagementPage() {
   const { businessId } = useParams();
 
-  const itemsObj = useSelector((state) => state.items.allItems);
+  const itemsObj = useSelector(selectAllItems);
   const itemIds = Object.keys(itemsObj);
 
   return (
