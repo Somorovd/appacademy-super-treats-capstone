@@ -85,5 +85,7 @@ export const selectBusinessStatus = (state) => state.businesses.status;
 export const selectBusinessFilters = (state) => state.businesses.filters;
 export const selectActiveOrder = (state) =>
   state.businesses.order[state.businesses.order.active];
+export const selectBusinessById = (id) => (state) =>
+  state.businesses.allBusinesses[id];
 
 export default businessSlice.reducer;

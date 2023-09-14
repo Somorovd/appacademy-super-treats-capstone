@@ -1,14 +1,19 @@
+import "./CartItemCard.css";
+
+import {
+  selectCartItemForBusinessById,
+  thunkDeleteCartItem,
+  thunkEditCartItem,
+} from "../../../store/carts";
 import { useDispatch, useSelector } from "react-redux";
 
-import { thunkDeleteCartItem, thunkEditCartItem } from "../../../store/carts";
-import "./CartItemCard.css";
 import { useEffect } from "react";
 
 export default function CartItemCard({ businessId, cartItemId }) {
   const dispatch = useDispatch();
 
   const cartItem = useSelector(
-    (state) => state.carts[businessId].cartItems[cartItemId]
+    selectCartItemForBusinessById(businessId, cartItemId)
   );
   const item = useSelector((state) => state.items.allItems[cartItem?.itemId]);
 

@@ -1,10 +1,11 @@
-import { useSelector } from "react-redux";
-
-import CartCard from "../CartCard";
 import "./AllCartsDropdown.css";
 
+import CartCard from "../CartCard";
+import { selectAllCarts } from "../../../store/carts";
+import { useSelector } from "react-redux";
+
 export default function AllCartsDropdown({ top, right }) {
-  const cartsObj = useSelector((state) => state.carts);
+  const cartsObj = useSelector(selectAllCarts);
   const carts = Object.values(cartsObj);
 
   return (

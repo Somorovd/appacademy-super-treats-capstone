@@ -24,7 +24,7 @@ export const thunkAddToCart = (item) => async (dispatch) => {
 export const thunkDeleteCart = (cart) => async (dispatch) => {
   const res = await deleteReq(`/api/carts/${cart.id}/delete`);
   const resBody = await res.json();
-  if (res.ok) dispatch(deleteCart(cart.businessId));
+  if (res.ok) dispatch(deleteCart({ businessId: cart.businessId }));
   return resBody;
 };
 
@@ -47,31 +47,37 @@ export const thunkDeleteCartItem = (cartItem) => async (dispatch) => {
   return resBody;
 };
 
-const initialState = {};
+const initialState = { carts: {} };
 
 export const cartSlice = createSlice({
   name: "carts",
   initialState,
   reducers: {
     getAllCarts: (state, action) => {
-      state = action.payload;
+      state.carts = action.payload;
     },
     addToCart: (state, action) => {
       const { cart } = action.payload;
-      state[cart.businessId] = cart;
+      state.carts[cart.businessId] = cart;
     },
     deleteCart: (state, action) => {
-      delete state[action.payload];
+      delete state.carts[action.payload.businessId];
     },
     editCartItem: (state, action) => {
       const { cartItem, cart } = action.payload;
-      state[cart.businessId] = { ...state[cart.businessId], ...cart };
-      state[cart.businessId].cartItems[cartItem.id] = cartItem;
+      state.carts[cart.businessId] = {
+        ...state.carts[cart.businessId],
+        ...cart,
+      };
+      state.carts[cart.businessId].cartItems[cartItem.id] = cartItem;
     },
     deleteCartItem: (state, action) => {
       const { cartItem, cart } = action.payload;
-      state[cart.businessId] = { ...state[cart.businessId], ...cart };
-      delete state[cart.businessId].cartItems[cartItem.id];
+      state.carts[cart.businessId] = {
+        ...state.carts[cart.businessId],
+        ...cart,
+      };
+      delete state.cartSlice[cart.businessId].cartItems[cartItem.id];
     },
   },
   extraReducers(builder) {
@@ -88,3 +94,9 @@ export const {
 } = cartSlice.actions;
 
 export default cartSlice.reducer;
+
+export const selectAllCarts = (state) => state.carts.carts;
+export const selectCartForBusiness = (businessId) => (state) =>
+  state.carts.carts[businessId];
+export const selectCartItemForBusinessById = (businessId, itemId) => (state) =>
+  state.carts.carts[businessId].cartItems[itemId];

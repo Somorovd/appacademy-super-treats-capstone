@@ -1,14 +1,13 @@
-import { useSelector } from "react-redux";
-import { useModal } from "../../../context/Modal";
+import "./CartCard.css";
 
 import CartSidebar from "../CartSidebar";
-import "./CartCard.css";
+import { selectBusinessById } from "../../../store/businesses";
+import { useModal } from "../../../context/Modal";
+import { useSelector } from "react-redux";
 
 export default function CartCard({ cart }) {
   const { setModalContent, setModalClass } = useModal();
-  const business = useSelector(
-    (state) => state.businesses.allBusinesses[cart.businessId]
-  );
+  const business = useSelector(selectBusinessById(cart.businessId));
 
   const handleClick = () => {
     setModalClass("flex flex-20 fh");
