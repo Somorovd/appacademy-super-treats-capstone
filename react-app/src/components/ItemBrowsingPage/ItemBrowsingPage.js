@@ -76,6 +76,7 @@ export default function ItemBrowsingPage() {
         <div className="fw">
           {categories.map((c) => (
             <section
+              key={c.id}
               id={`category-${c.id}`}
               className="category-section"
             >

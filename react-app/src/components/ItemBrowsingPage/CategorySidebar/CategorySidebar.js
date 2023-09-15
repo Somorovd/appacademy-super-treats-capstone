@@ -11,6 +11,7 @@ export default function CategorySidebar({ categories }) {
     <div className="category-sidebar flex flex-c g10">
       {categories.map((c) => (
         <p
+          key={c.id}
           className="category-sidebar__link"
           onClick={getScrollFunction(`category-${c.id}`)}
         >

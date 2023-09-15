@@ -36,11 +36,13 @@ export default function UserBusinessesHome() {
         </header>
         <div className="user-business__grid">
           {allBusinesses.map((b) => (
-            <div onClick={() => history.push(`/business/${b.id}`)}>
+            <div
+              key={b.id}
+              onClick={() => history.push(`/business/${b.id}`)}
+            >
               <BusinessCard
                 business={b}
                 isBrowsing={false}
-                key={b.id}
               />
             </div>
           ))}
