@@ -14,15 +14,16 @@ cart_routes = Blueprint("carts", __name__)
 @login_required
 def user_carts():
     carts = Cart.query.filter(Cart.user_id == current_user.id).all()
-    pairs = [
-        (cart_item.item, cart_item) for cart in carts for cart_item in cart.cart_items
-    ]
-    for item, cart_item in pairs:
-        item.cart_item_id = cart_item.id
+    items = []
+    for cart in carts:
+        for cart_item in cart.cart_items:
+            if cart_item.item:
+                cart_item.item.cart_item_id = cart_item.id
+                items.append(cart_item.item)
 
     return {
         "carts": {cart.business_id: cart.to_dict() for cart in carts},
-        "items": {item.id: item.to_dict() for item, _ in pairs},
+        "items": {item.id: item.to_dict() for item in items},
     }
 
 
