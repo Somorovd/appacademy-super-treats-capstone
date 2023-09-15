@@ -54,7 +54,7 @@ export default function CreateBusinessForm({ business, onSubmit }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSaving(true);
-    if (!validateForm()) return;
+    if (!validateForm()) return setIsSaving(false);
 
     const formData = new FormData();
 
