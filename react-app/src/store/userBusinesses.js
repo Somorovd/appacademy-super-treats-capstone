@@ -121,8 +121,8 @@ export const userBusinessSlice = createSlice({
     },
     swapItemCategory: (state, action) => {
       const { start, end } = action.payload;
-      state.singleBusiness.categories[start?.id] = start;
-      state.singleBusiness.categories[end?.id] = end;
+      if (start) state.singleBusiness.categories[start.id] = start;
+      if (end) state.singleBusiness.categories[end?.id] = end;
     },
   },
   extraReducers(builder) {

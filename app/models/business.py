@@ -97,7 +97,7 @@ class Business(db.Model):
                     "categories": {
                         category.id: category.to_dict()
                         for category in self.categories
-                        if category.count > (0 if not is_owner else -1)
+                        if category.count > (0 if not is_owner else -1) 
                     },
                     "items": {str(i.id): i.to_dict(timestamps=True) for i in self.items}
                     if self.items

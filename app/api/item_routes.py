@@ -85,8 +85,7 @@ def edit_item(item_id):
         item.name = form.data["name"]
         item.about = form.data["about"]
         item.price = form.data["price"]
-        if category_id:
-            item.category_id = category_id
+        item.category_id = category_id
 
         image = form.data.get("image")
         if image:
@@ -105,8 +104,8 @@ def edit_item(item_id):
         res = {"item": item.to_dict(timestamps=True)}
         if not end_category == start_category:
             res["categories"] = {
-                "start": start_category.to_dict(),
-                "end": end_category.to_dict(),
+                "start": start_category.to_dict() if start_category else None,
+                "end": end_category.to_dict() if end_category else None,
             }
 
         return res
