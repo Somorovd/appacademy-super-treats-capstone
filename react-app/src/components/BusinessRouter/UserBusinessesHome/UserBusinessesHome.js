@@ -5,14 +5,16 @@ import { useDispatch, useSelector } from "react-redux";
 
 import BusinessCard from "../../BusinessBrowsingPage/BusinessCard";
 import BusinessMenu from "../BusinessMenu";
-import { selectAllBusinesses } from "../../../store/businesses";
-import { thunkGetAllBusinesses } from "../../../store/userBusinesses";
+import {
+  selectAllUserBusinesses,
+  thunkGetAllBusinesses,
+} from "../../../store/userBusinesses";
 import { useEffect } from "react";
 
 export default function UserBusinessesHome() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const allBusinessesObj = useSelector(selectAllBusinesses);
+  const allBusinessesObj = useSelector(selectAllUserBusinesses);
   const allBusinesses = Object.values(allBusinessesObj);
 
   useEffect(() => {

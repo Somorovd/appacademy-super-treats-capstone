@@ -3,7 +3,10 @@ import { deleteReq, postReq, putReq } from "./utils";
 import { addToCart } from "./carts";
 import { createSlice } from "@reduxjs/toolkit";
 import { getOneBusiness } from "./businesses";
-import { getOneBusiness as getOneUserBusiness } from "./userBusinesses";
+import {
+  getOneBusiness as getOneUserBusiness,
+  swapItemCategory,
+} from "./userBusinesses";
 import { resetAll } from "./utils";
 
 export const thunkGetOneItem = (itemId) => async (dispatch) => {
@@ -24,7 +27,8 @@ export const thunkUpdateItem = (item) => async (dispatch) => {
   const url = `/api/items/${item.get("id")}/edit`;
   const res = await putReq(url, item);
   const resBody = await res.json();
-  if (res.ok) dispatch(updateItem(resBody.item));
+  if (res.ok) dispatch(editItem(resBody.item));
+  if (resBody.categories) dispatch(swapItemCategory(resBody.categories));
   return resBody;
 };
 
@@ -51,7 +55,7 @@ export const itemsSlice = createSlice({
       state.allItems[action.payload.id] = action.payload;
       state.singleItem = action.payload;
     },
-    updateItem: (state, action) => {
+    editItem: (state, action) => {
       state.allItems[action.payload.id] = action.payload;
       state.singleItem = action.payload;
     },
@@ -83,11 +87,11 @@ export const itemsSlice = createSlice({
   },
 });
 
-export const { getOneItem, createItem, updateItem, deleteItem, getCartItems } =
+export const { getOneItem, createItem, editItem, deleteItem, getCartItems } =
   itemsSlice.actions;
 
 export default itemsSlice.reducer;
 
 export const selectSingleItem = (state) => state.items.singleItem;
 export const selectAllItems = (state) => state.items.allItems;
-export const selectItemById = (id) => (state) => state.items[id];
+export const selectItemById = (id) => (state) => state.items.allItems[id];

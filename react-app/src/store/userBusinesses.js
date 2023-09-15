@@ -3,31 +3,6 @@ import { deleteReq, postReq, putReq } from "./utils";
 import { createSlice } from "@reduxjs/toolkit";
 import { resetAll } from "./utils";
 
-const CREATE_CATEGORY = "userBusinesses/CREATE_CATEGORY";
-const EDIT_CATEGORY = "userBusinesses/EDIT_CATEGORY";
-const REORDER_CATEGORIES = "userBusinesses/REORDER_CATEGORIES";
-const DELETE_CATEGORY = "userBusinesses/DELETE_CATEGORY";
-
-const actionCreateCategory = (category) => ({
-  type: CREATE_CATEGORY,
-  payload: category,
-});
-
-const actionEditCategory = (category) => ({
-  type: EDIT_CATEGORY,
-  payload: category,
-});
-
-const actionReorderCategories = (order) => ({
-  type: REORDER_CATEGORIES,
-  payload: order,
-});
-
-const actionDeleteCategory = (categoryId) => ({
-  type: DELETE_CATEGORY,
-  payload: categoryId,
-});
-
 export const thunkGetAllBusinesses = () => async (dispatch) => {
   const res = await fetch("/api/user_businesses/all");
   const resBody = await res.json();
@@ -72,7 +47,7 @@ export const thunkDeleteBusiness = (businessId) => async (dispatch) => {
 export const thunkCreateCategory = (category) => async (dispatch) => {
   const res = await postReq(`/api/categories/new`, category);
   const resBody = await res.json();
-  if (res.ok) dispatch(actionCreateCategory(resBody.category));
+  if (res.ok) dispatch(createCategory(resBody.category));
   return resBody;
 };
 
@@ -80,21 +55,21 @@ export const thunkEditCategory = (category) => async (dispatch) => {
   const url = `/api/categories/${category.id}/edit`;
   const res = await putReq(url, category);
   const resBody = await res.json();
-  if (res.ok) dispatch(actionEditCategory(resBody.category));
+  if (res.ok) dispatch(editCategory(resBody.category));
   return resBody;
 };
 
 export const thunkReorderCategories = (order) => async (dispatch) => {
   const res = await putReq(`/api/categories/reorder`, order);
   const resBody = await res.json();
-  if (res.ok) dispatch(actionReorderCategories(order.categories));
+  if (res.ok) dispatch(reorderCategories(order.categories));
   return resBody;
 };
 
 export const thunkDeleteCategory = (categoryId) => async (dispatch) => {
   const res = await deleteReq(`/api/categories/${categoryId}/delete`);
   const resBody = await res.json();
-  if (res.ok) dispatch(actionDeleteCategory({ id: categoryId }));
+  if (res.ok) dispatch(deleteCategory({ id: categoryId }));
   return resBody;
 };
 
@@ -108,8 +83,8 @@ export const userBusinessSlice = createSlice({
       state.allBusinesses = action.payload;
     },
     getOneBusiness: (state, action) => {
-      state.singleBusiness = action.payload;
-      state.singleBusiness.items = Object.keys(action.payload);
+      state.singleBusiness = { ...action.payload };
+      state.singleBusiness.items = Object.keys(action.payload.items);
     },
     createBusiness: (state, action) => {
       state.allBusinesses[action.payload.id] = action.payload;
@@ -118,7 +93,7 @@ export const userBusinessSlice = createSlice({
     },
     editBusiness: (state, action) => {
       state.allBusinesses[action.payload.id] = action.payload;
-      const items = state.singleBusiness[action.payload.id].items;
+      const items = state.singleBusiness.items;
       state.singleBusiness = action.payload;
       state.singleBusiness.items = items;
     },
@@ -140,9 +115,14 @@ export const userBusinessSlice = createSlice({
       delete state.singleBusiness.categories[action.payload.id];
     },
     reorderCategories: (state, action) => {
-      Object.entries.forEach(([id, order]) => {
+      Object.entries(action.payload).forEach(([id, order]) => {
         state.singleBusiness.categories[id].order = order;
       });
+    },
+    swapItemCategory: (state, action) => {
+      const { start, end } = action.payload;
+      state.singleBusiness.categories[start?.id] = start;
+      state.singleBusiness.categories[end?.id] = end;
     },
   },
   extraReducers(builder) {
@@ -156,10 +136,19 @@ export const {
   createBusiness,
   editBusiness,
   deleteBusiness,
+  createCategory,
+  editCategory,
+  deleteCategory,
+  reorderCategories,
+  swapItemCategory,
 } = userBusinessSlice.actions;
 
 export default userBusinessSlice.reducer;
 
+export const selectAllUserBusinesses = (state) =>
+  state.userBusinesses.allBusinesses;
+export const selectSingleUserBusiness = (state) =>
+  state.userBusinesses.singleBusiness;
 export const selectCategories = (state) =>
   state.userBusinesses.singleBusiness.categories;
 export const selectCategoryById = (id) => (state) =>

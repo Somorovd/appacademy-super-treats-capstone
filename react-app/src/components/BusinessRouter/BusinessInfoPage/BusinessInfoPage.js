@@ -5,8 +5,10 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { ConfirmDeleteModal } from "../../utils/ConfirmModal";
 import CreateBusinessForm from "../CreateBusinessPage/CreateBusinessForm";
-import { selectSingleBusiness } from "../../../store/businesses";
-import { thunkDeleteBusiness } from "../../../store/userBusinesses";
+import {
+  selectSingleUserBusiness,
+  thunkDeleteBusiness,
+} from "../../../store/userBusinesses";
 import { useModal } from "../../../context/Modal";
 
 export default function BusinessInfoPage() {
@@ -15,7 +17,7 @@ export default function BusinessInfoPage() {
   const { businessId } = useParams();
   const { closeModal, setModalContent, setModalClass } = useModal();
 
-  const business = useSelector(selectSingleBusiness);
+  const business = useSelector(selectSingleUserBusiness);
 
   const onDelete = async () => {
     const res = await dispatch(thunkDeleteBusiness(business.id));

@@ -22,8 +22,8 @@ export default function CartSidebar({ businessId }) {
   const [actionsHidden, setActionsHidden] = useState(true);
   const [menuHidden, setMenuHidden] = useState(true);
 
-  const cart = useSelector(selectCartForBusiness(businessId));
   const allCarts = useSelector(selectAllCarts);
+  const cart = useSelector(selectCartForBusiness(businessId));
   const business = useSelector(selectBusinessById(businessId));
 
   const { closeModal, setModalContent, setModalClass } = useModal();

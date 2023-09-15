@@ -19,7 +19,7 @@ export default function CategoryTableRow({
   const { setModalContent, setModalClass, closeModal } = useModal();
   const dispatch = useDispatch();
   const row = useRef();
-  const category = useSelector(selectCategoryById);
+  const category = useSelector(selectCategoryById(categoryId));
 
   const handleEdit = (e) => {
     e.preventDefault();

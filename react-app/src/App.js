@@ -15,7 +15,6 @@ function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
   useEffect(() => {
-    console.log("here in app");
     dispatch(authenticate()).then(() => setIsLoaded(true));
   }, [dispatch]);
 

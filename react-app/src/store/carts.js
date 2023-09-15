@@ -24,7 +24,7 @@ export const thunkAddToCart = (item) => async (dispatch) => {
 export const thunkDeleteCart = (cart) => async (dispatch) => {
   const res = await deleteReq(`/api/carts/${cart.id}/delete`);
   const resBody = await res.json();
-  if (res.ok) dispatch(deleteCart({ businessId: cart.businessId }));
+  if (res.ok) dispatch(deleteCart({ id: cart.businessId }));
   return resBody;
 };
 
@@ -41,8 +41,8 @@ export const thunkDeleteCartItem = (cartItem) => async (dispatch) => {
   const res = await deleteReq(url);
   const resBody = await res.json();
   if (res.ok) {
-    if (resBody.message) dispatch(deleteCart(cartItem.businessId));
-    else dispatch(deleteCartItem(cartItem.id, resBody.cart));
+    if (resBody.message) dispatch(deleteCart({ id: cartItem.businessId }));
+    else dispatch(deleteCartItem({ id: cartItem.id, cart: resBody.cart }));
   }
   return resBody;
 };
@@ -61,7 +61,7 @@ export const cartSlice = createSlice({
       state.carts[cart.businessId] = cart;
     },
     deleteCart: (state, action) => {
-      delete state.carts[action.payload.businessId];
+      delete state.carts[action.payload.id];
     },
     editCartItem: (state, action) => {
       const { cartItem, cart } = action.payload;
@@ -72,12 +72,12 @@ export const cartSlice = createSlice({
       state.carts[cart.businessId].cartItems[cartItem.id] = cartItem;
     },
     deleteCartItem: (state, action) => {
-      const { cartItem, cart } = action.payload;
+      const { id, cart } = action.payload;
       state.carts[cart.businessId] = {
         ...state.carts[cart.businessId],
         ...cart,
       };
-      delete state.cartSlice[cart.businessId].cartItems[cartItem.id];
+      delete state.carts[cart.businessId].cartItems[id];
     },
   },
   extraReducers(builder) {

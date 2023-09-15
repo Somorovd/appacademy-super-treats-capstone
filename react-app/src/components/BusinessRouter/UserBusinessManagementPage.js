@@ -12,8 +12,10 @@ import BusinessMenu from "./BusinessMenu";
 import CategoryManagementPage from "./CategoryManagementPage";
 import ItemEditPage from "./ItemEditPage";
 import ItemManagementPage from "./ItemManagementPage";
-import { selectSingleBusiness } from "../../store/businesses";
-import { thunkGetOneBusiness } from "../../store/userBusinesses";
+import {
+  selectSingleUserBusiness,
+  thunkGetOneBusiness,
+} from "../../store/userBusinesses";
 import { useEffect } from "react";
 
 export default function UserBusinessManagementPage() {
@@ -21,7 +23,7 @@ export default function UserBusinessManagementPage() {
   const dispatch = useDispatch();
   const { businessId } = useParams();
 
-  const business = useSelector(selectSingleBusiness);
+  const business = useSelector(selectSingleUserBusiness);
 
   useEffect(() => {
     (async () => {
