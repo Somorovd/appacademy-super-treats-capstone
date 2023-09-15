@@ -1,121 +1,66 @@
-import { clearAll } from ".";
-
-const SET_USER = "session/SET_USER";
-const REMOVE_USER = "session/REMOVE_USER";
-const SET_LOCATION = "session/SET_LOCATION";
-
-const setUser = (user) => ({
-  type: SET_USER,
-  payload: user,
-});
-
-const removeUser = () => ({
-  type: REMOVE_USER,
-});
-
-const actionSetLocation = (address, delivery) => ({
-  type: SET_LOCATION,
-  payload: { address, delivery },
-});
+import { createSlice } from "@reduxjs/toolkit";
+import { postReq } from "./utils";
+import { resetAll } from "./utils";
 
 export const authenticate = () => async (dispatch) => {
-  const response = await fetch("/api/auth/", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-  if (response.ok) {
-    const data = await response.json();
-    if (data.errors) {
-      return;
-    }
-
-    dispatch(setUser(data));
+  const res = await fetch("/api/auth/");
+  const resBody = await res.json();
+  if (res.ok && !resBody.errors) {
+    dispatch(setUser(resBody));
   }
 };
 
 export const login = (credential, password) => async (dispatch) => {
-  const res = await fetch("/api/auth/login", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      credential,
-      password,
-    }),
-  });
-
+  const res = await postReq("/api/auth/login", { credential, password });
   const resBody = await res.json();
-
   if (res.ok) dispatch(setUser(resBody));
   return resBody;
 };
 
 export const logout = () => async (dispatch) => {
-  const response = await fetch("/api/auth/logout", {
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
-  if (response.ok) {
-    dispatch(clearAll());
-  }
+  const res = await fetch("/api/auth/logout");
+  if (res.ok) dispatch(resetAll());
 };
 
 export const signUp = (user) => async (dispatch) => {
-  const res = await fetch("/api/auth/signup", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(user),
-  });
-
+  const res = await postReq("/api/auth/signup", user);
   const resBody = await res.json();
-
   if (res.ok) dispatch(setUser(resBody));
   return resBody;
 };
 
 export const validateEmail = (email) => async (_dispatch) => {
-  const res = await fetch("/api/auth/validate_email", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ email }),
-  });
+  const res = await postReq("/api/auth/validate_email", { email });
   const resBody = await res.json();
   return resBody;
 };
 
 export const validatePhone = (phone) => async (_dispatch) => {
-  const res = await fetch("/api/auth/validate_phone", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ phone }),
-  });
+  const res = await postReq("/api/auth/validate_phone", { phone });
   const resBody = await res.json();
   return resBody;
 };
 
-export const thunkSetLocation = (address, delivery) => async (dispatch) => {
-  await dispatch(actionSetLocation(address, delivery));
-};
-
 const initialState = { user: null, address: null, delivery: "delivery" };
 
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
-    case SET_USER:
-      return { ...state, user: action.payload };
-    case SET_LOCATION:
-      return { ...state, ...action.payload };
-    default:
-      return state;
-  }
-}
+export const sessionSlice = createSlice({
+  name: "session",
+  initialState,
+  reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
+    setLocation: (state, action) => {
+      state.address = action.payload;
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(resetAll, () => initialState);
+  },
+});
+
+export const { setUser, setLocation } = sessionSlice.actions;
+
+export default sessionSlice.reducer;
+
+export const selectUser = (state) => state.session.user;

@@ -1,18 +1,19 @@
-import { useDispatch } from "react-redux";
-import { useHistory, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useModal } from "../../../context/Modal";
-import { logout } from "../../../store/session";
+import "./LoggedInUserMenu.css";
+
+import { Link, useHistory } from "react-router-dom";
+import { logout, selectUser } from "../../../store/session";
 
 import PersonalLinksSection from "../PersonalLinksSection";
-import "./LoggedInUserMenu.css";
+import { useDispatch } from "react-redux";
+import { useModal } from "../../../context/Modal";
+import { useSelector } from "react-redux";
 
 export default function LoggedInUserMenu() {
   const dispatch = useDispatch();
   const history = useHistory();
   const { closeModal } = useModal();
 
-  const user = useSelector((state) => state.session.user);
+  const user = useSelector(selectUser);
 
   const modalNavigate = (path) => {
     closeModal();

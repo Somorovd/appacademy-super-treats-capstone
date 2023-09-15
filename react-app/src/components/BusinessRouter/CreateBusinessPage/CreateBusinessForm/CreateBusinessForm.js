@@ -212,7 +212,12 @@ export default function CreateBusinessForm({ business, onSubmit }) {
               Select...
             </option>
             {cuisines.map((c, i) => (
-              <option value={c}>{c}</option>
+              <option
+                key={c}
+                value={c}
+              >
+                {c}
+              </option>
             ))}
           </select>
           <p className="auth-error">{errors.cuisine}</p>
@@ -227,16 +232,16 @@ export default function CreateBusinessForm({ business, onSubmit }) {
               {["$", "$$", "$$$", "$$$$"].map((p, i) => (
                 <div className="flex">
                   <input
+                    key={p}
                     type="radio"
                     name="price-range"
                     id={p}
                     checked={p === priceRange}
                     onChange={(e) => setPriceRange(p)}
-                    key={2 * i}
                   />
                   <label
                     htmlFor={p}
-                    key={2 * i + 1}
+                    key={`${p}-label`}
                   >
                     {p}
                   </label>

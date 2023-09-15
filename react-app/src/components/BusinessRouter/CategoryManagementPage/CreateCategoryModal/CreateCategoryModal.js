@@ -17,7 +17,7 @@ export default function CreateCategoryModal({
   const dispatch = useDispatch();
   const [name, setName] = useState(category?.name || "");
   const [errors, setErrors] = useState({});
-
+  
   const handleChangeName = (e) => {
     const name = e.target.value;
     const errors = {};

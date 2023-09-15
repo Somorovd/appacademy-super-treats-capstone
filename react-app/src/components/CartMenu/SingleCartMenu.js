@@ -1,10 +1,12 @@
-import { useSelector } from "react-redux";
-import { useModal } from "../../context/Modal";
 import CartSidebar from "./CartSidebar/CartSidebar";
+import { selectCartForBusiness } from "../../store/carts";
+import { selectSingleBusiness } from "../../store/businesses";
+import { useModal } from "../../context/Modal";
+import { useSelector } from "react-redux";
 
 export default function SingleCartMenu() {
-  const business = useSelector((state) => state.businesses.singleBusiness);
-  const cart = useSelector((state) => state.carts[business?.id]);
+  const business = useSelector(selectSingleBusiness);
+  const cart = useSelector(selectCartForBusiness(business?.id));
 
   const { setModalContent, setModalClass } = useModal();
 

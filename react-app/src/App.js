@@ -1,14 +1,15 @@
-import { authenticate } from "./store/session";
 import { Route, Switch } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useState, useEffect } from "react";
-import SignupFormPage from "./components/auth/SignupFormPage";
-import LoginFormPage from "./components/auth/LoginFormPage";
-import LandingPage from "./components/LandingPage";
+import { useEffect, useState } from "react";
+
 import BusinessBrowsingPage from "./components/BusinessBrowsingPage";
 import BusinessRouter from "./components/BusinessRouter";
 import ItemBrowsingPage from "./components/ItemBrowsingPage";
+import LandingPage from "./components/LandingPage";
+import LoginFormPage from "./components/auth/LoginFormPage";
 import Page404 from "./components/Page404";
+import SignupFormPage from "./components/auth/SignupFormPage";
+import { authenticate } from "./store/session";
+import { useDispatch } from "react-redux";
 
 function App() {
   const dispatch = useDispatch();

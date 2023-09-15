@@ -1,19 +1,20 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { login } from "../../../store/session";
-
-import PageHeader from "../../PageHeader";
-import HLine from "../../utils/HLine";
-import DemoLogin from "../DemoLogin";
 import "./LoginForm.css";
+
+import React, { useState } from "react";
+import { login, selectUser } from "../../../store/session";
+import { useDispatch, useSelector } from "react-redux";
+
+import DemoLogin from "../DemoLogin";
+import HLine from "../../utils/HLine";
+import PageHeader from "../../PageHeader";
+import { useHistory } from "react-router-dom";
 
 const countries = ["US", "CA", "MX"];
 
 export default function LoginFormPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector(selectUser);
   const [credential, setCredential] = useState("");
   const [isPhone, setIsPhone] = useState(false);
   const [password, setPassword] = useState("");

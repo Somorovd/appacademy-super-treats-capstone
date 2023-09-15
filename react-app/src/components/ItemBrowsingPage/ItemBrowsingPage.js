@@ -1,32 +1,33 @@
-import { useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import "./ItemBrowsingPage.css";
 
 import {
+  fetchAllBusinesses,
+  selectBusinessById,
+  selectSingleBusiness,
   thunkGetOneBusiness,
-  thunkGetAllBusinesses,
 } from "../../store/businesses";
-import PageHeader from "../PageHeader";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+
 import CartMenu from "../CartMenu";
-import ItemCard from "./ItemCard";
 import CategorySidebar from "./CategorySidebar";
-import "./ItemBrowsingPage.css";
+import ItemCard from "./ItemCard";
+import PageHeader from "../PageHeader";
+import { useEffect } from "react";
 
 export default function ItemBrowsingPage() {
   const { businessId } = useParams();
   const dispatch = useDispatch();
   const history = useHistory();
-  const business = useSelector((state) => state.businesses.singleBusiness);
-  const haveAllBusinesses = useSelector(
-    (state) => state.businesses.allBusinesses[businessId]
-  );
+  const business = useSelector(selectSingleBusiness);
+  const haveAllBusinesses = useSelector(selectBusinessById(businessId));
 
   useEffect(() => {
     (async () => {
       const res = await dispatch(thunkGetOneBusiness(businessId));
       if (res.errors) history.push("/feed");
     })();
-    if (!haveAllBusinesses) dispatch(thunkGetAllBusinesses(businessId));
+    if (!haveAllBusinesses) dispatch(fetchAllBusinesses());
   }, [dispatch, businessId]);
 
   useEffect(() => {
@@ -75,6 +76,7 @@ export default function ItemBrowsingPage() {
         <div className="fw">
           {categories.map((c) => (
             <section
+              key={c.id}
               id={`category-${c.id}`}
               className="category-section"
             >

@@ -1,10 +1,11 @@
-import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useModal } from "../../context/Modal";
+import "./PageHeader.css";
 
 import Logo from "../utils/Logo";
 import UserMenu from "../UserMenu";
-import "./PageHeader.css";
+import { selectUser } from "../../store/session";
+import { useHistory } from "react-router-dom";
+import { useModal } from "../../context/Modal";
+import { useSelector } from "react-redux";
 
 export default function PageHeader({
   backgroundColor,
@@ -15,7 +16,7 @@ export default function PageHeader({
   const history = useHistory();
   const { setModalContent, setModalClass } = useModal();
 
-  const user = useSelector((state) => state.session.user);
+  const user = useSelector(selectUser);
 
   const openUserMenu = () => {
     setModalClass("");

@@ -1,11 +1,13 @@
-import { useSelector } from "react-redux";
-
-import AddToCart from "./AddToCart";
 import "./ItemCard.css";
 
+import AddToCart from "./AddToCart";
+import { selectItemById } from "../../../store/items";
+import { selectUser } from "../../../store/session";
+import { useSelector } from "react-redux";
+
 export default function ItemCard({ itemId }) {
-  const item = useSelector((state) => state.items.allItems[itemId]);
-  const user = useSelector((state) => state.session.user);
+  const item = useSelector(selectItemById(itemId));
+  const user = useSelector(selectUser);
 
   if (!item) return null;
 

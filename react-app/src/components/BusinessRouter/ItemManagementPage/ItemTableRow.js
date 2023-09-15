@@ -1,5 +1,8 @@
-import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
+
+import { selectCategoryById } from "../../../store/userBusinesses";
+import { selectItemById } from "../../../store/items";
+import { useSelector } from "react-redux";
 
 const formatDate = (date) => {
   return new Date(date).toLocaleDateString("en-US");
@@ -7,10 +10,8 @@ const formatDate = (date) => {
 
 export default function ItemTableRow({ itemId }) {
   const { businessId } = useParams();
-  const item = useSelector((state) => state.items.allItems[itemId]);
-  const category = useSelector(
-    (state) => state.userBusinesses.singleBusiness.categories[item.categoryId]
-  );
+  const item = useSelector(selectItemById(itemId));
+  const category = useSelector(selectCategoryById(item.categoryId));
 
   if (!item) return null;
 

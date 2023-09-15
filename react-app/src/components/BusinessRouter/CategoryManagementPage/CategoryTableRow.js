@@ -1,11 +1,14 @@
-import { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useModal } from "../../../context/Modal";
+import {
+  selectCategoryById,
+  thunkDeleteCategory,
+} from "../../../store/userBusinesses";
+import { useDispatch, useSelector } from "react-redux";
 
-import CreateCategoryModal from "./CreateCategoryModal";
-import { thunkDeleteCategory } from "../../../store/userBusinesses";
 import { ConfirmDeleteModal } from "../../utils/ConfirmModal/ConfirmDeleteModal";
+import CreateCategoryModal from "./CreateCategoryModal";
+import { useModal } from "../../../context/Modal";
+import { useParams } from "react-router-dom";
+import { useRef } from "react";
 
 export default function CategoryTableRow({
   categoryId,
@@ -16,9 +19,7 @@ export default function CategoryTableRow({
   const { setModalContent, setModalClass, closeModal } = useModal();
   const dispatch = useDispatch();
   const row = useRef();
-  const category = useSelector(
-    (state) => state.userBusinesses.singleBusiness.categories[categoryId]
-  );
+  const category = useSelector(selectCategoryById(categoryId));
 
   const handleEdit = (e) => {
     e.preventDefault();

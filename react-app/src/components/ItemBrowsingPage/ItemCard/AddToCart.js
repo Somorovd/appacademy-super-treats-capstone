@@ -1,8 +1,12 @@
+import {
+  selectCartItemForBusinessById,
+  thunkAddToCart,
+  thunkDeleteCartItem,
+} from "../../../store/carts";
 import { useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 
-import { thunkAddToCart, thunkDeleteCartItem } from "../../../store/carts";
+import { useParams } from "react-router-dom";
 
 export default function AddToCart({ item }) {
   const dispatch = useDispatch();
@@ -11,7 +15,7 @@ export default function AddToCart({ item }) {
   const [expand, setExpand] = useState(false);
 
   const cartItem = useSelector(
-    (state) => state.carts[businessId]?.cartItems[item.cartItemId]
+    selectCartItemForBusinessById(businessId, item.cartItemId)
   );
 
   useEffect(() => {

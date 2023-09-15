@@ -1,21 +1,22 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { signUp } from "../../../store/session";
-
-import PageHeader from "../../PageHeader";
-import HLine from "../../utils/HLine";
-import DemoLogin from "../DemoLogin";
-import SignupFormEmail from "./SignupFormEmail";
-import SignupFormPhone from "./SignupFormPhone";
-import SignupFormPassword from "./SignupFormPassword";
-import SignupFormName from "./SignupFormName";
 import "./SignupForm.css";
+
+import React, { useState } from "react";
+import { selectUser, signUp } from "../../../store/session";
+import { useDispatch, useSelector } from "react-redux";
+
+import DemoLogin from "../DemoLogin";
+import HLine from "../../utils/HLine";
+import PageHeader from "../../PageHeader";
+import SignupFormEmail from "./SignupFormEmail";
+import SignupFormName from "./SignupFormName";
+import SignupFormPassword from "./SignupFormPassword";
+import SignupFormPhone from "./SignupFormPhone";
+import { useHistory } from "react-router-dom";
 
 export default function SignupFormPage() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const sessionUser = useSelector((state) => state.session.user);
+  const sessionUser = useSelector(selectUser);
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [firstName, setFirstName] = useState("");

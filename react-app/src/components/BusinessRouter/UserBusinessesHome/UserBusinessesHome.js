@@ -1,18 +1,20 @@
-import { useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import "./UserBusinessesHome.css";
 
-import { thunkGetAllBusinesses } from "../../../store/userBusinesses";
+import { Link, useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+
 import BusinessCard from "../../BusinessBrowsingPage/BusinessCard";
 import BusinessMenu from "../BusinessMenu";
-import "./UserBusinessesHome.css";
+import {
+  selectAllUserBusinesses,
+  thunkGetAllBusinesses,
+} from "../../../store/userBusinesses";
+import { useEffect } from "react";
 
 export default function UserBusinessesHome() {
   const dispatch = useDispatch();
   const history = useHistory();
-  const allBusinessesObj = useSelector(
-    (state) => state.userBusinesses.allBusinesses
-  );
+  const allBusinessesObj = useSelector(selectAllUserBusinesses);
   const allBusinesses = Object.values(allBusinessesObj);
 
   useEffect(() => {
@@ -34,11 +36,13 @@ export default function UserBusinessesHome() {
         </header>
         <div className="user-business__grid">
           {allBusinesses.map((b) => (
-            <div onClick={() => history.push(`/business/${b.id}`)}>
+            <div
+              key={b.id}
+              onClick={() => history.push(`/business/${b.id}`)}
+            >
               <BusinessCard
                 business={b}
                 isBrowsing={false}
-                key={b.id}
               />
             </div>
           ))}

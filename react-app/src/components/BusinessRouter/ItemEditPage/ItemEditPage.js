@@ -1,16 +1,19 @@
-import { useEffect, useState, useRef } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useHistory, useParams, Link } from "react-router-dom";
-import { useModal } from "../../../context/Modal";
-
-import {
-  thunkGetOneItem,
-  thunkCreateItem,
-  thunkUpdateItem,
-  thunkDeleteItem,
-} from "../../../store/items";
-import { ConfirmModal, ConfirmDeleteModal } from "../../utils/ConfirmModal";
 import "./ItemEditPage.css";
+
+import { ConfirmDeleteModal, ConfirmModal } from "../../utils/ConfirmModal";
+import { Link, useHistory, useParams } from "react-router-dom";
+import {
+  selectSingleItem,
+  thunkCreateItem,
+  thunkDeleteItem,
+  thunkGetOneItem,
+  thunkUpdateItem,
+} from "../../../store/items";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+
+import { selectCategories } from "../../../store/userBusinesses";
+import { useModal } from "../../../context/Modal";
 
 const defaultImage =
   "https://cdn.discordapp.com/attachments/723759214123679836/1129101930510172180/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
@@ -42,10 +45,8 @@ export default function ItemEditPage() {
   const { setModalContent } = useModal();
 
   const isEditting = itemId;
-  const item = useSelector((state) => state.items.singleItem);
-  const categoriesObj = useSelector(
-    (state) => state.userBusinesses.singleBusiness.categories
-  );
+  const item = useSelector(selectSingleItem);
+  const categoriesObj = useSelector(selectCategories);
   const categories = Object.values(categoriesObj).sort(
     (a, b) => a.order - b.order
   );
@@ -172,7 +173,7 @@ export default function ItemEditPage() {
               className="item-actions__save bt-black bt-pd"
               disabled={isSaving}
             >
-              {isSaving ? <i class="fa-regular fa-circle"></i> : "Save"}
+              {isSaving ? <i className="fa-regular fa-circle"></i> : "Save"}
             </button>
           </div>
         </header>

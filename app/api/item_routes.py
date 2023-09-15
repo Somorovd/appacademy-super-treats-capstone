@@ -69,6 +69,7 @@ def edit_item(item_id):
 
     if form.validate_on_submit():
         item = Item.query.get(item_id)
+        start_category = item.category
 
         if not item:
             return {"errors": "No item found"}, 404
@@ -84,15 +85,10 @@ def edit_item(item_id):
         item.name = form.data["name"]
         item.about = form.data["about"]
         item.price = form.data["price"]
-        if category_id:
-            item.category_id = category_id
+        item.category_id = category_id
 
         image = form.data.get("image")
-        print("_______________________________")
-        print(image)
-        print("_______________________________")
         if image:
-            print("here")
             image.filename = get_unique_filename(image.filename)
             upload = upload_file_to_s3(image)
 
@@ -103,7 +99,17 @@ def edit_item(item_id):
             item.image = url
 
         db.session.commit()
-        return {"item": item.to_dict(timestamps=True)}
+
+        end_category = item.category
+        res = {"item": item.to_dict(timestamps=True)}
+        if not end_category == start_category:
+            res["categories"] = {
+                "start": start_category.to_dict() if start_category else None,
+                "end": end_category.to_dict() if end_category else None,
+            }
+
+        return res
+
     return {"errors": validation_errors_to_dict(form.errors)}, 400
 
 

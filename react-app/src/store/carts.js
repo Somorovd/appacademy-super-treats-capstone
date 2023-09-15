@@ -1,147 +1,102 @@
-const GET_ALL_CARTS = "carts/GET_ALL_CARTS";
-const ADD_TO_CART = "carts/ADD_TO_CART";
-const DELETE_CART = "carts/DELETE_CART";
-const DELETE_CART_ITEM = "carts/DELETE_CART_ITEM";
-const EDIT_CART_ITEM = "carts/EDIT_CART_ITEM";
-const GET_CART_ITEMS = "carts/GET_CART_ITEMS";
+import { deleteReq, postReq, putReq } from "./utils";
 
-const actionGetAllCarts = (carts) => ({
-  type: GET_ALL_CARTS,
-  payload: carts,
-});
-
-const actionAddToCart = (cart, cartItemId, itemId) => ({
-  type: ADD_TO_CART,
-  payload: { cart, cartItemId, itemId },
-});
-
-const actionDeleteCart = (businessId) => ({
-  type: DELETE_CART,
-  payload: businessId,
-});
-
-const actionEditCartItem = ({ cartItem, cart }) => ({
-  type: EDIT_CART_ITEM,
-  payload: { cartItem, cart },
-});
-
-const actionDeleteCartItem = (cartItemId, cart) => ({
-  type: DELETE_CART_ITEM,
-  payload: { cartItemId, cart },
-});
-
-const actionGetCartItems = (items) => ({
-  type: GET_CART_ITEMS,
-  payload: items,
-});
+import { createSlice } from "@reduxjs/toolkit";
+import { getCartItems } from "./items";
+import { resetAll } from "./utils";
 
 export const thunkGetAllCarts = () => async (dispatch) => {
   const res = await fetch("/api/carts/current");
   const resBody = await res.json();
-
   if (res.ok) {
-    dispatch(actionGetAllCarts(resBody.carts));
-    dispatch(actionGetCartItems(resBody.items));
+    dispatch(getAllCarts(resBody.carts));
+    dispatch(getCartItems(resBody.items));
   }
   return resBody;
 };
 
 export const thunkAddToCart = (item) => async (dispatch) => {
-  const res = await fetch("/api/carts/add_item", {
-    method: "post",
-    headers: {
-      "content-type": "application/json",
-    },
-    body: JSON.stringify(item),
-  });
+  const res = await postReq("/api/carts/add_item", item);
   const resBody = await res.json();
-
-  if (res.ok)
-    dispatch(actionAddToCart(resBody.cart, resBody.cartItemId, item.id));
+  if (res.ok) dispatch(addToCart({ ...resBody, itemId: item.id }));
   return resBody;
 };
 
 export const thunkDeleteCart = (cart) => async (dispatch) => {
-  const res = await fetch(`/api/carts/${cart.id}/delete`, {
-    method: "delete",
-  });
+  const res = await deleteReq(`/api/carts/${cart.id}/delete`);
   const resBody = await res.json();
-
-  if (res.ok) dispatch(actionDeleteCart(cart.businessId));
+  if (res.ok) dispatch(deleteCart({ id: cart.businessId }));
   return resBody;
 };
 
 export const thunkEditCartItem = (cartItem) => async (dispatch) => {
-  const res = await fetch(
-    `/api/carts/${cartItem.cartId}/items/${cartItem.id}/edit`,
-    {
-      method: "put",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(cartItem),
-    }
-  );
+  const url = `/api/carts/${cartItem.cartId}/items/${cartItem.id}/edit`;
+  const res = await putReq(url, cartItem);
   const resBody = await res.json();
-
-  if (res.ok) dispatch(actionEditCartItem(resBody));
+  if (res.ok) dispatch(editCartItem(resBody));
   return resBody;
 };
 
 export const thunkDeleteCartItem = (cartItem) => async (dispatch) => {
-  const res = await fetch(
-    `/api/carts/${cartItem.cartId}/items/${cartItem.id}/delete`,
-    {
-      method: "delete",
-    }
-  );
+  const url = `/api/carts/${cartItem.cartId}/items/${cartItem.id}/delete`;
+  const res = await deleteReq(url);
   const resBody = await res.json();
-
   if (res.ok) {
-    if (resBody.message) dispatch(actionDeleteCart(cartItem.businessId));
-    else dispatch(actionDeleteCartItem(cartItem.id, resBody.cart));
+    if (resBody.message) dispatch(deleteCart({ id: cartItem.businessId }));
+    else dispatch(deleteCartItem({ id: cartItem.id, cart: resBody.cart }));
   }
   return resBody;
 };
 
-const initialState = {};
+const initialState = { carts: {} };
 
-export default function reducer(state = initialState, action) {
-  switch (action.type) {
-    case GET_ALL_CARTS: {
-      return { ...action.payload };
-    }
-    case ADD_TO_CART: {
+export const cartSlice = createSlice({
+  name: "carts",
+  initialState,
+  reducers: {
+    getAllCarts: (state, action) => {
+      state.carts = action.payload;
+    },
+    addToCart: (state, action) => {
       const { cart } = action.payload;
-      return { ...state, [cart.businessId]: { ...cart } };
-    }
-    case DELETE_CART: {
-      const newState = { ...state };
-      delete newState[action.payload];
-      return newState;
-    }
-    case EDIT_CART_ITEM: {
+      state.carts[cart.businessId] = cart;
+    },
+    deleteCart: (state, action) => {
+      delete state.carts[action.payload.id];
+    },
+    editCartItem: (state, action) => {
       const { cartItem, cart } = action.payload;
-      const newState = { ...state };
-      const newCart = { ...newState[cart.businessId], ...cart };
-      newCart.cartItems = {
-        ...newCart.cartItems,
-        [cartItem.id]: { ...cartItem },
-      };
-      newState[cart.businessId] = newCart;
-      return newState;
-    }
-    case DELETE_CART_ITEM: {
-      const { cartItemId, cart } = action.payload;
-      const newState = { ...state };
-      newState[cart.businessId] = {
-        ...newState[cart.businessId],
+      state.carts[cart.businessId] = {
+        ...state.carts[cart.businessId],
         ...cart,
       };
-      delete newState[cart.businessId].cartItems[cartItemId];
-      return newState;
-    }
-    default:
-      return state;
-  }
-}
+      state.carts[cart.businessId].cartItems[cartItem.id] = cartItem;
+    },
+    deleteCartItem: (state, action) => {
+      const { id, cart } = action.payload;
+      state.carts[cart.businessId] = {
+        ...state.carts[cart.businessId],
+        ...cart,
+      };
+      delete state.carts[cart.businessId].cartItems[id];
+    },
+  },
+  extraReducers(builder) {
+    builder.addCase(resetAll, () => initialState);
+  },
+});
+
+export const {
+  getAllCarts,
+  addToCart,
+  deleteCart,
+  editCartItem,
+  deleteCartItem,
+} = cartSlice.actions;
+
+export default cartSlice.reducer;
+
+export const selectAllCarts = (state) => state.carts.carts;
+export const selectCartForBusiness = (businessId) => (state) =>
+  state.carts.carts[businessId];
+export const selectCartItemForBusinessById = (businessId, itemId) => (state) =>
+  state.carts.carts[businessId]?.cartItems[itemId];

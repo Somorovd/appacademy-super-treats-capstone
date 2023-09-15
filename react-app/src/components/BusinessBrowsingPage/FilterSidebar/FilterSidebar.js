@@ -1,12 +1,14 @@
-import { useEffect, useState } from "react";
-
-import { store } from "../../../../src";
-import {
-  actionChangeOrder,
-  actionChangeFilter,
-} from "../../../store/businesses";
 import "./FilterSidebar.css";
-import { useSelector } from "react-redux";
+
+import {
+  changeFilter,
+  changeOrder,
+  selectActiveOrder,
+  selectAllBusinesses,
+  selectBusinessFilters,
+} from "../../../store/businesses";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useState } from "react";
 
 const orderOptions = [
   {
@@ -38,9 +40,10 @@ const orderOptions = [
 const priceRangeOptions = ["$", "$$", "$$$", "$$$$"];
 
 export default function FilterSidebar() {
-  const allBusinesses = useSelector((state) => state.businesses.allBusinesses);
-  const storeOrder = useSelector((state) => state.businesses.order.active);
-  const storeFilters = useSelector((state) => state.businesses.filters);
+  const dispatch = useDispatch();
+  const allBusinesses = useSelector(selectAllBusinesses);
+  const storeOrder = useSelector(selectActiveOrder);
+  const storeFilters = useSelector(selectBusinessFilters);
   const [order, setOrder] = useState({});
   const [priceRange, setPriceRange] = useState(
     storeFilters.priceRange?.value || new Set()
@@ -48,7 +51,7 @@ export default function FilterSidebar() {
 
   const handleChangeOrder = (order) => {
     setOrder(order);
-    store.dispatch(actionChangeOrder(order.name, order.property, order.desc));
+    dispatch(changeOrder(order));
   };
 
   const handleChangePriceRange = (pr) => {
@@ -62,8 +65,12 @@ export default function FilterSidebar() {
         else return newPriceRange.has(business.priceRange);
       };
 
-      store.dispatch(
-        actionChangeFilter("priceRange", newPriceRange, validatePriceRange)
+      dispatch(
+        changeFilter({
+          name: "priceRange",
+          value: newPriceRange,
+          validate: validatePriceRange,
+        })
       );
       return newPriceRange;
     });

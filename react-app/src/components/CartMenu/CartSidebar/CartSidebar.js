@@ -1,13 +1,19 @@
-import { useRef, useState, useEffect } from "react";
+import "./CartSidebar.css";
+
+import {
+  selectAllCarts,
+  selectCartForBusiness,
+  thunkDeleteCart,
+} from "../../../store/carts";
 import { useDispatch, useSelector } from "react-redux";
+import { useEffect, useRef, useState } from "react";
+
+import AllCartsDropdown from "../AllCartsDropdown";
+import CartItemCard from "../CartItemCard";
+import SubmitOrderModal from "../SubmitOrderModal";
+import { selectBusinessById } from "../../../store/businesses";
 import { useHistory } from "react-router-dom";
 import { useModal } from "../../../context/Modal";
-
-import { thunkDeleteCart } from "../../../store/carts";
-import CartItemCard from "../CartItemCard";
-import AllCartsDropdown from "../AllCartsDropdown";
-import SubmitOrderModal from "../SubmitOrderModal";
-import "./CartSidebar.css";
 
 export default function CartSidebar({ businessId }) {
   const dispatch = useDispatch();
@@ -16,11 +22,9 @@ export default function CartSidebar({ businessId }) {
   const [actionsHidden, setActionsHidden] = useState(true);
   const [menuHidden, setMenuHidden] = useState(true);
 
-  const cart = useSelector((state) => state.carts[businessId]);
-  const allCarts = useSelector((state) => state.carts);
-  const business = useSelector(
-    (state) => state.businesses.allBusinesses[businessId]
-  );
+  const allCarts = useSelector(selectAllCarts);
+  const cart = useSelector(selectCartForBusiness(businessId));
+  const business = useSelector(selectBusinessById(businessId));
 
   const { closeModal, setModalContent, setModalClass } = useModal();
   const cartItems = Object.values(cart?.cartItems || {}).sort((a, b) => {
