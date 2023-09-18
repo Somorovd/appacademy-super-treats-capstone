@@ -55,3 +55,47 @@
   display: flex;
   gap: 5px;
 }
+
+.business-profile__overview {
+  border: 15px solid black;
+  height: 600px;
+  position: relative;
+  display: flex;
+  gap: 40px;
+}
+
+.overview-cover {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.overview-cover > p {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 900;
+}
+
+#temp-1 {
+  background: rgb(185, 185, 185);
+  height: 100%;
+  flex-grow: 1;
+}
+
+#temp-2 {
+  height: 100%;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+#temp-2 > div {
+  background: rgb(185, 185, 185);
+  width: 100%;
+  flex-grow: 1;
+}

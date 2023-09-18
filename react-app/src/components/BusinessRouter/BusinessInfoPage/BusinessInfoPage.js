@@ -67,26 +67,41 @@ export default function BusinessInfoPage() {
           </button>
         </div>
       </header>
-      <section className="business-profile flex-c">
-        <h1 className="business-profile__name">{business.name}</h1>
-        <p className="business-profile__address">{business.address}</p>
-        <p>
-          <span className="business-profile__rating">
-            <i className="fa-solid fa-star"></i> {business.rating}
-          </span>
-          &bull;
-          <span className="business-profile__type">
-            {business.cuisine || business.type}
-          </span>
-          &bull;
-          <span className="business-profile__price">{business.priceRange}</span>
-          &bull;
-          <span className="business-profile__delivery">
-            ${business.deliveryFee} Delivery Fee
-          </span>
-        </p>
-      </section>
-      <section></section>
+      <div className="flex flex-c g20">
+        <section className="business-profile flex-c">
+          <h1 className="business-profile__name">{business.name}</h1>
+          <p className="business-profile__address">{business.address}</p>
+          <p>
+            <span className="business-profile__rating">
+              <i className="fa-solid fa-star"></i> {business.rating}
+            </span>
+            &bull;
+            <span className="business-profile__type">
+              {business.cuisine || business.type}
+            </span>
+            &bull;
+            <span className="business-profile__price">
+              {business.priceRange}
+            </span>
+            &bull;
+            <span className="business-profile__delivery">
+              ${business.deliveryFee} Delivery Fee
+            </span>
+          </p>
+        </section>
+        <section className="business-profile__overview">
+          <div className="overview-cover">
+            <p>Business Details Coming Soon!</p>
+          </div>
+          <div id="temp-1"></div>
+          <div id="temp-2">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
