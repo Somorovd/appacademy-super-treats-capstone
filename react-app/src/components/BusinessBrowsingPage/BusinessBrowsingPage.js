@@ -2,13 +2,14 @@ import "./BusinessBrowsingPage.css";
 
 import {
   fetchAllBusinesses,
-  selectActiveOrder,
   selectAllBusinesses,
   selectBusinessFilters,
+  selectBusinessOrderingIndex,
   selectBusinessStatus,
 } from "../../store/businesses";
 import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { orderOptions } from "./FilterSidebar/FilterSidebar";
 
 import BusinessCard from "./BusinessCard";
 import CartMenu from "../CartMenu";
@@ -42,10 +43,11 @@ export default function BusinessBrowsingPage() {
 
   const businessStatus = useSelector(selectBusinessStatus);
   const allBusinesses = useSelector(selectAllBusinesses);
-  const businessOrder = useSelector(selectActiveOrder);
+  const orderingIndex = useSelector(selectBusinessOrderingIndex);
   const businessFilters = useSelector(selectBusinessFilters);
 
-  const [validateBusiness, setValidateBusiness] = useState(() => (b) => true);
+  const [orderedBusinesses, setOrderedBusinesses] = useState([]);
+  const [filteredBusinesses, setFilteredBusinesses] = useState([]);
 
   useEffect(() => {
     if (businessStatus === "idle") {
@@ -54,11 +56,35 @@ export default function BusinessBrowsingPage() {
   }, [dispatch, businessStatus]);
 
   useEffect(() => {
-    setValidateBusiness(() => {
-      return (b) =>
-        Object.values(businessFilters).every((filter) => filter.validate(b));
-    });
-  }, [businessFilters]);
+    const sorted = sortBusinesses();
+    setOrderedBusinesses(sorted);
+  }, [orderingIndex, allBusinesses]);
+
+  useEffect(() => {
+    if (!businessFilters) {
+      setFilteredBusinesses(orderedBusinesses);
+    } else {
+      const priceRanges = new Set(businessFilters.split("."));
+      setFilteredBusinesses(
+        orderedBusinesses.filter((id) =>
+          priceRanges.has(allBusinesses[id].priceRange)
+        )
+      );
+    }
+  }, [orderedBusinesses, businessFilters]);
+
+  const sortBusinesses = () => {
+    if (orderingIndex !== undefined && allBusinesses) {
+      return Object.values(allBusinesses)
+        .sort((a, b) => {
+          const { property, desc } = orderOptions[orderingIndex];
+          return (property(a) > property(b) ? 1 : -1) * (desc ? -1 : 1);
+        })
+        .map((b) => b.id);
+    } else {
+      return orderedBusinesses;
+    }
+  };
 
   return (
     <div className="business-browsing flex-c">
@@ -78,21 +104,15 @@ export default function BusinessBrowsingPage() {
         </div>
       </header>
       <div className="business-browsing__body flex pg-pd">
-        {/* <FilterSidebar /> */}
+        <FilterSidebar />
         <div className="business-browsing__content fw">
-          {businessOrder &&
-            businessFilters &&
-            businessOrder
-              .filter((businessId) =>
-                validateBusiness(allBusinesses[businessId])
-              )
-              .map((businessId) => (
-                <BusinessCard
-                  business={allBusinesses[businessId]}
-                  isBrowsing={true}
-                  key={businessId}
-                />
-              ))}
+          {filteredBusinesses.map((businessId) => (
+            <BusinessCard
+              business={allBusinesses[businessId]}
+              isBrowsing={true}
+              key={businessId}
+            />
+          ))}
         </div>
       </div>
     </div>

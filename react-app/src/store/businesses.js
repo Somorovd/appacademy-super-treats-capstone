@@ -25,13 +25,10 @@ export const thunkGetOneBusiness = (businessId) => async (dispatch) => {
 const initialState = {
   allBusinesses: {},
   singleBusiness: {},
-  filters: {},
-  order: {
-    default: [],
-    active: "default",
-  },
   status: "idle",
   error: null,
+  orderIndex: 0,
+  filters: "",
 };
 
 export const businessSlice = createSlice({
@@ -43,19 +40,10 @@ export const businessSlice = createSlice({
       state.singleBusiness.items = Object.keys(action.payload.items);
     },
     changeOrder: (state, action) => {
-      const { name, property, desc } = action.payload;
-      if (!state.order[name]) {
-        state.order[name] = Object.values(state.allBusinesses)
-          .sort((a, b) => {
-            return (property(a) < property(b) ? -1 : 1) * (desc ? -1 : 1);
-          })
-          .map((b) => `${b.id}`);
-      }
-      state.order.active = name;
+      state.orderIndex = action.payload;
     },
     changeFilter: (state, action) => {
-      const { name, value, validate } = action.payload;
-      state.filters[name] = { value, validate };
+      state.filters = action.payload;
     },
   },
   extraReducers(builder) {
@@ -67,7 +55,6 @@ export const businessSlice = createSlice({
         state.status = "succeeded";
         const { businesses } = action.payload;
         state.allBusinesses = businesses;
-        state.order.default = Object.keys(businesses);
       })
       .addCase(fetchAllBusinesses.rejected, (state, action) => {
         state.status = "failed";
@@ -83,10 +70,10 @@ export const { getAllBusinesses, getOneBusiness, changeOrder, changeFilter } =
 export const selectAllBusinesses = (state) => state.businesses.allBusinesses;
 export const selectSingleBusiness = (state) => state.businesses.singleBusiness;
 export const selectBusinessStatus = (state) => state.businesses.status;
-export const selectBusinessFilters = (state) => state.businesses.filters;
-export const selectActiveOrder = (state) =>
-  state.businesses.order[state.businesses.order.active];
 export const selectBusinessById = (id) => (state) =>
   state.businesses.allBusinesses[id];
+export const selectBusinessOrderingIndex = (state) =>
+  state.businesses.orderIndex;
+export const selectBusinessFilters = (state) => state.businesses.filters;
 
 export default businessSlice.reducer;

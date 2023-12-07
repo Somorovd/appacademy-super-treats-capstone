@@ -1,16 +1,10 @@
 import "./FilterSidebar.css";
 
-import {
-  changeFilter,
-  changeOrder,
-  selectActiveOrder,
-  selectAllBusinesses,
-  selectBusinessFilters,
-} from "../../../store/businesses";
-import { useDispatch, useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { changeFilter, changeOrder } from "../../../store/businesses";
+import { useDispatch } from "react-redux";
+import { useState } from "react";
 
-const orderOptions = [
+export const orderOptions = [
   {
     text: "Picked for you (default)",
     name: "default",
@@ -41,44 +35,24 @@ const priceRangeOptions = ["$", "$$", "$$$", "$$$$"];
 
 export default function FilterSidebar() {
   const dispatch = useDispatch();
-  const allBusinesses = useSelector(selectAllBusinesses);
-  const storeOrder = useSelector(selectActiveOrder);
-  const storeFilters = useSelector(selectBusinessFilters);
-  const [order, setOrder] = useState({});
-  const [priceRange, setPriceRange] = useState(
-    storeFilters.priceRange?.value || new Set()
-  );
+  const [orderIndex, setOrderIndex] = useState(0);
+  const [priceRange, setPriceRange] = useState({});
 
-  const handleChangeOrder = (order) => {
-    setOrder(order);
-    dispatch(changeOrder(order));
+  const handleChangeOrder = (orderIndex) => {
+    setOrderIndex(orderIndex);
+    dispatch(changeOrder(orderIndex));
   };
 
-  const handleChangePriceRange = (pr) => {
-    setPriceRange((priceRange) => {
-      const newPriceRange = new Set(priceRange);
-      if (newPriceRange.has(pr)) newPriceRange.delete(pr);
-      else newPriceRange.add(pr);
-
-      const validatePriceRange = (business) => {
-        if (!newPriceRange.size) return true;
-        else return newPriceRange.has(business.priceRange);
-      };
-
-      dispatch(
-        changeFilter({
-          name: "priceRange",
-          value: newPriceRange,
-          validate: validatePriceRange,
-        })
-      );
-      return newPriceRange;
-    });
+  const handleChangePriceRange = (price) => {
+    const newPriceRange = { ...priceRange };
+    if (newPriceRange[price]) {
+      delete newPriceRange[price];
+    } else {
+      newPriceRange[price] = true;
+    }
+    setPriceRange(newPriceRange);
+    dispatch(changeFilter(Object.keys(newPriceRange).join(".")));
   };
-
-  useEffect(() => {
-    handleChangeOrder(orderOptions.find((o) => o.name === storeOrder));
-  }, [allBusinesses]);
 
   return (
     <div className="filter-sidebar">
@@ -97,8 +71,8 @@ export default function FilterSidebar() {
                 type="radio"
                 name="order"
                 value={o.name}
-                checked={order === o}
-                onChange={() => handleChangeOrder(o)}
+                checked={orderIndex === i}
+                onChange={() => handleChangeOrder(i)}
               />
               <label htmlFor={o.name}>{o.text}</label>{" "}
             </div>
@@ -109,7 +83,7 @@ export default function FilterSidebar() {
         <h3 className="flex flex-b1">
           Price Range
           <span className="price-count bt-black flex flex-11">
-            {priceRange.size || ""}
+            {Object.keys(priceRange).length || ""}
           </span>
         </h3>
         <div className="price-checks flex">
@@ -123,7 +97,7 @@ export default function FilterSidebar() {
                 type="checkbox"
                 value={pr}
                 onChange={() => handleChangePriceRange(pr)}
-                checked={priceRange.has(pr)}
+                checked={priceRange[pr]}
               />
               <label
                 htmlFor={pr}
