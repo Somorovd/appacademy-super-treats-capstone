@@ -4,12 +4,11 @@
 
 .item-table thead tr,
 .item-table tbody tr {
-  grid-template-columns: 100px 150px 1fr 100px 150px;
+  grid-template-columns: 100px 170px 1fr 100px 150px;
 }
 
-.item-table__link {
-  color: rgb(74, 128, 74);
-  text-decoration: none;
+.item-table tr:not(thead > tr):hover {
+  background-color: lightgray;
 }
 
 .item-table__category {
@@ -31,4 +30,6 @@
 .item-table__name {
   overflow: hidden;
   text-overflow: ellipsis;
+  font-weight: bold;
+  font-size: larger;
 }

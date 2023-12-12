@@ -32,10 +32,11 @@ export const thunkUpdateItem = (item) => async (dispatch) => {
   return resBody;
 };
 
-export const thunkDeleteItem = (itemId) => async (dispatch) => {
-  const res = await deleteReq(`/api/items/${itemId}/delete`);
+export const thunkDeleteItem = (item) => async (dispatch) => {
+  const res = await deleteReq(`/api/items/${item.id}/delete`);
   const resBody = await res.json();
-  if (res.ok) dispatch(deleteItem({ id: itemId }));
+  if (res.ok)
+    dispatch(deleteItem({ id: item.id, categoryId: item.categoryId }));
   return resBody;
 };
 

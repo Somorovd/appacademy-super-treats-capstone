@@ -2,6 +2,7 @@ import { deleteReq, postReq, putReq } from "./utils";
 
 import { createSlice } from "@reduxjs/toolkit";
 import { resetAll } from "./utils";
+import { createItem, deleteItem } from "./items";
 
 export const thunkGetAllBusinesses = () => async (dispatch) => {
   const res = await fetch("/api/user_businesses/all");
@@ -126,7 +127,20 @@ export const userBusinessSlice = createSlice({
     },
   },
   extraReducers(builder) {
-    builder.addCase(resetAll, () => initialState);
+    builder
+      .addCase(createItem, (state, action) => {
+        const { categoryId } = action.payload;
+        if (state.singleBusiness.categories[categoryId]) {
+          state.singleBusiness.categories[categoryId].count += 1;
+        }
+      })
+      .addCase(deleteItem, (state, action) => {
+        const { categoryId } = action.payload;
+        if (state.singleBusiness.categories[categoryId]) {
+          state.singleBusiness.categories[categoryId].count -= 1;
+        }
+      })
+      .addCase(resetAll, () => initialState);
   },
 });
 

@@ -1,13 +1,15 @@
 .create-item-form {
   gap: 10px;
-  width: 550px;
+  margin: 3rem;
+  width: 500px;
 }
 
 .create-item-form input,
 .create-item-form label,
 .create-item-form textarea {
   display: block;
-  width: 550px;
+  width: 100%;
+  max-width: 100%;
 }
 
 .create-item-form input:focus,
@@ -64,6 +66,6 @@ input::-webkit-inner-spin-button {
 }
 
 /* Hiding price input arrows -- Firefox */
-input[type=number] {
+input[type="number"] {
   -moz-appearance: textfield;
 }

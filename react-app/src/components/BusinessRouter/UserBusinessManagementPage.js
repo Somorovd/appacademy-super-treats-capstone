@@ -10,7 +10,6 @@ import { useDispatch, useSelector } from "react-redux";
 import BusinessInfoPage from "./BusinessInfoPage";
 import BusinessMenu from "./BusinessMenu";
 import CategoryManagementPage from "./CategoryManagementPage";
-import ItemEditPage from "./ItemEditPage";
 import ItemManagementPage from "./ItemManagementPage";
 import {
   selectSingleUserBusiness,
@@ -38,12 +37,6 @@ export default function UserBusinessManagementPage() {
     <div className="business-page">
       <BusinessMenu />
       <Switch>
-        <Route path="/business/:businessId/menu/items/new">
-          <ItemEditPage />
-        </Route>
-        <Route path="/business/:businessId/menu/items/:itemId">
-          <ItemEditPage />
-        </Route>
         <Route path="/business/:businessId/menu/items">
           <ItemManagementPage />
         </Route>

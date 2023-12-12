@@ -13,13 +13,14 @@ const ConfirmDeleteBody = ({ deleteName }) => {
   );
 };
 
-export function ConfirmDeleteModal({ deleteName, onDelete }) {
+export function ConfirmDeleteModal({ deleteName, onDelete, onCancel }) {
   const ConfirmBody = <ConfirmDeleteBody deleteName={deleteName} />;
   return (
     <ConfirmModal
       ConfirmBody={ConfirmBody}
       onConfirm={onDelete}
       confirmText={"Delete"}
+      onCancel={onCancel}
     />
   );
 }
