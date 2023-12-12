@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import { selectCategoryById } from "../../../store/userBusinesses";
 import { selectItemById } from "../../../store/items";
@@ -8,7 +8,7 @@ const formatDate = (date) => {
   return new Date(date).toLocaleDateString("en-US");
 };
 
-export default function ItemTableRow({ itemId }) {
+export default function ItemTableRow({ itemId, handleOpen }) {
   const { businessId } = useParams();
   const item = useSelector(selectItemById(itemId));
   const category = useSelector(selectCategoryById(item.categoryId));
@@ -16,7 +16,10 @@ export default function ItemTableRow({ itemId }) {
   if (!item) return null;
 
   return (
-    <tr key={item.id}>
+    <tr
+      key={item.id}
+      onClick={handleOpen}
+    >
       <td className="flex flex-11">
         {item.image && (
           <img
@@ -30,16 +33,16 @@ export default function ItemTableRow({ itemId }) {
         {category ? (
           <p className="item-table__category">{category.name}</p>
         ) : (
-          <p className="auth-error">item will be hidden</p>
+          <p className="auth-error">Not Offered</p>
         )}
       </td>
       <td className="flex flex-01">
-        <Link
-          className="item-table__link item-table__name"
+        <p
+          className="item-table__name"
           to={`/business/${businessId}/menu/items/${item.id}`}
         >
           {item.name}
-        </Link>
+        </p>
       </td>
       <td className="flex flex-11">
         <p className="item-table__price">
