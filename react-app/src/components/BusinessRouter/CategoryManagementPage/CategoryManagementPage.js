@@ -10,7 +10,6 @@ import { useRef, useState } from "react";
 
 import CategoryTableRow from "./CategoryTableRow";
 import CreateCategoryModal from "./CreateCategoryModal";
-import MenuPageNavBar from "../MenuPageNavBar";
 import { useModal } from "../../../context/Modal";
 import { useParams } from "react-router-dom";
 
@@ -54,7 +53,6 @@ export default function CategoryManagementPage() {
   return (
     <div className="category-management-page">
       <header>
-        <MenuPageNavBar />
         <div
           id="category-management-header"
           className="flex flex-b1"

@@ -4,7 +4,6 @@ import "../TableStyling.css";
 import { Link, useParams } from "react-router-dom";
 
 import ItemTableRow from "./ItemTableRow";
-import MenuPageNavBar from "../MenuPageNavBar";
 import { selectAllItems } from "../../../store/items";
 import { useSelector } from "react-redux";
 
@@ -17,9 +16,7 @@ export default function ItemManagementPage() {
   return (
     <>
       <div className="item-management-page">
-        <header>
-          <MenuPageNavBar />
-          <div
+        <header>          <div
             id="item-management-header"
             className="flex flex-b1"
           >
