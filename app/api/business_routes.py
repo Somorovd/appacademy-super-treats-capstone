@@ -11,6 +11,11 @@ def all_businesses():
     Query for all the businesses in the database, no filters
     """
     businesses = Business.query.all()
+    
+    for b in businesses:
+        d = b.to_dict()
+        print(d["name"], d["image"])
+
     return {"businesses": {b.id: b.to_dict() for b in businesses}}
 
 

@@ -16,8 +16,7 @@ import { selectCategories } from "../../../store/userBusinesses";
 import { useModal } from "../../../context/Modal";
 import { Alert } from "@mui/material";
 
-const defaultImage =
-  "https://cdn.discordapp.com/attachments/723759214123679836/1129101930510172180/360_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg";
+const defaultImage = `${process.env.REACT_APP_BACKEND_URL}/static/default-image.jpg`;
 
 export default function ItemEditForm({ editItemId, handleClose }) {
   const dispatch = useDispatch();
