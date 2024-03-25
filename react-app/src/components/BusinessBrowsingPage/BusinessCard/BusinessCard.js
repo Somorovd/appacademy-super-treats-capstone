@@ -1,7 +1,7 @@
 import { useHistory } from "react-router-dom";
 import "./BusinessCard.css";
 
-const defaultImage = `${process.env.REACT_APP_BACKEND_URL}/static/default-image.jpg`;
+const defaultImage = `${process.env.REACT_APP_BACKEND_URL}/images/default-image.jpg`;
 
 export default function BusinessCard({ business, isBrowsing }) {
   const history = useHistory();

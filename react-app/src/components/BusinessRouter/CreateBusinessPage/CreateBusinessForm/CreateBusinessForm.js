@@ -21,7 +21,7 @@ const cuisines = [
   "Sushi",
 ];
 
-const defaultImage = `${process.env.REACT_APP_BACKEND_URL}/static/default-image.jpg`;
+const defaultImage = `${process.env.REACT_APP_BACKEND_URL}/images/default-image.jpg`;
 
 export default function CreateBusinessForm({ business, onSubmit }) {
   const dispatch = useDispatch();
