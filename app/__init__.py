@@ -70,9 +70,9 @@ def inject_csrf_token(response):
     )
     return response
 
-@app.route('/static/<path:filename>')
+@app.route('/images/<path:filename>')
 def serve_image(filename):
-    return send_from_directory('static', filename)
+    return send_from_directory('static/images', filename)
 
 
 @app.route("/api/docs")

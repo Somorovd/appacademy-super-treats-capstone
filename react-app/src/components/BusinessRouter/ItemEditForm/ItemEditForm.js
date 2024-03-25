@@ -16,7 +16,7 @@ import { selectCategories } from "../../../store/userBusinesses";
 import { useModal } from "../../../context/Modal";
 import { Alert } from "@mui/material";
 
-const defaultImage = `${process.env.REACT_APP_BACKEND_URL}/static/default-image.jpg`;
+const defaultImage = `${process.env.REACT_APP_BACKEND_URL}/images/default-image.jpg`;
 
 export default function ItemEditForm({ editItemId, handleClose }) {
   const dispatch = useDispatch();

@@ -11,7 +11,7 @@ def seed_businesses():
         address="180 Geary St Fl 6\nSan Francisco, CA 94108",
         cuisine="Burgers",
         delivery_fee="0.99",
-        image="/static/app-academy.png",
+        image="/images/app-academy.png",
         name="App Academy",
         price_range=price_ranges["$$$$"],
         rating=4.8,
