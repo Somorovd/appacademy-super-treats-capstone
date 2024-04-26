@@ -95,11 +95,6 @@ def api_help():
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>")
 def react_root(path):
-    """
-    This route will direct to the public directory in our
-    react builds in the production environment for favicon
-    or index.html requests
-    """
     if path == "favicon.ico":
         return app.send_from_directory("public", "favicon.ico")
     return app.send_static_file("index.html")
